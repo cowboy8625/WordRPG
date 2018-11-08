@@ -69,7 +69,7 @@ class Witch:
         self.luck = 0
 
 
-##-- Hell Wolfes are wolfes speled by evil creatures. They are weak, but really fast.
+##-- Hell Wolfes are wolfes speled by evil creatures. They are weak, but really fast. --##
 
 class Hell_Wolfes:
 
