@@ -4,9 +4,10 @@
 
 
 ##-- Import Modules --##
-import os, sys, random, time
+import os, sys, random, time, cmd, textwrap
 import Screen
 import InfoDics
+import Map
 
 ##-- Globel Varibles --##
 
@@ -28,6 +29,7 @@ class Player:
 
     def __init__(self, name):
         self.name = name
+        self.level = 1
         self.max_health = 100
         self.heath = 100
         self.armor = 0
@@ -45,7 +47,7 @@ class Player:
 def main():
     
     while True:
-        Screen.main_screen()
+        Screen.main_menu_screen()
         choice = input('\n\nChoose a number:> ')
         
         if choice == '1':
@@ -113,6 +115,43 @@ def char_creation():
 
     player_name = input('\n\nENTER YOUR NAME:> ')
     player_in_game = Player(player_name)
+    main_game_loop()
+
+def main_game_loop():
+    
+    ##-- This is the starting loction --##
+    x = 1
+    y = 1
+
+
+    while True:
+        Screen.main_game_screen(InfoDics.story_line['Intro'])
+
+        move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\nInput a Number:>  ")
+        ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
+        if move_to == '1':  ##-- UP --##
+            y += 1
+            print(f"Location: {Map.map[(x, y)]['name']}")
+            input("Press Enter to continue: ")
+        
+        elif move_to == '2':  ##-- DOWN --##
+            y -+ 1
+            print(f"Location: {Map.map[(x, y)]['name']}")
+            input("Press Enter to continue: ")
+
+        elif move_to == '3':  ##-- RIGHT --##
+            x += 1
+            print(f"Location: {Map.map[(x, y)]['name']}")
+            input("Press Enter to continue: ")
+        
+        elif move_to == '4':  ##-- LEFT --##
+            x -= 1
+            print(f"Location: {Map.map[(x, y)]['name']}")
+            input("Press Enter to continue: ")
+        
+        elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
+            sys.exit()
+
 
 
 

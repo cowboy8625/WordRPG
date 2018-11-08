@@ -8,6 +8,7 @@ class Zombie:
 
         self.max_health = 100
         self.heath = 100
+        self.level = 1
         self.armor = 0
         self.melee_attack = 0
         self.magic_attack = 0
@@ -25,6 +26,7 @@ class Skeleton:
 
         self.max_health = 100
         self.heath = 120
+        self.level = 1
         self.armor = 0
         self.melee_attack = 0
         self.magic_attack = 0
@@ -42,6 +44,7 @@ class Golem:
     
         self.max_health = 250
         self.heath = 250
+        self.level = 1
         self.armor = 0
         self.melee_attack = 0
         self.magic_attack = 0
@@ -59,6 +62,7 @@ class Witch:
     
         self.max_health = 100
         self.heath = 100
+        self.level = 1
         self.armor = 0
         self.melee_attack = 0
         self.magic_attack = 50
@@ -71,12 +75,13 @@ class Witch:
 
 ##-- Hell Wolfes are wolfes speled by evil creatures. They are weak, but really fast. --##
 
-class Hell_Wolfes:
+class HellHounds:
 
     def __init__(self):
     
         self.max_health = 80
         self.heath = 80
+        self.level = 1
         self.armor = 0
         self.melee_attack = 0
         self.magic_attack = 0

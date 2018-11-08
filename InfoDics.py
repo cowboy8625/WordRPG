@@ -14,3 +14,17 @@ Don't worry though he is also skilled with a short sword incase he misses or the
 'Assassin': "The Assassin likes the shadows and relies on stealth for surprise attacks. \
 He wields daggers and short swords and has throwing stars if needed."
 }
+
+info_on_mobs = {
+    "Zombie": "",
+    "Skeleton": "",
+    "Golem": "",
+    "Witch": "",
+    "Hell Hound": ""
+}
+
+story_line = {
+"Intro": "Some cool intro to the story", 
+"Chapter 1": "Blah Blah Blah",
+"Chapter 2": "Blah Blah Blah"
+}

@@ -29,7 +29,7 @@ def clear():
 
 ##-- Main Menu --##
 
-def main_screen():
+def main_menu_screen():
     
     first = light_red + 'WELECOME TO THE WASTE LAND'
     num1 = green + '1'
@@ -51,7 +51,7 @@ def main_screen():
     line8 = f"#-                                                                                                -#"
     line9 = f"#-                                   {red}SELECT A NUMBER TO CONTINE                                   {cyan}-#"
     line10 = f"#-                                       {red}Copy Write 2018                                          {cyan}-#"
-    line11 = f"#-                                        {red}Cowboy Gaming                                           {cyan}-#"
+    line11 = f"#-                                  {red}Writen by Bobby & Fernando                                    {cyan}-#"
     line12 = f"####################################################################################################"
 
     lines = [line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12]
@@ -104,6 +104,21 @@ def name_player(player_class):
     line4 = '#' * len(player_class) + '#' * 30
 
     lines = [line1, line2, line3, line4]
+    
+    clear()
+    
+    for i in lines:
+        print(i)
+##-- This is for the main story line and to update the player what is happening --##
+##-- Needs work but we can come back to it when we get to adding story          --##
+
+def main_game_screen(story):
+
+    line1 = '#' * len(story) + '#' * 30
+    line2 = f'# {story} #'
+    line3 = '#' * len(story) + '#' * 30
+
+    lines = [line1, line2, line3]
     
     clear()
     
