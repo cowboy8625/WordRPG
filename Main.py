@@ -117,40 +117,58 @@ def char_creation():
     player_in_game = Player(player_name)
     main_game_loop()
 
-def main_game_loop():
+##-- This is for navigating the map --##
+
     
-    ##-- This is the starting loction --##
+
+##-- encounter is to handle if we fight or not --##
+
+def encounter():
+
+    random.randint(1, 6)
+
+def main_game_loop():
+    ##-- This is for navigating the map --##
     x = 1
     y = 1
-
-
     while True:
-        Screen.main_game_screen(InfoDics.story_line['Intro'])
+        try:
+            Screen.main_game_screen(InfoDics.story_line['Intro'])
 
-        move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\nInput a Number:>  ")
-        ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
-        if move_to == '1':  ##-- UP --##
-            y += 1
-            print(f"Location: {Map.map[(x, y)]['name']}")
-            input("Press Enter to continue: ")
-        
-        elif move_to == '2':  ##-- DOWN --##
-            y -+ 1
-            print(f"Location: {Map.map[(x, y)]['name']}")
+            move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n5): Quit\nInput a Number:>  ")
+            ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
+            if move_to == '1':  ##-- UP --##
+                y += 1
+                print(f"Location: {Map.map[(x, y)]['name']}")
+                input("Press Enter to continue: ")
+                encounter()
+            
+            elif move_to == '2':  ##-- DOWN --##
+                y -= 1
+                print(f"Location: {Map.map[(x, y)]['name']}")
+                input("Press Enter to continue: ")
+                encounter()
+
+            elif move_to == '3':  ##-- RIGHT --##
+                x += 1
+                print(f"Location: {Map.map[(x, y)]['name']}")
+                input("Press Enter to continue: ")
+                encounter()
+            
+            elif move_to == '4':  ##-- LEFT --##
+                x -= 1
+                print(f"Location: {Map.map[(x, y)]['name']}")
+                input("Press Enter to continue: ")
+                encounter()
+            
+            elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
+                break
+
+        except:
+            print("That is undiscover area. We best stay on the map.")
             input("Press Enter to continue: ")
 
-        elif move_to == '3':  ##-- RIGHT --##
-            x += 1
-            print(f"Location: {Map.map[(x, y)]['name']}")
-            input("Press Enter to continue: ")
-        
-        elif move_to == '4':  ##-- LEFT --##
-            x -= 1
-            print(f"Location: {Map.map[(x, y)]['name']}")
-            input("Press Enter to continue: ")
-        
-        elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
-            sys.exit()
+    
 
 
 
