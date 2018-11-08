@@ -1,0 +1,1 @@
+##-- This is for all the weapons, armor, potions or any other item type in the game --##
