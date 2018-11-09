@@ -130,7 +130,7 @@ def main_game_screen(story):
 ##-- This shows who is fighing and there stats --##
 
 def combat_screen(player, mob):
-
+    clear()
     width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
     print('#' * width)                              ##  How big the names or stats are
     print(f"#              {player.name}  -- VS --  {mob.name}               #")

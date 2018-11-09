@@ -216,27 +216,27 @@ def encounter():
         combat('animal')
     
     elif num is 2:
-        print("You came accoss some treaser")
+        Screen.main_game_screen("You came accoss some treaser")
         input("Press Enter to continue: ")
         main_game_loop()
 
     elif num is 3:
-        print("A mob attacks you!")
+        Screen.main_game_screen("A mob attacks you!")
         input("Press Enter to continue: ")
         combat('random mob')
 
     elif num is 4:
-        print("You see a person aproching! Do you hide?")
+        Screen.main_game_screen("You see a person aproching! Do you hide?")
         input("Press Enter to continue: ")
         main_game_loop()
 
     elif num is 5:
-        print('Some bandits attack you')
+        Screen.main_game_screen('Some bandits attack you')
         input("Press Enter to continue: ")
         combat('human')
 
     elif num is 6:
-        print(" This area is infested with blah blah")
+        Screen.main_game_screen(" This area is infested with blah blah")
         input("Press Enter to continue: ")
         main_game_loop()
 
@@ -258,10 +258,25 @@ def level_up(player):
     # print(f"Stamina: {player.stamina}")
     # print(f"Luck: {player.luck}")
 
-##-- This is to set up the fighting system
+##-- This is to set up the fighting system --##
 
 def combat(combat_choice):
 
+    def in_combat(player, mob): ##-- This will handle all the combat --##
+                                ##-- Takes to argument               --##
+        
+        turn = True ##-- If True it's the players turn --##
+        while True:
+
+            player_move = input('(1): Attack\n(2): Quit\nChoose A Number:> ')
+
+            if player_move == '1':
+                pass
+
+            elif player_move == '2':
+
+                sys.exit()
+        
     mob = Mobs.random_enemy(player_in_game.level)
     
     if combat_choice == 'random mob':
