@@ -2,16 +2,26 @@
 ##-- Made By Cowboy8625             --##
 ##-- Waste Land                     --##
 
-
 ##-- Import Modules --##
-import os, sys, random, time, cmd, textwrap
-import Screen
+import cmd
+import os
+import random
+import sys
+import textwrap
+import time
+
+##-- Custom Imports --##
 import InfoDics
 import Map
+import Screen
+import Mobs
+import Items
+import NPC
 
 ##-- Globel Varibles --##
 
 player_in_game = ''
+opening = True
 
 ##-- Clears PRint Screen --##
 
@@ -25,21 +35,86 @@ def clear():
 
 ##-- Setting up the players attubuts --##
 
-class Player:
+class Mage:
 
     def __init__(self, name):
         self.name = name
         self.level = 1
-        self.max_health = 100
-        self.heath = 100
+        self.max_health = 80
+        self.heath = 80
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 1
+        self.magic_attack = 10
+        self.mana = 25
+        self.stamina = 10
+        self.defense = 1
+        self.pures = 0
+        self.luck = 5
+
+class Warrior:
+    
+    def __init__(self, name):
+        self.name = name
+        self.level = 1
+        self.max_health = 150
+        self.heath = 150
+        self.armor = 10
+        self.melee_attack = 5
         self.magic_attack = 0
-        self.mama = 0
-        self.stamina = 0
-        self.deffence = 0
+        self.mana = 10
+        self.stamina = 20
+        self.defense = 1
         self.pures = 0
         self.luck = 0
+
+class Archer:
+    
+    def __init__(self, name):
+        self.name = name
+        self.level = 1
+        self.max_health = 80
+        self.heath = 80
+        self.armor = 5
+        self.melee_attack = 5
+        self.magic_attack = 5
+        self.mana = 15
+        self.stamina = 20
+        self.defense = 1
+        self.pures = 0
+        self.luck = 2
+
+class Assassin:
+    
+    def __init__(self, name):
+        self.name = name
+        self.level = 1
+        self.max_health = 50
+        self.heath = 50
+        self.armor = 5
+        self.melee_attack = 5
+        self.magic_attack = 0
+        self.mana = 10
+        self.stamina = 25
+        self.defense = 1
+        self.pures = 0
+        self.luck = 3
+
+##-- Inventory layout --##
+
+class Player:
+
+    def __init__(self):
+
+        self.can_carry = 10 
+        self.on_player = []
+
+    def add_to_inventory(self, add_item):
+
+        self.add_item = add_item
+
+    def remove_from_inv(self, remove_item):
+
+        self.remove_item = remove_item
 
 ##-- Main() is the first function --##
 ##-- Gets input from player to either Start Load Help or Exit --##
@@ -114,60 +189,155 @@ def char_creation():
             print("That's not an option.")
 
     player_name = input('\n\nENTER YOUR NAME:> ')
-    player_in_game = Player(player_name)
+    if player_options[num] == 'Mage':
+        player_in_game = Mage(player_name)
+
+    elif player_options[num] == 'Warrior':
+        player_in_game = Warrior(player_name)
+
+    elif player_options[num] == 'Archer':
+        player_in_game = Archer(player_name)
+
+    elif player_options[num] == 'Assassin':
+        player_in_game = Assassin(player_name)
+    
     main_game_loop()
 
-##-- This is for navigating the map --##
-
-    
 
 ##-- encounter is to handle if we fight or not --##
 
 def encounter():
+    print("\nin Encounter")
+    num = random.randint(1, 6)
 
-    random.randint(1, 6)
+    if num is 1:
+        print("You see a Deer/Animal.")
+        input("Press Enter to continue: ")
+        combat('animal')
+    
+    elif num is 2:
+        print("You came accoss some treaser")
+        input("Press Enter to continue: ")
+        main_game_loop()
+
+    elif num is 3:
+        print("A mob attacks you!")
+        input("Press Enter to continue: ")
+        combat('random mob')
+
+    elif num is 4:
+        print("You see a person aproching! Do you hide?")
+        input("Press Enter to continue: ")
+        main_game_loop()
+
+    elif num is 5:
+        print('Some bandits attack you')
+        input("Press Enter to continue: ")
+        combat('human')
+
+    elif num is 6:
+        print(" This area is infested with blah blah")
+        input("Press Enter to continue: ")
+        main_game_loop()
+
+##-- This Function is to level up the player --##
+
+def level_up(player):
+    
+
+    player.level += 1
+    player.max_health = player.max_health + player.level
+    player.armor = player.armor + player.level
+    player.mana = player.mana + player.level
+    player.stamina = player.stamina + player.level
+    player.luck = player.luck + player.level
+    # print(f"Level: {player.level}")
+    # print(f"Health: {player.max_health}")
+    # print(f"Armor: {player.armor}")
+    # print(f"Mana: {player.mana}")
+    # print(f"Stamina: {player.stamina}")
+    # print(f"Luck: {player.luck}")
+
+##-- This is to set up the fighting system
+
+def combat(combat_choice):
+
+    mob = Mobs.random_enemy(player_in_game.level)
+    
+    if combat_choice == 'random mob':
+        Screen.combat_screen(player_in_game, mob)
+        input("Press Enter to continue: ")
+        main_game_loop()
+        
+    elif combat_choice == 'animal':
+        Screen.combat_screen(player_in_game, mob)
+        input("Press Enter to continue: ")
+        main_game_loop()
+
+    elif combat_choice == 'human':
+        Screen.combat_screen(player_in_game, mob)
+        input("Press Enter to continue: ")
+        main_game_loop()
 
 def main_game_loop():
+    
     ##-- This is for navigating the map --##
+    global opening
     x = 1
     y = 1
-    while True:
-        try:
-            Screen.main_game_screen(InfoDics.story_line['Intro'])
 
-            move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n5): Quit\nInput a Number:>  ")
+    if opening == True:
+        Screen.main_game_screen(InfoDics.story_line['Intro'])
+        opening = False
+
+    while True:
+        
+        try:
+            #Screen.main_game_screen()
+            print(f"Location: {Map.map[(x, y)]['name']}")
+            move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
             ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
             if move_to == '1':  ##-- UP --##
-                y += 1
-                print(f"Location: {Map.map[(x, y)]['name']}")
-                input("Press Enter to continue: ")
-                encounter()
-            
-            elif move_to == '2':  ##-- DOWN --##
                 y -= 1
                 print(f"Location: {Map.map[(x, y)]['name']}")
                 input("Press Enter to continue: ")
                 encounter()
+                break
+            
+            elif move_to == '2':  ##-- DOWN --##
+                y += 1
+                print(f"Location: {Map.map[(x, y)]['name']}")
+                input("Press Enter to continue: ")
+                encounter()
+                break
 
             elif move_to == '3':  ##-- RIGHT --##
                 x += 1
                 print(f"Location: {Map.map[(x, y)]['name']}")
                 input("Press Enter to continue: ")
                 encounter()
+                break
             
             elif move_to == '4':  ##-- LEFT --##
                 x -= 1
                 print(f"Location: {Map.map[(x, y)]['name']}")
                 input("Press Enter to continue: ")
                 encounter()
+                break
             
             elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
                 break
 
-        except:
-            print("That is undiscover area. We best stay on the map.")
+        except Exception as e:
+            print(e)
+            print("That is undiscovered area, we best stay on the map.")
+            print("you have been teleported home")
+            y = 1
+            x = 1
+    
             input("Press Enter to continue: ")
 
+        clear()
     
 
 

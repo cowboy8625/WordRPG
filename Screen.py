@@ -3,6 +3,8 @@
 ##-- All Imports --##
 from colorama import init, Fore, Back, Style
 import os, time, sys
+import Mobs
+
 
 ##-- Font Colors --##
 
@@ -124,4 +126,49 @@ def main_game_screen(story):
     
     for i in lines:
         print(i)
+
+##-- This shows who is fighing and there stats --##
+
+def combat_screen(player, mob):
+
+    width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
+    print('#' * width)                              ##  How big the names or stats are
+    print(f"#              {player.name}  -- VS --  {mob.name}               #")
+    print('#' * (len(player.name) + len(mob.name) + 43))
+
+    left = f"{player.name}    "                                   ##  Left side is for player
+    right = f"    {mob.name}"                                     ##  Right side is for Enemy
+    line = left + ' ' * (width - (len(left) + len(right))) + right##  Line puts the Left and Right 
+                                                                  ##  Sides together and uses width
+    left1 = f"Level: {player.level}    "                          ##  varible to know how many space
+    right1 = f"    {mob.level} :Level"                            ##  to print
+    line1 = left1 + ' ' * (width - (len(left1) + len(right1))) + right1
+
+    left2 = f"Health: {player.max_health}    "
+    right2 = f"    {mob.max_health} :Health"
+    line2 = left2 + ' ' * (width - (len(left2) + len(right2))) + right2
+
+    left3 = f"Armor: {player.armor}    "
+    right3 = f"    {mob.armor} :Armor"
+    line3 = left3 + ' ' * (width - (len(left3) + len(right3))) + right3
+
+    left4 = f"Mana: {player.mana}    "
+    right4 = f"    {mob.mana} :Mana"
+    line4 = left4 + ' ' * (width - (len(left4) + len(right4))) + right4
+
+    left5 = f"Stamina: {player.stamina}    "
+    right5 = f"    {mob.stamina} :Stamina"
+    line5 = left5 + ' ' * (width - (len(left5) + len(right5))) + right5
+
+    left6 = f"Luck: {player.luck}    "
+    right6 = f"    {mob.luck} :Luck"
+    line6 = left6 + ' ' * (width - (len(left6) + len(right6))) + right6
+    
+    print(line)
+    print(line1)
+    print(line2)
+    print(line3)
+    print(line4)
+    print(line5)
+    print(line6)
 

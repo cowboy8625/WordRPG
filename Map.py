@@ -12,6 +12,7 @@
 3 | | 
 '''
 
+
 map = {
     (1,1): {'name': 'Forest', 'difficulty': 1},
     (1,2): {'name': 'Dark Forest', 'difficulty': 3},
