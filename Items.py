@@ -1,5 +1,17 @@
 ##-- This is for all the weapons, armor, potions or any other item type in the game --##
 
+items = {
+    'health_potion': {'hp_restore': 50,
+                      'mana_restore': 50
+                    }
+    }
+weapons = {'short_sword': {
+           'name': 'Rusty Short Sword', 'damage': 2
+                        }
+          
+    }
+armor = {}
+
 
 ##-- This class of weapons would be oriented to all player classes, but directed to the physicall classes. --##
 class White_Weapons:
@@ -51,3 +63,5 @@ class Items:
 
 Power_Ring = Items (10, 0, 2)
 Magic_Ring = Items (10, 10, 10)
+
+

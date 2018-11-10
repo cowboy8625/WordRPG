@@ -24,7 +24,10 @@ info_on_mobs = {
 }
 
 story_line = {
-"Intro": "Some cool intro to the story", 
+"Intro": "\tThere was smoke coming from over the hill......  That was stange to (PLAYER NAME GOES HERE) because it wasn't time for dinner and it was to hot to just have a\
+ fire going.  (PLAYER NAME GOES HERE)'s mind started to race thinking maybe the Bandits have come back?  No, no he gave them a good beating last time.  It was to far for\
+ him to run do to the large deer on his back.  He reasured him self that other men in the village would keep he village safe. But when (PLAYER NAME GOES HERE) finally made\
+ it over the hill he didn't believe his eye.........", 
 "Chapter 1": "Blah Blah Blah",
 "Chapter 2": "Blah Blah Blah"
 }

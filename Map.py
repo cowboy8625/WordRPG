@@ -4,12 +4,13 @@
 ##-- I would like to make amap generator             --##
 ##-- But we can work on that once the game functions --##
 '''
- 1 2 3
+ 1 2 3 x
 1 | | 
  -|-|-
 2 | | 
  -|-|-
 3 | | 
+y
 '''
 
 

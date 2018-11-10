@@ -1,10 +1,15 @@
 ##-- This module is to hadle all the print screens for the menus --##
 
-##-- All Imports --##
-from colorama import init, Fore, Back, Style
-import os, time, sys
-import Mobs
 
+##-- All Imports --##
+
+import os
+import sys
+import textwrap
+import time
+from colorama import Back, Fore, Style, init
+
+import Mobs
 
 ##-- Font Colors --##
 
@@ -33,27 +38,30 @@ def clear():
 
 def main_menu_screen():
     
-    first = light_red + 'WELECOME TO THE WASTE LAND'
-    num1 = green + '1'
-    num2 = green + '2'
-    num3 = green + '3'
-    num4 = green + '4'
-    start = yellow + 'START'
-    load = yellow + 'LOAD'
-    help = yellow + 'HELP'
-    quit = yellow + 'QUIT'
+    first = light_red + 'WELECOME TO THE WASTE LAND' + cyan
+    num1 = green + '1' + cyan
+    num2 = green + '2' + cyan
+    num3 = green + '3' + cyan
+    num4 = green + '4' + cyan
+    start = yellow + 'START' + cyan
+    load = yellow + 'LOAD' + cyan
+    help_ = yellow + 'HELP' + cyan
+    quit = yellow + 'QUIT' + cyan
+    l1 = red + "SELECT A NUMBER TO CONTINE" + cyan
+    l2 = red + "Copy Write 2018" + cyan
+    l3 = red + "Writen by Cowboy Gaming" + cyan
 
     line1 = f"{cyan}####################################################################################################"
-    line2 = f"#-                                   {first}                                   {cyan}-#"
+    line2 = f"#-                                   {first}                                   -#"
     line3 = "#-                                                                                                -#"
-    line4 = f"#-                                           ({num1}{cyan}): {start}                                           {cyan}-#"
-    line5 = f"#-                                           ({num2}{cyan}): {load}                                            {cyan}-#"
-    line6 = f"#-                                           ({num3}{cyan}): {help}                                            {cyan}-#"
-    line7 = f"#-                                           ({num4}{cyan}): {quit}                                            {cyan}-#"
+    line4 = f"#-                                           ({num1}): {start}                                           -#"
+    line5 = f"#-                                           ({num2}): {load}                                            -#"
+    line6 = f"#-                                           ({num3}): {help_}                                            -#"
+    line7 = f"#-                                           ({num4}): {quit}                                            -#"
     line8 = f"#-                                                                                                -#"
-    line9 = f"#-                                   {red}SELECT A NUMBER TO CONTINE                                   {cyan}-#"
-    line10 = f"#-                                       {red}Copy Write 2018                                          {cyan}-#"
-    line11 = f"#-                                  {red}Writen by Bobby & Fernando                                    {cyan}-#"
+    line9 = f"#-                                   {l1}                                   -#"
+    line10 = f"#-                                       {l2}                                          -#"
+    line11 = f"#-                                  {l3}                                       -#"
     line12 = f"####################################################################################################"
 
     lines = [line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12]
@@ -65,27 +73,30 @@ def main_menu_screen():
 
 def char_options():
 
-    first = light_red + 'SELECT A CLASS TO BE'
-    num1 = green + '1'
-    num2 = green + '2'
-    num3 = green + '3'
-    num4 = green + '4'
-    mage = yellow + 'MAGE'
-    warrior = yellow + 'WARRIOR'
-    archer = yellow + 'ARCHER'
-    assassin = yellow + 'ASSASSIN'
+    first = light_red + 'SELECT A CLASS TO BE' + cyan
+    num1 = green + '1' + cyan
+    num2 = green + '2' + cyan
+    num3 = green + '3' + cyan
+    num4 = green + '4' + cyan
+    mage = yellow + 'MAGE' + cyan
+    warrior = yellow + 'WARRIOR' + cyan
+    archer = yellow + 'ARCHER' + cyan
+    assassin = yellow + 'ASSASSIN' + cyan
+    l1 = red + "SELECT A NUMBER TO CONTINE OR" + cyan
+    l2 = red + "TYPE 'INFO' THEN SPACE AND A NUMBER, FOR INFORMATION ON CLASS" + cyan
+    l3 = red + "EXSAMPLE: INFO 1" + cyan
 
     line1 = f"{cyan}####################################################################################################"
-    line2 = f"#-                                       {first}                                     {cyan}-#"
+    line2 = f"#-                                       {first}                                     -#"
     line3 = "#-                                                                                                -#"
-    line4 = f"#-                                           ({num1}{cyan}): {mage}                                            {cyan}-#"
-    line5 = f"#-                                           ({num2}{cyan}): {warrior}                                         {cyan}-#"
-    line6 = f"#-                                           ({num3}{cyan}): {archer}                                          {cyan}-#"
-    line7 = f"#-                                           ({num4}{cyan}): {assassin}                                        {cyan}-#"
+    line4 = f"#-                                           ({num1}): {mage}                                            -#"
+    line5 = f"#-                                           ({num2}): {warrior}                                         -#"
+    line6 = f"#-                                           ({num3}): {archer}                                          -#"
+    line7 = f"#-                                           ({num4}): {assassin}                                        -#"
     line8 = f"#-                                                                                                -#"
-    line9 = f"#-                                   {red}SELECT A NUMBER TO CONTINE OR                                {cyan}-#"
-    line10 = f"#-                     {red}TYPE 'INFO' THEN SPACE AND A NUMBER, FOR INFORMATION ON CLASS              {cyan}-#"
-    line11 = f"#-                                           {red}EXSAMPLE: INFO 1                                     {cyan}-#"
+    line9 = f"#-                                   {l1}                                -#"
+    line10 = f"#-                     {l2}              -#"
+    line11 = f"#-                                           {l3}                                     -#"
     line12 = f"####################################################################################################"
 
     lines = [line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12]
@@ -172,3 +183,27 @@ def combat_screen(player, mob):
     print(line5)
     print(line6)
 
+def display(on_screen):
+    
+    width = 44  ##-- max width is 208
+    
+    side = round(((width/2)/2)-1)
+    middle = round(width / 2)
+    top_bottom = '#' * width
+    space = '#' + ' ' * (width - 2) +'#' 
+    center_text = textwrap.wrap(on_screen, middle)
+
+    left = '#' + (' ' * side)
+    right = (' ' * side) + '#'
+
+    clear()
+    print(cyan + top_bottom)
+    print(space)
+    print(space)
+
+    for i in center_text:
+        print(cyan + left + white + i + cyan + ' ' * (middle - len(i)) + right)
+    
+    print(space)
+    print(space)
+    print(top_bottom)

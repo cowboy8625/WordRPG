@@ -13,7 +13,7 @@ class Zombie:
 
         self.name = 'Zombie'
         self.max_health = 100 
-        self.heath = 100 
+        self.health = 100 
         self.level = 1
         self.armor = 0
         self.melee_attack = 0
@@ -32,7 +32,7 @@ class Skeleton:
 
         self.name = 'Skeleton'
         self.max_health = 100
-        self.heath = 120
+        self.health = 120
         self.level = 1
         self.armor = 0
         self.melee_attack = 0
@@ -51,7 +51,7 @@ class Golem:
         
         self.name = 'Golem'
         self.max_health = 250
-        self.heath = 250
+        self.health = 250
         self.level = 1
         self.armor = 0
         self.melee_attack = 0
@@ -70,7 +70,7 @@ class Witch:
         
         self.name = 'Witch'
         self.max_health = 100
-        self.heath = 100
+        self.health = 100
         self.level = 1
         self.armor = 0
         self.melee_attack = 0
@@ -90,7 +90,7 @@ class HellHounds:
         
         self.name = 'Hell Hound'
         self.max_health = 80
-        self.heath = 80
+        self.health = 80
         self.level = 1
         self.armor = 0
         self.melee_attack = 0
