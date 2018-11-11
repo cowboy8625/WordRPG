@@ -16,7 +16,7 @@ class Zombie:
         self.health = 100 
         self.level = 1
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 3
         self.magic_attack = 0
         self.mana = 0
         self.stamina = 0
@@ -35,7 +35,7 @@ class Skeleton:
         self.health = 120
         self.level = 1
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 5
         self.magic_attack = 0
         self.mana = 0
         self.stamina = 0
@@ -54,7 +54,7 @@ class Golem:
         self.health = 250
         self.level = 1
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 4
         self.magic_attack = 0
         self.mana = 0
         self.stamina = 0
@@ -73,7 +73,7 @@ class Witch:
         self.health = 100
         self.level = 1
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 7
         self.magic_attack = 50
         self.mana = 0
         self.stamina = 0
@@ -93,7 +93,7 @@ class HellHounds:
         self.health = 80
         self.level = 1
         self.armor = 0
-        self.melee_attack = 0
+        self.melee_attack = 6
         self.magic_attack = 0
         self.mana = 0
         self.stamina = 0
@@ -131,6 +131,7 @@ def level_up(mob):
 
     mob.level += 1
     mob.max_health = mob.max_health + mob.level
+    mob.health = mob.max_health
     mob.armor = mob.armor + mob.level
     mob.mana = mob.mana + mob.level
     mob.stamina = mob.stamina + mob.level

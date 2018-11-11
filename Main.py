@@ -12,6 +12,7 @@ import time
 
 ##-- Custom Imports --##
 import InfoDics
+import Story
 import Map
 import Screen
 import Mobs
@@ -21,10 +22,13 @@ import NPC
 ##-- Globel Varibles --##
 
 player_in_game = ''
+mob = ''
 opening = True ##-- Only True if hasnt seen opening story --##
-turn = True  ##-- If True it's the players turn --##
-x = 1
-y = 3
+turn = True    ##-- If True it's the players turn         --##
+x = 1          ##-- Y Coords --##
+y = 3          ##-- X Coords --##
+
+
 
 ##-- Clears PRint Screen --##
 
@@ -192,6 +196,13 @@ def char_creation():
             print("That's not an option.")
 
     player_name = input('\n\nENTER YOUR NAME:> ')
+    while len(player_name) == 0:
+        player_name = input('\n\nENTER YOUR NAME:> ')
+
+        if len(player_name) == 0:
+            print("You need a name!")
+            input("\nEnter to continue:> ")
+    
     if player_options[num] == 'Mage':
         player_in_game = Mage(player_name)
 
@@ -206,39 +217,52 @@ def char_creation():
     
     main_game_loop()
 
+##-- Makes a random mob with in the range of the players level --##
+
+
+def random_enemy():
+    global mob
+    mob = Mobs.random_enemy(player_in_game.level)
 
 ##-- encounter is to handle if we fight or not --##
 
 def encounter():
     
     num = random.randint(1, 6)
+    random_enemy()
 
     if num is 1:
+        clear()
         Screen.display("You see a Deer/Animal.")
         input("Press Enter to continue: ")
-        combat('animal')
+        combat()
     
     elif num is 2:
+        clear()
         Screen.display("You came accoss some treaser")
         input("Press Enter to continue: ")
         main_game_loop()
 
     elif num is 3:
+        clear()
         Screen.display("A mob attacks you!")
         input("Press Enter to continue: ")
-        combat('random mob')
+        combat()
 
     elif num is 4:
+        clear()
         Screen.display("You see a person aproching! Do you hide?")
         input("Press Enter to continue: ")
         main_game_loop()
 
     elif num is 5:
+        clear()
         Screen.display('Some bandits attack you')
         input("Press Enter to continue: ")
-        combat('human')
+        combat()
 
     elif num is 6:
+        clear()
         Screen.display(" This area is infested with blah blah")
         input("Press Enter to continue: ")
         main_game_loop()
@@ -254,59 +278,90 @@ def level_up(player):
     player.mana = player.mana + player.level
     player.stamina = player.stamina + player.level
     player.luck = player.luck + player.level
-    # print(f"Level: {player.level}")
-    # print(f"Health: {player.max_health}")
-    # print(f"Armor: {player.armor}")
-    # print(f"Mana: {player.mana}")
-    # print(f"Stamina: {player.stamina}")
-    # print(f"Luck: {player.luck}")
+
 
 ##-- This is to set up the fighting system --##
 
-def combat(combat_choice):
-    m = []
+def combat():
+    #clear()
 
-    mob = Mobs.random_enemy(player_in_game.level)
-    m.append(mob)
+    Screen.vs_screen(player_in_game, mob)
+    Screen.stat_screen(player_in_game, mob)
+    option = input('\n(1): Attack\n(2): Use Item\n(3): Run\nChoose A Number:> ')
 
-    def in_combat(player, mob): ##-- This will handle all the combat --##
-                                ##-- Takes to argument               --## 
-        global turn ##-- If True it's the players turn --##
-        while True:
-            Screen.combat_screen(player_in_game, m[0])
-            player_move = input('\n\n(1): Melee Attack\n(2): Magic Attack\n(3): Run\nChoose A Number:> ')
+    if option == '1':
+        attack()
 
-            if player_move == '1':  ##-- Handles Melee Attacks
-                attacker = player.melee_attack + player_inventory.in_hand
-                deffender = mob.defense - mob.armor
+    elif option == '2':
+        use_item()
 
-                mob.health -= attacker - deffender
+    elif option =='3':
+        run()
 
-            elif player_move == '2':        ##-- Handles Magic Attacks --##
-                attacker = player.magic_attack + player_inventory.in_hand
-                deffender = mob.defense - mob.armor
+def attack():
 
-                mob.health -= attacker - deffender           
+    player_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand)
+    enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
+    clear()
+    Screen.vs_screen(player_in_game, mob)
+    Screen.stat_screen(player_in_game, mob)
+    if player_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
+        print('\nYou Missed!')
+    else:
+        mob.health -= player_attack
+        clear()       
+        print(f'\nYou just dealed {player_attack} damage.')
 
-            elif player_move == '3':
-
-                sys.exit()
-        
+    input('\nPess Enter To Continue:> ')
+    if mob.health <= 0:
+        win()
     
-    if combat_choice == 'random mob':
-        in_combat(player_in_game, m[0])
-        input("Press Enter to continue: ")
-        main_game_loop()
-        
-    elif combat_choice == 'animal':
-        in_combat(player_in_game, m[0])
-        input("Press Enter to continue: ")
-        main_game_loop()
+    if enemy_attack == round(mob.melee_attack / 2):  ##--  Mob Attack --##
+        clear()
+        print(f'\n{mob.name} missed!')
+    else:
+        player_in_game.health -= enemy_attack
+        clear()
+        print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+    input('\nPess Enter To Continue:> ')
+    if player_in_game.health <= 0:
+        dead()
+    else:
+        combat()
+    
+def use_item():
+    pass
 
-    elif combat_choice == 'human':
-        in_combat(player_in_game, m[0])
-        input("Press Enter to continue: ")
+def run():
+    running = random.randint(1, 3)
+    if running == 1:
+        clear()
+        print("You have successfully ran away!")
+        input('\nPess Enter To Continue:> ')
         main_game_loop()
+    else:
+        clear()
+        print("You Failed To Get Away!")
+        input('\nPess Enter To Continue:> ')
+    enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
+    if enemy_attack == round(mob.melee_attack / 2):
+        clear()
+        print(f'\n{mob.name} missed!')
+    else:
+        player_in_game.health -= enemy_attack
+        clear()
+        print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+    input('\nPess Enter To Continue:> ')
+    if player_in_game.health <= 0:
+        dead()
+    else:
+        combat()
+
+def win():
+    pass
+
+def dead():
+    pass
 
 def main_game_loop():
     
@@ -314,7 +369,8 @@ def main_game_loop():
     global opening, x, y
 
     if opening == True:
-        Screen.display(InfoDics.story_line['Intro'])
+        Story.intro_story(player_in_game.name)
+        #Screen.display(InfoDics.story_line['Intro'])
         input("Press Enter to continue: ")
         opening = False
 
@@ -366,10 +422,9 @@ def main_game_loop():
         input("Press Enter to continue: ")
 
         clear()
-    
-
-
-
-
-
+# player_in_game = Warrior('Quoth')
+# random_enemy()
+# print(mob.name, mob.health)
+# mob.health -= (player_in_game.melee_attack + player_inventory.in_hand)
+# print(mob.name, mob.health)
 main()

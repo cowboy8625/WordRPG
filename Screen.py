@@ -9,7 +9,6 @@ import textwrap
 import time
 from colorama import Back, Fore, Style, init
 
-import Mobs
 
 ##-- Font Colors --##
 
@@ -23,6 +22,24 @@ blue = Fore.BLUE
 magenta = Fore.MAGENTA
 light_red = Fore.LIGHTRED_EX
 cyan = Fore.CYAN
+
+class Blank:
+
+    def __init__(self):
+
+        self.name = ' '
+        self.max_health = 0 
+        self.health = 0 
+        self.level = 0
+        self.armor = 0
+        self.melee_attack = 0
+        self.magic_attack = 0
+        self.mana = 0
+        self.stamina = 0
+        self.defense = 0 
+        self.pures = 0
+        self.luck = 0
+filler = Blank()
 
 ##-- Clear Function --##
 
@@ -123,7 +140,7 @@ def name_player(player_class):
     for i in lines:
         print(i)
 ##-- This is for the main story line and to update the player what is happening --##
-##-- Needs work but we can come back to it when we get to adding story          --##
+##-- Needs work but we can come back to it when we get to adding story          --## NOT IN USE
 
 def main_game_screen(story):
 
@@ -140,12 +157,17 @@ def main_game_screen(story):
 
 ##-- This shows who is fighing and there stats --##
 
-def combat_screen(player, mob):
-    clear()
+def vs_screen(player, mob=filler, width=44):
     width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
     print('#' * width)                              ##  How big the names or stats are
     print(f"#              {player.name}  -- VS --  {mob.name}               #")
     print('#' * (len(player.name) + len(mob.name) + 43))
+
+
+
+def stat_screen(player, mob=filler, width=44):
+
+    width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
 
     left = f"{player.name}    "                                   ##  Left side is for player
     right = f"    {mob.name}"                                     ##  Right side is for Enemy
@@ -155,8 +177,8 @@ def combat_screen(player, mob):
     right1 = f"    {mob.level} :Level"                            ##  to print
     line1 = left1 + ' ' * (width - (len(left1) + len(right1))) + right1
 
-    left2 = f"Health: {player.max_health}    "
-    right2 = f"    {mob.max_health} :Health"
+    left2 = f"Health: {player.max_health}\\{player.health}    "
+    right2 = f"    {mob.health}//{mob.max_health} :Health"
     line2 = left2 + ' ' * (width - (len(left2) + len(right2))) + right2
 
     left3 = f"Armor: {player.armor}    "
@@ -183,9 +205,9 @@ def combat_screen(player, mob):
     print(line5)
     print(line6)
 
-def display(on_screen):
+def display(on_screen, width=44):
     
-    width = 44  ##-- max width is 208
+    ##-- width = 44 max width is 208 --##
     
     side = round(((width/2)/2)-1)
     middle = round(width / 2)
@@ -207,3 +229,6 @@ def display(on_screen):
     print(space)
     print(space)
     print(top_bottom)
+
+
+
