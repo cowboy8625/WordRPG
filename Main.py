@@ -20,9 +20,11 @@ import Items
 import NPC
 
 ##-- Globel Varibles --##
-
-player_in_game = ''
-mob = ''
+player_name = 'X'
+player_class_choice = 'X'
+player_in_game = 'X'
+mob = 'X'
+gender = 'X'
 opening = True ##-- Only True if hasnt seen opening story --##
 turn = True    ##-- If True it's the players turn         --##
 x = 1          ##-- Y Coords --##
@@ -48,7 +50,7 @@ class PlayerInventory:
 
         self.can_carry = 10 
         self.on_player = []
-        self.in_hand = Items.weapons['short_sword']['damage']
+        self.in_hand = ''
 
     def add_to_inventory(self, add_item):
 
@@ -72,7 +74,9 @@ class Mage:
 
     def __init__(self, name):
         self.name = name
+        self.player_class = 'Mage'
         self.level = 1
+        self.exp = 0
         self.max_health = 80
         self.health = 80
         self.armor = 0
@@ -88,7 +92,9 @@ class Warrior:
     
     def __init__(self, name):
         self.name = name
+        self.player_class = 'Warrior'
         self.level = 1
+        self.exp = 0
         self.max_health = 150
         self.health = 150
         self.armor = 10
@@ -104,7 +110,9 @@ class Archer:
     
     def __init__(self, name):
         self.name = name
+        self.player_class = 'Archer'
         self.level = 1
+        self.exp = 0
         self.max_health = 80
         self.health = 80
         self.armor = 5
@@ -120,7 +128,9 @@ class Assassin:
     
     def __init__(self, name):
         self.name = name
+        self.player_class = 'Assassin'
         self.level = 1
+        self.exp = 0
         self.max_health = 50
         self.health = 50
         self.armor = 5
@@ -137,23 +147,26 @@ class Assassin:
 
 def main():
     
-    while True:
-        Screen.main_menu_screen()
-        choice = input('\n\nChoose a number:> ')
-        
-        if choice == '1':
-            char_creation()
-            break
-        
-        elif choice == '2':
-            print('NOT AN OPTION YET')
-            time.sleep(2)
+    Screen.main_menu_screen()
+    choice = input('\n\nSELECT A NUMBER:> ')
+    
+    if choice == '1':
+        char_creation()
+    
+    elif choice == '2':
+        print('NOT AN OPTION YET') ##-- LOADED AND SAVE --##
+        time.sleep(2)
+        main()
 
-        elif choice == '3':
-            game_help()
+    elif choice == '3':
+        game_help()
 
-        elif choice == '4':
-            sys.exit()
+    elif choice == '4':
+        sys.exit()
+    else:
+        print("Not an Option.")
+        input("Press Enter to Continue:> ")
+        main()
 
 ##-- Helps player know what to do --##
 
@@ -163,58 +176,88 @@ def game_help():
 ##-- This is where the player chooses what class he will be --##
 
 def char_creation():
-    
     global player_in_game
-    player_options = ['Mage', 'Warrior', 'Archer', 'Assassin']
-    
-    while True:
+    def name_player():
+        global player_name
         
-        Screen.char_options()
-        
-        try:
+        message = f"A {player_class_choice} is a good choice I think. What shall shall I call you?"
+        Screen.display(message)
+        option = input("\n\nENTER YOUR NAME:> ")
+
+        if len(option) == 0:
+            print('\nYou need to enter a name to continue\n')
+            name_player()
+        else:
+            option1 = input("Are you Sure You Want To Keep This Name?\
+             \n(1): Yes\n(2): No\n Enter A Number:> ")
             
-            choice = input('\n\nSELECT A NUMBER OR TYPE HELP:> ')
+            if option1 == '1':
+                player_name = option
+            else:
+                name_player()
 
-            if choice[0] in '1234':
-                num = int(choice[0]) - 1
-                Screen.name_player(player_options[num])
-                break
-
-            elif choice[0].lower() == 'i':
-                clear()
-                try:
-                    lore = InfoDics.info_on_classes[player_options[int(choice[5])-1]] ##-- lore is the story and it is found in InfoDics --##
-  
-                    Screen.display(lore)
-                            
-                    input("\n\nPress Enter to Continue:> ")
-                    continue
-                except:
-                    print("Invaled Command")
-
-        except:
-            print("That's not an option.")
-
-    player_name = input('\n\nENTER YOUR NAME:> ')
-    while len(player_name) == 0:
-        player_name = input('\n\nENTER YOUR NAME:> ')
-
-        if len(player_name) == 0:
-            print("You need a name!")
-            input("\nEnter to continue:> ")
+    def gender_call():
     
-    if player_options[num] == 'Mage':
+        global gender
+
+        message = f"{player_name} the {player_class_choice}, has a nice ring to\
+         it I think. I know it is obvious but just let me know what gender you are."
+ 
+        Screen.display(message)
+        option = input('\n\n(1): Male\n(2): Female\nEnter A Number:> ')
+        if option == '1':
+            gender = 'male'
+
+        elif option == '2':
+            gender = 'female'
+        
+        else:
+            gender_call()
+    
+    def class_selection():
+        global player_class_choice
+        player_options = ('Mage', 'Warrior', 'Archer', 'Assassin')
+        Screen.char_options()
+
+        choice = input('\n\nSELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
+
+        if choice == '1':
+            player_class_choice = player_options[int(choice)-1]
+        elif choice == '2':
+            player_class_choice = player_options[int(choice)-1]
+        elif choice == '3':
+            player_class_choice = player_options[int(choice)-1]
+        elif choice == '4':
+            player_class_choice = player_options[int(choice)-1]
+        ##-- lore is the story and it is found in InfoDics --##
+        elif choice[0:4].lower() == 'help': 
+            lore = InfoDics.info_on_classes[player_options[int(choice[5])-1]] 
+            Screen.display(lore)      
+            input("\n\nPress Enter to Continue:> ")
+        else:
+            print("Not An Option.")
+            class_selection()
+
+    class_selection()
+    name_player()
+
+    if player_class_choice == 'Mage':  ##-- Mage --##
         player_in_game = Mage(player_name)
-
-    elif player_options[num] == 'Warrior':
+        player_inventory.in_hand = Items.staff['weak_staff']
+        
+    elif player_class_choice == 'Warrior':  ##-- Warrior --##
         player_in_game = Warrior(player_name)
+        player_inventory.in_hand = Items.swords['rusty_short_sword']
 
-    elif player_options[num] == 'Archer':
+    elif player_class_choice == 'Archer':  ##-- Archer --##
         player_in_game = Archer(player_name)
+        player_inventory.in_hand = Items.bow['common_hunting_bow']
 
-    elif player_options[num] == 'Assassin':
+    elif player_class_choice == 'Assassin': ##-- Assassin --##
         player_in_game = Assassin(player_name)
-    
+        player_inventory.in_hand = Items.staff['rusty_dagger']
+
+    gender_call()            
     main_game_loop()
 
 ##-- Makes a random mob with in the range of the players level --##
@@ -287,48 +330,83 @@ def combat():
 
     Screen.vs_screen(player_in_game, mob)
     Screen.stat_screen(player_in_game, mob)
-    option = input('\n(1): Attack\n(2): Use Item\n(3): Run\nChoose A Number:> ')
+    option = input('\n(1): Attack\n(2): Magic\n(3): Use Item\n(4): Run\nChoose A Number:> ')
 
     if option == '1':
         attack()
 
     elif option == '2':
+        magic()
+
+    elif option == '3':
         use_item()
 
-    elif option =='3':
+    elif option =='4':
         run()
 
 def attack():
 
-    player_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand)
+    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand['melee_damage'])
+    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.in_hand['magic_damage'])    
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
     Screen.stat_screen(player_in_game, mob)
-    if player_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
-        print('\nYou Missed!')
-    else:
-        mob.health -= player_attack
-        clear()       
-        print(f'\nYou just dealed {player_attack} damage.')
+    attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
+    if attack_type == '1':
+        if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
+            print(f"\n{player_in_game.name} {player_inventory.in_hand['action']}")  ##-- finish me --#############################
+        else:
+            mob.health -= player_melee_attack
+            clear()       
+            print(f'\nYou just dealed {player_melee_attack} damage.')
 
-    input('\nPess Enter To Continue:> ')
-    if mob.health <= 0:
-        win()
+        input('\nPess Enter To Continue:> ')
+        if mob.health <= 0:
+            win()
+        
+        if enemy_attack == round(mob.melee_attack / 2):  ##--  Mob Attack --##
+            clear()
+            print(f'\n{mob.name} missed!')
+        else:
+            player_in_game.health -= enemy_attack
+            clear()
+            print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+        input('\nPess Enter To Continue:> ')
+        if player_in_game.health <= 0:
+            dead()
+        else:
+            combat()
     
-    if enemy_attack == round(mob.melee_attack / 2):  ##--  Mob Attack --##
-        clear()
-        print(f'\n{mob.name} missed!')
-    else:
-        player_in_game.health -= enemy_attack
-        clear()
-        print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
-    input('\nPess Enter To Continue:> ')
-    if player_in_game.health <= 0:
-        dead()
-    else:
-        combat()
-    
+    elif attack_type == '2':
+
+        if player_magic_attack == player_in_game.magic_attack / 2: ##-- Player Attack --##
+            print('\nYou Missed!')
+        else:
+            mob.health -= player_magic_attack
+            clear()       
+            print(f'\nYou just dealed {player_magic_attack} damage.')
+
+        input('\nPess Enter To Continue:> ')
+        if mob.health <= 0:
+            win()
+        
+        if enemy_attack == round(mob.magic_attack / 2):  ##--  Mob Attack --##
+            clear()
+            print(f'\n{mob.name} missed!')
+        else:
+            player_in_game.health -= enemy_attack
+            clear()
+            print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+        input('\nPess Enter To Continue:> ')
+        if player_in_game.health <= 0:
+            dead()
+        else:
+            combat()
+
+def magic():
+    pass
+
 def use_item():
     pass
 
@@ -358,10 +436,17 @@ def run():
         combat()
 
 def win():
-    pass
+    clear()
+    player_in_game.pures += mob.pures
+    player_in_game.exp += mob.exp_gained
+    message = f"You just defeated a {mob.name}\nGold Looted: {mob.pures}\nEXP Gained: {mob.exp_gained}"
+    print(message)
+    input('\nPess Enter To Continue:> ')
+    main_game_loop()
+
 
 def dead():
-    pass
+    print('You have died from {mob.name}')
 
 def main_game_loop():
     

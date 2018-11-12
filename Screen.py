@@ -169,13 +169,17 @@ def stat_screen(player, mob=filler, width=44):
 
     width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
 
-    left = f"{player.name}    "                                   ##  Left side is for player
-    right = f"    {mob.name}"                                     ##  Right side is for Enemy
+    left = f"{player.player_class}    "                                   ##  Left side is for player
+    right = f"    {mob.mob_class}"                                     ##  Right side is for Enemy
     line = left + ' ' * (width - (len(left) + len(right))) + right##  Line puts the Left and Right 
                                                                   ##  Sides together and uses width
     left1 = f"Level: {player.level}    "                          ##  varible to know how many space
     right1 = f"    {mob.level} :Level"                            ##  to print
     line1 = left1 + ' ' * (width - (len(left1) + len(right1))) + right1
+
+    left7 = f"Exp: {player.exp}    "
+    right7 =  f"    {mob.exp_gained} :Exp Drop"
+    line7 = left7 + ' ' * (width - (len(left7) + len(right7))) + right7
 
     left2 = f"Health: {player.max_health}\\{player.health}    "
     right2 = f"    {mob.health}//{mob.max_health} :Health"
@@ -199,6 +203,7 @@ def stat_screen(player, mob=filler, width=44):
     
     print(line)
     print(line1)
+    print(line7)
     print(line2)
     print(line3)
     print(line4)

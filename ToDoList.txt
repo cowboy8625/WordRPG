@@ -1,0 +1,12 @@
+1) Add Quest for player.
+
+2) Add logic so the game knows if the player is in a town so you have 
+    a new option appear in screen with your movment that ask you if you 
+    want to go to the store to buy, food, potions, weapons, armor, other
+    stuff.
+
+3) More Animals
+
+4) Add a way to change the gender in the store to suit the player
+
+For now that is all I can think of but I will add more as I go.
