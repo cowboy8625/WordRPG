@@ -13,6 +13,7 @@ class Zombie:
 
         self.name = 'Zombie'
         self.mob_class = 'Undead'
+        self.in_hand = 'No Weapon'
         self.max_health = 100 
         self.health = 100 
         self.level = 1
@@ -34,6 +35,7 @@ class Skeleton:
 
         self.name = 'Skeleton'
         self.mob_class = 'Undead'
+        self.in_hand = 'No Weapon'
         self.max_health = 100
         self.health = 120
         self.level = 1
@@ -55,6 +57,7 @@ class Golem:
         
         self.name = 'Golem'
         self.mob_class = 'Elemental'
+        self.in_hand = 'No Weapon'
         self.max_health = 250
         self.health = 250
         self.level = 1
@@ -76,6 +79,7 @@ class Witch:
         
         self.name = 'Witch'
         self.mob_class = 'Human'
+        self.in_hand = 'No Weapon'
         self.max_health = 100
         self.health = 100
         self.level = 1
@@ -98,6 +102,7 @@ class HellHounds:
         
         self.name = 'Hell Hound'
         self.mob_class = 'Elemental'
+        self.in_hand = 'No Weapon'
         self.max_health = 80
         self.health = 80
         self.level = 1

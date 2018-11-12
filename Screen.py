@@ -165,9 +165,13 @@ def vs_screen(player, mob=filler, width=44):
 
 
 
-def stat_screen(player, mob=filler, width=44):
+def stat_screen(player, inv, mob=filler, width=44):
 
     width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
+
+    left_in_hand = f"Wielding: {inv.in_hand['name']}    "
+    right_in_hand = f"    {mob.in_hand} :Wielding"
+    line_in_hand = left_in_hand + ' ' * (width - (len(left_in_hand) + len(right_in_hand))) + right_in_hand
 
     left = f"{player.player_class}    "                                   ##  Left side is for player
     right = f"    {mob.mob_class}"                                     ##  Right side is for Enemy
@@ -182,7 +186,7 @@ def stat_screen(player, mob=filler, width=44):
     line7 = left7 + ' ' * (width - (len(left7) + len(right7))) + right7
 
     left2 = f"Health: {player.max_health}\\{player.health}    "
-    right2 = f"    {mob.health}//{mob.max_health} :Health"
+    right2 = f"    {mob.health}/{mob.max_health} :Health"
     line2 = left2 + ' ' * (width - (len(left2) + len(right2))) + right2
 
     left3 = f"Armor: {player.armor}    "
@@ -201,7 +205,9 @@ def stat_screen(player, mob=filler, width=44):
     right6 = f"    {mob.luck} :Luck"
     line6 = left6 + ' ' * (width - (len(left6) + len(right6))) + right6
     
+    
     print(line)
+    print(line_in_hand)
     print(line1)
     print(line7)
     print(line2)

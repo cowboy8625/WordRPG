@@ -159,7 +159,9 @@ def main():
         main()
 
     elif choice == '3':
-        game_help()
+        print('NOT AN OPTION YET') ##-- Help  --##
+        time.sleep(2)
+        main()
 
     elif choice == '4':
         sys.exit()
@@ -213,6 +215,7 @@ def char_creation():
         
         else:
             gender_call()
+        Story.set_gender(gender)
     
     def class_selection():
         global player_class_choice
@@ -234,6 +237,7 @@ def char_creation():
             lore = InfoDics.info_on_classes[player_options[int(choice[5])-1]] 
             Screen.display(lore)      
             input("\n\nPress Enter to Continue:> ")
+            class_selection()
         else:
             print("Not An Option.")
             class_selection()
@@ -244,7 +248,7 @@ def char_creation():
     if player_class_choice == 'Mage':  ##-- Mage --##
         player_in_game = Mage(player_name)
         player_inventory.in_hand = Items.staff['weak_staff']
-        
+
     elif player_class_choice == 'Warrior':  ##-- Warrior --##
         player_in_game = Warrior(player_name)
         player_inventory.in_hand = Items.swords['rusty_short_sword']
@@ -326,10 +330,10 @@ def level_up(player):
 ##-- This is to set up the fighting system --##
 
 def combat():
-    #clear()
 
+    clear()
     Screen.vs_screen(player_in_game, mob)
-    Screen.stat_screen(player_in_game, mob)
+    Screen.stat_screen(player_in_game, player_inventory, mob)
     option = input('\n(1): Attack\n(2): Magic\n(3): Use Item\n(4): Run\nChoose A Number:> ')
 
     if option == '1':
@@ -351,7 +355,7 @@ def attack():
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
-    Screen.stat_screen(player_in_game, mob)
+    Screen.stat_screen(player_in_game,player_inventory, mob)
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
         if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
@@ -446,7 +450,7 @@ def win():
 
 
 def dead():
-    print('You have died from {mob.name}')
+    print(f'You have died from {mob.name}')
 
 def main_game_loop():
     
@@ -459,57 +463,35 @@ def main_game_loop():
         input("Press Enter to continue: ")
         opening = False
 
-    while True:
-        
-        try:
-            
-            Screen.display(f"Location: {Map.map[(x, y)]['name']}")
-            move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
-            ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
-            if move_to == '1':  ##-- UP --##
-                y -= 1
-                print(f"Location: {Map.map[(x, y)]['name']}")
-                input("Press Enter to continue: ")
-                encounter()
-                break
-            
-            elif move_to == '2':  ##-- DOWN --##
-                y += 1
-                print(f"Location: {Map.map[(x, y)]['name']}")
-                input("Press Enter to continue: ")
-                encounter()
-                break
-
-            elif move_to == '3':  ##-- RIGHT --##
-                x += 1
-                print(f"Location: {Map.map[(x, y)]['name']}")
-                input("Press Enter to continue: ")
-                encounter()
-                break
-            
-            elif move_to == '4':  ##-- LEFT --##
-                x -= 1
-                print(f"Location: {Map.map[(x, y)]['name']}")
-                input("Press Enter to continue: ")
-                encounter()
-                break
-            
-            elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
-                break
-
-        except Exception as e:
-            print(e)
-            print("That is undiscovered area, we best stay on the map.")
-            print("you have been teleported home")
-            y = 1
-            x = 1
+    Screen.display(f"Location: {Map.map[(x, y)]['name']}")
+    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
+    ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
+    if move_to == '1':  ##-- UP --##
+        y -= 1
+        encounter()
     
-        input("Press Enter to continue: ")
+    elif move_to == '2':  ##-- DOWN --##
+        y += 1
+        encounter()
 
-        clear()
-# player_in_game = Warrior('Quoth')
-# random_enemy()
-# print(mob.name, mob.health)
-# mob.health -= (player_in_game.melee_attack + player_inventory.in_hand)
-# print(mob.name, mob.health)
+    elif move_to == '3':  ##-- RIGHT --##
+        x += 1
+        encounter()
+    
+    elif move_to == '4':  ##-- LEFT --##
+        x -= 1
+        encounter()
+    
+    elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
+        sys.exit()
+
+    else:
+        print("That is undiscovered area, we best stay on the map.")
+        print("you have been teleported home")
+        y = 1
+        x = 1
+        input("Press Enter to continue: ")
+        main_game_loop()
+    
+
 main()
