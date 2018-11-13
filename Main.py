@@ -20,19 +20,19 @@ import Items
 import NPC
 
 ##-- Globel Varibles --##
-player_name = 'X'
-player_class_choice = 'X'
-player_in_game = 'X'
-mob = 'X'
-gender = 'X'
-opening = True ##-- Only True if hasnt seen opening story --##
-turn = True    ##-- If True it's the players turn         --##
-x = 1          ##-- Y Coords --##
-y = 3          ##-- X Coords --##
+player_name = 'X'         ##-- This is for the Funtion char_creation()            --##
+player_class_choice = 'X' ##-- This is also for the Funtion char_creation()       --##
+player_in_game = 'X'      ##-- Again this is also for the Funtion char_creation() --##
+mob = 'X'                 ##-- This varible is to hold the current mob player is fighing --##
+gender = 'X'              ##-- This varible sets the pronouns for the story and is set in the function in char_creation() in gender_call() --##
+opening = True            ##-- Only True if hasnt seen opening story --##
+turn = True               ##-- If True it's the players turn         --##
+x = 1                     ##-- Y Coords --##
+y = 3                     ##-- X Coords --##
 
 
 
-##-- Clears PRint Screen --##
+##-- Clears Print Screen --##
 
 def clear():
     
@@ -51,8 +51,8 @@ class PlayerInventory:
         self.can_carry = 10 
         self.on_player = []
         self.in_hand = ''
-
-    def add_to_inventory(self, add_item):
+    ##-- Below code is not in use and will change one I start using it --##
+    def add_to_inventory(self, add_item): 
 
         self.add_item = add_item
 
@@ -68,7 +68,8 @@ class PlayerInventory:
 
 player_inventory = PlayerInventory()
 
-##-- Setting up the players attubuts --##
+##-- Setting up the players attubuts or classes --##
+##-- Not sure if I did this right.              --##
 
 class Mage:
 
@@ -170,7 +171,8 @@ def main():
         input("Press Enter to Continue:> ")
         main()
 
-##-- Helps player know what to do --##
+##-- Helps is to show player how to fight use items and more                --##
+##-- I think I will also make this accessable in game as well at some point --##
 
 def game_help():
     pass
@@ -179,6 +181,7 @@ def game_help():
 
 def char_creation():
     global player_in_game
+    ##-- This function sets the name of the player --##
     def name_player():
         global player_name
         
@@ -198,6 +201,8 @@ def char_creation():
             else:
                 name_player()
 
+    ##-- This sets the gender of the character --##
+
     def gender_call():
     
         global gender
@@ -216,7 +221,7 @@ def char_creation():
         else:
             gender_call()
         Story.set_gender(gender)
-    
+    ##-- This set the class for the player --## 
     def class_selection():
         global player_class_choice
         player_options = ('Mage', 'Warrior', 'Archer', 'Assassin')
@@ -244,34 +249,38 @@ def char_creation():
 
     class_selection()
     name_player()
-
-    if player_class_choice == 'Mage':  ##-- Mage --##
+    ##-- This takes the varibles from the the global varibles that where set in --##
+    ##-- class_selection(), gender_call() and name_player() to set the players  --##
+    ##-- class to be Mage, Warrior, Archer or Assassin                          --## 
+    ##-- Mage     --##
+    if player_class_choice == 'Mage':  
         player_in_game = Mage(player_name)
         player_inventory.in_hand = Items.staff['weak_staff']
-
-    elif player_class_choice == 'Warrior':  ##-- Warrior --##
+    ##-- Warrior  --##
+    elif player_class_choice == 'Warrior':  
         player_in_game = Warrior(player_name)
         player_inventory.in_hand = Items.swords['rusty_short_sword']
-
-    elif player_class_choice == 'Archer':  ##-- Archer --##
+    ##-- Archer   --##
+    elif player_class_choice == 'Archer':  
         player_in_game = Archer(player_name)
         player_inventory.in_hand = Items.bow['common_hunting_bow']
-
-    elif player_class_choice == 'Assassin': ##-- Assassin --##
+    ##-- Assassin --##
+    elif player_class_choice == 'Assassin': 
         player_in_game = Assassin(player_name)
         player_inventory.in_hand = Items.staff['rusty_dagger']
 
-    gender_call()            
+    gender_call()
+    ##-- Back to main loop --##           
     main_game_loop()
 
 ##-- Makes a random mob with in the range of the players level --##
-
 
 def random_enemy():
     global mob
     mob = Mobs.random_enemy(player_in_game.level)
 
-##-- encounter is to handle if we fight or not --##
+##-- Encounter is to handle if we fight or not --##
+##-- This probably needs some work             --##
 
 def encounter():
     
@@ -315,6 +324,8 @@ def encounter():
         main_game_loop()
 
 ##-- This Function is to level up the player --##
+##-- Needs to add more stats and change the  --##
+##-- the player levels up                    --##
 
 def level_up(player):
     
@@ -347,7 +358,12 @@ def combat():
 
     elif option =='4':
         run()
-
+##-- Attack handles melee and magic attacks --##
+##-- Unlike most games magic attacks aren't --##
+##-- Just spells "magic attack" uses the    --##
+##-- Magic of the weapon in hand to deal    --##
+##-- Damage. But spells will be delt with a --##
+##-- Different functions                    --##
 def attack():
 
     player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand['melee_damage'])
@@ -408,12 +424,16 @@ def attack():
         else:
             combat()
 
+##-- Handles Spell Attacks and Healing or what ever else I can dream up --##
 def magic():
     pass
 
+##-- Handles the use of potions or and other usable item --##
+##-- In combat or out                                    --##
 def use_item():
     pass
 
+##-- Run or Flee is to get away from the enemy in a fight --##
 def run():
     running = random.randint(1, 3)
     if running == 1:
@@ -439,6 +459,8 @@ def run():
     else:
         combat()
 
+##-- If you when a fight this function handles what happens --##
+
 def win():
     clear()
     player_in_game.pures += mob.pures
@@ -448,9 +470,13 @@ def win():
     input('\nPess Enter To Continue:> ')
     main_game_loop()
 
-
+##-- If in an unfortunate event the player dies this function is called --##
+ 
 def dead():
     print(f'You have died from {mob.name}')
+
+##-- main_game_loop() is where all the logic for the player to move about the map --##
+##-- or any other event while not in a fight                                      --##
 
 def main_game_loop():
     

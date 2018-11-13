@@ -1,6 +1,5 @@
 ##-- This module is to hadle all the print screens for the menus --##
 
-
 ##-- All Imports --##
 
 import os
@@ -8,7 +7,6 @@ import sys
 import textwrap
 import time
 from colorama import Back, Fore, Style, init
-
 
 ##-- Font Colors --##
 
@@ -22,6 +20,9 @@ blue = Fore.BLUE
 magenta = Fore.MAGENTA
 light_red = Fore.LIGHTRED_EX
 cyan = Fore.CYAN
+
+##-- This class is only here to let the vs_screen() and the stat_screen the be called --##
+##-- without crashing for testing                                                     --##
 
 class Blank:
 
@@ -87,6 +88,8 @@ def main_menu_screen():
     
     for i in lines:
         print(i)
+
+##-- This This is the menu for the character set up --##
 
 def char_options():
 
@@ -166,55 +169,54 @@ def vs_screen(player, mob=filler, width=44):
 
 
 def stat_screen(player, inv, mob=filler, width=44):
+    ##-- Width sets how big the screen is no matter --##
+    width = (len(player.name) + len(mob.name) + 43) 
 
-    width = (len(player.name) + len(mob.name) + 43) ##  Width sets how big the screen is no matter
-
-    left_in_hand = f"Wielding: {inv.in_hand['name']}    "
-    right_in_hand = f"    {mob.in_hand} :Wielding"
+    left_p_class = f"{player.player_class}    "                                                            ##-- Left side is for player        --##    
+    right_p_class = f"    {mob.mob_class}"                                                                 ##-- Right side is for Enemy        --##
+    line_p_class = left_p_class + ' ' * (width - (len(left_p_class) + len(right_p_class))) + right_p_class ##-- Line puts the Left and Right   --##
+                                                                                                           ##-- Sides together and uses width  --##
+    left_in_hand = f"Wielding: {inv.in_hand['name']}    "                                                  ##-- varible to know how many space --##
+    right_in_hand = f"    {mob.in_hand} :Wielding"                                                         ##-- to print                       --##
     line_in_hand = left_in_hand + ' ' * (width - (len(left_in_hand) + len(right_in_hand))) + right_in_hand
+                                                                     
+    left_level = f"Level: {player.level}    "                          
+    right_level = f"    {mob.level} :Level"                            
+    line_level = left_level + ' ' * (width - (len(left_level) + len(right_level))) + right_level
 
-    left = f"{player.player_class}    "                                   ##  Left side is for player
-    right = f"    {mob.mob_class}"                                     ##  Right side is for Enemy
-    line = left + ' ' * (width - (len(left) + len(right))) + right##  Line puts the Left and Right 
-                                                                  ##  Sides together and uses width
-    left1 = f"Level: {player.level}    "                          ##  varible to know how many space
-    right1 = f"    {mob.level} :Level"                            ##  to print
-    line1 = left1 + ' ' * (width - (len(left1) + len(right1))) + right1
+    left_exp = f"Exp: {player.exp}    "
+    right_exp =  f"    {mob.exp_gained} :Exp Drop"
+    line_exp = left_exp + ' ' * (width - (len(left_exp) + len(right_exp))) + right_exp
 
-    left7 = f"Exp: {player.exp}    "
-    right7 =  f"    {mob.exp_gained} :Exp Drop"
-    line7 = left7 + ' ' * (width - (len(left7) + len(right7))) + right7
+    left_health = f"Health: {player.max_health}\\{player.health}    "
+    right_health = f"    {mob.health}/{mob.max_health} :Health"
+    line_health = left_health + ' ' * (width - (len(left_health) + len(right_health))) + right_health
 
-    left2 = f"Health: {player.max_health}\\{player.health}    "
-    right2 = f"    {mob.health}/{mob.max_health} :Health"
-    line2 = left2 + ' ' * (width - (len(left2) + len(right2))) + right2
+    left_armor = f"Armor: {player.armor}    "
+    right_armor = f"    {mob.armor} :Armor"
+    line_armor = left_armor + ' ' * (width - (len(left_armor) + len(right_armor))) + right_armor
 
-    left3 = f"Armor: {player.armor}    "
-    right3 = f"    {mob.armor} :Armor"
-    line3 = left3 + ' ' * (width - (len(left3) + len(right3))) + right3
+    left_mana = f"Mana: {player.mana}    "
+    right_mana = f"    {mob.mana} :Mana"
+    line_mana = left_mana + ' ' * (width - (len(left_mana) + len(right_mana))) + right_mana
 
-    left4 = f"Mana: {player.mana}    "
-    right4 = f"    {mob.mana} :Mana"
-    line4 = left4 + ' ' * (width - (len(left4) + len(right4))) + right4
+    left_stamina = f"Stamina: {player.stamina}    "
+    right_stamina = f"    {mob.stamina} :Stamina"
+    line_stamina = left_stamina + ' ' * (width - (len(left_stamina) + len(right_stamina))) + right_stamina
 
-    left5 = f"Stamina: {player.stamina}    "
-    right5 = f"    {mob.stamina} :Stamina"
-    line5 = left5 + ' ' * (width - (len(left5) + len(right5))) + right5
-
-    left6 = f"Luck: {player.luck}    "
-    right6 = f"    {mob.luck} :Luck"
-    line6 = left6 + ' ' * (width - (len(left6) + len(right6))) + right6
+    left_luck = f"Luck: {player.luck}    "
+    right_luck = f"    {mob.luck} :Luck"
+    line_luck = left_luck + ' ' * (width - (len(left_luck) + len(right_luck))) + right_luck
     
-    
-    print(line)
+    print(line_p_class)
     print(line_in_hand)
-    print(line1)
-    print(line7)
-    print(line2)
-    print(line3)
-    print(line4)
-    print(line5)
-    print(line6)
+    print(line_level)
+    print(line_exp)
+    print(line_health)
+    print(line_armor)
+    print(line_mana)
+    print(line_stamina)
+    print(line_luck)
 
 def display(on_screen, width=44):
     
