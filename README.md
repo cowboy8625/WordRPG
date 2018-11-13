@@ -7,6 +7,16 @@ If you are playing the game feel free to message me on discord https://discord.g
 or for any thing else.
 Also if you want to help out on the project and have ideas hit me up and show me some code!
 
+## To Play The Game
+WARNING: Before Playing the game you must install a module called Colorama. Go to 
+command prompt and type "pip install colorama" and once done you may start game.
+
+To play the game double click on Main file and make sure you have downloaded the
+"WordRPG Folder not just one file.
+
+### Remember
+I am constantly changing the code and add new code so check back to get more content.
+
 ## Virsion
 * Python 3.7
 
