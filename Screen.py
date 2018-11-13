@@ -52,7 +52,7 @@ def clear():
     else:
         _ = os.system('clear')
 
-##-- Main Menu --##
+##-- Main Menu I have Ideas for a better more custom and reusable screen --##
 
 def main_menu_screen():
     

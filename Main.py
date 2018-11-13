@@ -68,81 +68,41 @@ class PlayerInventory:
 
 player_inventory = PlayerInventory()
 
-##-- Setting up the players attubuts or classes --##
-##-- Not sure if I did this right.              --##
-
-class Mage:
-
-    def __init__(self, name):
+##-- Setting up player classes                                                    --##
+##-- The player class handles all the players stat creation                       --##
+##-- The Mage, Warrior, Archer and Assassin classes will inherit the Player class --##
+class Player:
+    
+    def __init__(self, name, player_class, max_health, melee_attack, magic_attack,
+    mana, stamina, defense, pures, luck):
+        
         self.name = name
-        self.player_class = 'Mage'
+        self.player_class = player_class
         self.level = 1
         self.exp = 0
-        self.max_health = 80
-        self.health = 80
+        self.max_health = max_health
+        self.health = max_health  ##-- Not sure if this is smart but this should only set health to max on making the character --##
         self.armor = 0
-        self.melee_attack = 1
-        self.magic_attack = 10
-        self.mana = 25
-        self.stamina = 10
-        self.defense = 1
-        self.pures = 0
-        self.luck = 5
+        self.melee_attack = melee_attack
+        self.magic_attack = magic_attack
+        self.mana = mana
+        self.stamina = stamina
+        self.defense = defense
+        self.pures = pures
+        self.luck = luck
 
-class Warrior:
+class Mage(Player):
+    pass
     
-    def __init__(self, name):
-        self.name = name
-        self.player_class = 'Warrior'
-        self.level = 1
-        self.exp = 0
-        self.max_health = 150
-        self.health = 150
-        self.armor = 10
-        self.melee_attack = 5
-        self.magic_attack = 0
-        self.mana = 10
-        self.stamina = 20
-        self.defense = 1
-        self.pures = 0
-        self.luck = 0
+class Warrior(Player):
+    pass
 
-class Archer:
+class Archer(Player):
+    pass
+
+class Assassin(Player):
+    pass
     
-    def __init__(self, name):
-        self.name = name
-        self.player_class = 'Archer'
-        self.level = 1
-        self.exp = 0
-        self.max_health = 80
-        self.health = 80
-        self.armor = 5
-        self.melee_attack = 5
-        self.magic_attack = 5
-        self.mana = 15
-        self.stamina = 20
-        self.defense = 1
-        self.pures = 0
-        self.luck = 2
-
-class Assassin:
-    
-    def __init__(self, name):
-        self.name = name
-        self.player_class = 'Assassin'
-        self.level = 1
-        self.exp = 0
-        self.max_health = 50
-        self.health = 50
-        self.armor = 5
-        self.melee_attack = 5
-        self.magic_attack = 0
-        self.mana = 10
-        self.stamina = 25
-        self.defense = 1
-        self.pures = 0
-        self.luck = 3
-
 ##-- Main() is the first function --##
 ##-- Gets input from player to either Start Load Help or Exit --##
 
@@ -254,19 +214,23 @@ def char_creation():
     ##-- class to be Mage, Warrior, Archer or Assassin                          --## 
     ##-- Mage     --##
     if player_class_choice == 'Mage':  
-        player_in_game = Mage(player_name)
+        player_in_game = Mage(player_name,'Mage',max_health=80,melee_attack=1,magic_attack=10,
+    mana=50, stamina=10, defense=1, pures=0, luck=1)
         player_inventory.in_hand = Items.staff['weak_staff']
     ##-- Warrior  --##
     elif player_class_choice == 'Warrior':  
-        player_in_game = Warrior(player_name)
+        player_in_game = Warrior(player_name,'Warrior',max_health=150,melee_attack=10,magic_attack=0,
+    mana=5, stamina=50, defense=4, pures=0, luck=0)
         player_inventory.in_hand = Items.swords['rusty_short_sword']
     ##-- Archer   --##
     elif player_class_choice == 'Archer':  
-        player_in_game = Archer(player_name)
+        player_in_game = Archer(player_name,'Archer',max_health=100,melee_attack=5,magic_attack=0,
+    mana=50, stamina=10, defense=1, pures=0, luck=5)
         player_inventory.in_hand = Items.bow['common_hunting_bow']
     ##-- Assassin --##
     elif player_class_choice == 'Assassin': 
-        player_in_game = Assassin(player_name)
+        player_in_game = Assassin(player_name,'Assassin',max_health=50,melee_attack=20,magic_attack=10,
+    mana=25, stamina=10, defense=2, pures=100, luck=10)
         player_inventory.in_hand = Items.staff['rusty_dagger']
 
     gender_call()
