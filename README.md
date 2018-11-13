@@ -16,6 +16,9 @@ To play the game double click on Main file and make sure you have downloaded the
 
 ### Remember
 I am constantly changing the code and add new code so check back to get more content.
+Also I'm super new and really just doing this project to learn more and sharpen my skills
+as a new programmer so if there is something I did that can be improved apone please let
+me know!
 
 ## Virsion
 * Python 3.7
