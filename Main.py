@@ -245,9 +245,12 @@ def random_enemy():
 
 ##-- Encounter is to handle if we fight or not --##
 ##-- This probably needs some work             --##
+##-- I will work on this more once I get the   --##
+##-- Map done                                  --##
 
 def encounter():
     
+    ##-- num is subject to change as I add possible encounters --##
     num = random.randint(1, 6)
     random_enemy()
 
