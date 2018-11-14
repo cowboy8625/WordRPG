@@ -3,7 +3,7 @@
   A text based RPG game with a story, shopping, NPC's, and fighing
 
 ## Find Me Here
-If you are playing the game feel free to message me on discord https://discord.gg/NFKuBq about bugs or ideas!
+If you are playing the game feel free to message me on discord https://discord.gg/8bkzqfm about bugs or ideas!
 or for any thing else.
 Also if you want to help out on the project and have ideas hit me up and show me some code!
 
@@ -20,7 +20,7 @@ Also I'm super new and really just doing this project to learn more and sharpen 
 as a new programmer so if there is something I did that can be improved a pawn  please let
 me know!
 
-## Virsion
+## Version
 * Python 3.7
 
 ## Tools
