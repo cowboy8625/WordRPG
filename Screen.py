@@ -254,5 +254,3 @@ def type_to_screen(message):
         time.sleep(0.02)
         display(add_one_letter[0])
         
-        #time.sleep(0.05)
-        
