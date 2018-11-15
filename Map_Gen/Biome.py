@@ -8,7 +8,11 @@ Biome names          |abriv|            Resourses                      |        
 'Woodlands'          |'wld'|           'Logs                                 'Earth Golem'
 'Mountains'          |'mou'|           'Rock', 'Flint'                       'Rock Golem'
 'Lake'               |'lak'|           'Water', 'Fish'
+<<<<<<< HEAD
 'River'              |'rvr'|           'Water', 'Fish', 'Clay'
+=======
+'River'              |'rvr'|           'Water', 'Fish'
+>>>>>>> 2d88f5a0cb160ebb7f0103c9757b96671ad03936
 'Town'               |'twn'|
 'Village'            |'vil'|
 'Field'              |'fld'|
