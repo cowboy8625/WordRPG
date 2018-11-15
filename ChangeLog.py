@@ -1,5 +1,6 @@
-import Screen
-def change_log():
-    changelog = "  ::Changlog for pre-beta v0.1::\t+Added this changelog to the game"
-    Screen.display(changelog, width=70)
-change_log()
+##- This will grab the changes from CHANGELOG.md and put them in a variable to
+##- be used in the game for the changelog menu.
+with open('CHANGELOG.md', 'r') as f:
+    f_contents = f.read()
+    print(f_contents)
+
