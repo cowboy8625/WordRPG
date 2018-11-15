@@ -145,7 +145,7 @@ def char_creation():
     def name_player():
         global player_name
         
-        message = f"A {player_class_choice} is a good choice I think. What shall shall I call you?"
+        message = f"A {player_class_choice} is a good choice I think. What shall I call you?"
         Screen.display(message)
         option = input("\n\nENTER YOUR NAME:> ")
 
@@ -231,7 +231,7 @@ def char_creation():
     elif player_class_choice == 'Assassin': 
         player_in_game = Assassin(player_name,'Assassin',max_health=50,melee_attack=20,magic_attack=10,
     mana=25, stamina=10, defense=2, pures=100, luck=10)
-        player_inventory.in_hand = Items.staff['rusty_dagger']
+        player_inventory.in_hand = Items.dagger['rusty_dagger']
 
     gender_call()
     ##-- Back to main loop --##           
