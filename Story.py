@@ -37,4 +37,4 @@ def intro_story(name):
  village safe. But when {name} finally made it over the hill {he_she} didn't believe {his_her} eyes........."
     
     
-    Screen.display(intro)
+    Screen.type_to_screen(intro)

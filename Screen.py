@@ -243,5 +243,15 @@ def display(on_screen, width=44):
     print(space)
     print(top_bottom)
 
+def type_to_screen(message):
 
-
+    add_one_letter = []
+    for i in message:
+        if len(add_one_letter) == 0:
+            add_one_letter.append(i)
+        else:
+            add_one_letter.append(add_one_letter.pop(0) + i)
+        display(add_one_letter[0])
+    #clear()
+        #time.sleep(0.05)
+        

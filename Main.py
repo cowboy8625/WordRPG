@@ -451,8 +451,8 @@ def main_game_loop():
     global opening, x, y
 
     if opening == True:
+
         Story.intro_story(player_in_game.name)
-        #Screen.display(InfoDics.story_line['Intro'])
         input("Press Enter to continue: ")
         opening = False
 
