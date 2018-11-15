@@ -251,7 +251,8 @@ def type_to_screen(message):
             add_one_letter.append(i)
         else:
             add_one_letter.append(add_one_letter.pop(0) + i)
+        time.sleep(0.02)
         display(add_one_letter[0])
-    #clear()
+        
         #time.sleep(0.05)
         
