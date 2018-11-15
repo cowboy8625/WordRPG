@@ -58,4 +58,7 @@ Things Cowboy Wants To Add:
 
     Crafting.
     Posible a Day and Night Cycle
-    
+
+Things BJTMastermind Wants To Add:
+
+	Changelog to Main Menu.
