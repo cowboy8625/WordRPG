@@ -37,6 +37,7 @@ Also depends if I'm doing it alone or with some one. If I'm working on this proj
 # Team
 <a name="team-members"></a>Team Members
 * Cowboy8625
+* BJTmastermind
 
 # Screen Shots
 

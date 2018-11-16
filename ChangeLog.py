@@ -18,4 +18,5 @@ def change_log_print():
         f_contents = f.read()
         clear()
         print(f_contents)
+        
 

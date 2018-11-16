@@ -43,6 +43,11 @@ def clear():
 
     else:
         _ = os.system('clear')
+##-- This maybe fast then retyping input a bunch --##
+
+def pause():
+    
+    input("\n\nPress Enter To Continue:> ")
 
 ##-- Inventory layout --##
 
@@ -130,6 +135,9 @@ def main():
         main()
     elif choice == '4':
         ChangeLog.change_log_print()
+        pause()
+        main()
+
     elif choice == '5':
         sys.exit()
     else:
