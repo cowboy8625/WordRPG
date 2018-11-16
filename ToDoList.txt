@@ -7,26 +7,30 @@ me know.
 
 Cowboy:
 
-    I am working on the map generation at the moment. 
+    I am working on the map generation at the moment.
 
 BJTMastermind:
 
     Changelog to Main Menu.
 
+Giioke:
+
+  Class-Story interactions.
+
 Things to do:
 
     1) The use_item() function needs to be added.
-        
+
         Function of it:
 
-            In combat we need to be able to use potions. So the use_item() function 
+            In combat we need to be able to use potions. So the use_item() function
             will be called if the player choose to heal or maybe change his weapon.
-            So you will need to make a dictionary for the potions in the Items.py 
-            file. Make it how it makes since to you because I'm not sure how the 
-            best way is going to be. 
+            So you will need to make a dictionary for the potions in the Items.py
+            file. Make it how it makes since to you because I'm not sure how the
+            best way is going to be.
             I think that's enough for now we can build on it later
 
-    2) The magic() function needs to be added. 
+    2) The magic() function needs to be added.
 
         Function of it:
 
@@ -47,10 +51,10 @@ Things to do:
 
     4) The Mobs.py file needs to redone like the Player class in the Main.py. So there should be a Main Mob class
         and each mob will inherit the mob class but each mob will have its own special class that handles all the
-        special attributes. Like the Witch class could have a spell attack or the hell hounds could have a bite 
+        special attributes. Like the Witch class could have a spell attack or the hell hounds could have a bite
         attack.
 
-    5) The Screen.py needs a more easy way to customize the screen as well. I have apretty good idea how to do this 
+    5) The Screen.py needs a more easy way to customize the screen as well. I have apretty good idea how to do this
         but you are welcome to try your hand at it.
 
 Notes:
