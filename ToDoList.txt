@@ -1,8 +1,8 @@
 If you start a project please say so in discord and also update this file and place you name and under it what\
 you are working on.
 I'm new like you and haven't got a clue what I'm doing. Saying that I do know we need to work clean and comment
-on everything! There is no such thing is to many comments.  We need to comunicate on this project a lot to make
-sure we dont mess up each other. This is my first project with other so im all ears. if you ahve any ideas let
+on everything! There is no such thing is to many comments.  We need to communicate on this project a lot to make
+sure we dont mess up each other. This is my first project with other so im all ears. if you have any ideas let
 me know.
 
 Cowboy:
@@ -54,7 +54,7 @@ Things to do:
         special attributes. Like the Witch class could have a spell attack or the hell hounds could have a bite
         attack.
 
-    5) The Screen.py needs a more easy way to customize the screen as well. I have apretty good idea how to do this
+    5) The Screen.py needs a more easy way to customize the screen as well. I have a pretty good idea how to do this
         but you are welcome to try your hand at it.
 
 Notes:
@@ -64,7 +64,7 @@ Notes:
 Things Cowboy Wants To Add:
 
     Crafting.
-    Posible a Day and Night Cycle
+    Possible a Day and Night Cycle
 
 Things BJTMastermind Wants To Add:
 
