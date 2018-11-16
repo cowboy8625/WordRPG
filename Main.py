@@ -12,13 +12,14 @@ import time
 
 
 ##-- Custom Imports --##
+import ChangeLog
 import InfoDics
-import Story
-import Map
-import Screen
-import Mobs
 import Items
+import Map
+import Mobs
 import NPC
+import Screen
+import Story
 
 ##-- Globel Varibles --##
 player_name = 'X'         ##-- This is for the Funtion char_creation()            --##
@@ -95,7 +96,10 @@ class Player:
 class Mage(Player):
     pass
     
-class Warrior(Player):
+class Warrior(Player):  
+    ##-- Adrenaline Junky --##
+    ##-- Lets Warrior the ablity to take 1 hits before death --##
+    ##-- Ability can level up as player gets stronger --##
     pass
 
 class Archer(Player):
@@ -124,8 +128,9 @@ def main():
         print('NOT AN OPTION YET') ##-- Help  --##
         time.sleep(2)
         main()
-
     elif choice == '4':
+        ChangeLog.change_log_print()
+    elif choice == '5':
         sys.exit()
     else:
         print("Not an Option.")
@@ -199,7 +204,7 @@ def char_creation():
         elif choice == '4':
             player_class_choice = player_options[int(choice)-1]
         ##-- lore is the story and it is found in InfoDics --##
-        elif choice[0:4].lower() == 'help': 
+        elif choice[0:4].lower() == 'info': 
             lore = InfoDics.info_on_classes[player_options[int(choice[5])-1]] 
             Screen.display(lore)      
             input("\n\nPress Enter to Continue:> ")
@@ -343,7 +348,7 @@ def attack():
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
         if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
-            print(f"\n{player_in_game.name} {player_inventory.in_hand['action']}")  ##-- finish me --#############################
+            print(f"\n{player_in_game.name} {player_inventory.in_hand['action']}")  ##-- finish me --##
         else:
             mob.health -= player_melee_attack
             clear()       

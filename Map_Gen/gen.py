@@ -33,10 +33,11 @@ class coord_ys:
 # print(df)
 
 ##-- This sets the coords to a biome --##
-x = 1
-y = 0
 
-#  print(df)
+
+
+def get_random_biome():
+    pass
 
 def map_builder():
 
@@ -44,12 +45,16 @@ def map_builder():
     hight = 3
     grid = [hight, width]
     df = pd.DataFrame(columns=range(grid[1]),index=range(grid[0]))
-
-    for coord_y in range(0, width * hight):
-        if coord_y % width == 0 and coord_y != 0:
-            #y += 1
-            pass
-    df.set_value(y,x,'cav')
+    x = 0
+    y = 0
+    for coord_x in range(0, width * hight):
+        #  biome = get_random_biome()
+        if coord_x % width == 0 and coord_x != 0:
+            y += 1
+            x = 0
+            df.set_value(y,x,'cav')
+        df.set_value(y,x,'cav')
+        x += 1
     print(df)
-        #df.set_value()
+        
 map_builder()  

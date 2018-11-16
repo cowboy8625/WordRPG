@@ -61,9 +61,11 @@ def main_menu_screen():
     num2 = green + '2' + cyan
     num3 = green + '3' + cyan
     num4 = green + '4' + cyan
+    num5 = green + '5' + cyan
     start = yellow + 'START' + cyan
     load = yellow + 'LOAD' + cyan
     help_ = yellow + 'HELP' + cyan
+    change_log = yellow + 'CHANGE LOG' + cyan
     quit = yellow + 'QUIT' + cyan
     l1 = red + "SELECT A NUMBER TO CONTINE" + cyan
     l2 = red + "Copy Write 2018" + cyan
@@ -75,14 +77,15 @@ def main_menu_screen():
     line4 = f"#-                                           ({num1}): {start}                                           -#"
     line5 = f"#-                                           ({num2}): {load}                                            -#"
     line6 = f"#-                                           ({num3}): {help_}                                            -#"
-    line7 = f"#-                                           ({num4}): {quit}                                            -#"
-    line8 = f"#-                                                                                                -#"
-    line9 = f"#-                                   {l1}                                   -#"
-    line10 = f"#-                                       {l2}                                          -#"
-    line11 = f"#-                                  {l3}                                       -#"
-    line12 = f"####################################################################################################"
+    line7 = f"#-                                           ({num4}): {change_log}                                      -#"
+    line8 = f"#-                                           ({num5}): {quit}                                            -#"
+    line9 = f"#-                                                                                                -#"
+    line10 = f"#-                                   {l1}                                   -#"
+    line11 = f"#-                                       {l2}                                          -#"
+    line12 = f"#-                                  {l3}                                       -#"
+    line13 = f"####################################################################################################"
 
-    lines = [line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12]
+    lines = [line1, line2, line3, line4, line5, line6, line7, line8, line9, line10, line11, line12, line13]
     
     clear()
     
