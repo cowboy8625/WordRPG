@@ -12,14 +12,15 @@ import time
 
 
 ##-- Custom Imports --##
+from Map_Gen import Engine
+from script import InfoDics
+from script import Items
+from script import Map
+from script import Mobs
+from script import NPC
+from script import Screen
+from script import Story
 import ChangeLog
-import InfoDics
-import Items
-import Map
-import Mobs
-import NPC
-import Screen
-import Story
 
 ##-- Globel Varibles --##
 player_name = 'X'         ##-- This is for the Funtion char_creation()            --##
@@ -29,8 +30,12 @@ mob = 'X'                 ##-- This varible is to hold the current mob player is
 gender = 'X'              ##-- This varible sets the pronouns for the story and is set in the function in char_creation() in gender_call() --##
 opening = True            ##-- Only True if hasnt seen opening story --##
 turn = True               ##-- If True it's the players turn         --##
-x = 1                     ##-- Y Coords --##
-y = 3                     ##-- X Coords --##
+x = 40                     ##-- Y Coords --##
+y = 40                     ##-- X Coords --##
+##-- Map sizes --##
+small = 100
+medium = 500
+large = 1000
 
 
 
@@ -47,7 +52,7 @@ def clear():
 
 def pause():
     
-    input("\n\nPress Enter To Continue:> ")
+    input("Press Enter To Continue:> ")
 
 ##-- Inventory layout --##
 
@@ -345,6 +350,7 @@ def combat():
 ##-- Magic of the weapon in hand to deal    --##
 ##-- Damage. But spells will be delt with a --##
 ##-- Different functions                    --##
+
 def attack():
 
     player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand['melee_damage'])
@@ -460,7 +466,8 @@ def dead():
 ##-- or any other event while not in a fight                                      --##
 
 def main_game_loop():
-    
+    Engine.make_map_datebase()
+    Engine.map_builder()
     ##-- This is for navigating the map --##
     global opening, x, y
 
@@ -469,36 +476,48 @@ def main_game_loop():
         Story.intro_story(player_in_game.name)
         input("Press Enter to continue: ")
         opening = False
-
-    Screen.display(f"Location: {Map.map[(x, y)]['name']}")
+    map_info = Engine.get_tile(x,y)
+    Screen.display(f"Location: {map_info[0][2]}")
     move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
     ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
     if move_to == '1':  ##-- UP --##
-        y -= 1
-        encounter()
+        if y > 0:
+            y -= 1
+            encounter()
+        else:
+            print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+            pause()
+            main_game_loop()
     
     elif move_to == '2':  ##-- DOWN --##
-        y += 1
-        encounter()
+        if y < small:
+            y += 1
+            encounter()
+        else:
+            print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+            pause()
+            main_game_loop()
 
     elif move_to == '3':  ##-- RIGHT --##
-        x += 1
-        encounter()
-    
+        if x > 0:
+            x += 1
+            encounter()
+        else:
+            print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+            pause()
+            main_game_loop()
+
     elif move_to == '4':  ##-- LEFT --##
-        x -= 1
-        encounter()
-    
+        if x < small:
+            x -= 1
+            encounter()
+        else:
+            print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+            pause()
+            main_game_loop()
+
     elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
         sys.exit()
-
-    else:
-        print("That is undiscovered area, we best stay on the map.")
-        print("you have been teleported home")
-        y = 1
-        x = 1
-        input("Press Enter to continue: ")
-        main_game_loop()
     
 
 main()

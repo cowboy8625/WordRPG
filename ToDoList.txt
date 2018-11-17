@@ -8,6 +8,9 @@ me know.
 Cowboy:
 
     I am working on the map generation at the moment.
+    Please dont mess with anything in the Map_Gen folder
+    I'm Working on the types of biomes along with mobs spawn for each biome
+    and resourse spicific items in biomes.  
 
 BJTMastermind:
 
@@ -15,7 +18,7 @@ BJTMastermind:
 
 Giioke:
 
-  Class-Story interactions.
+    Class-Story interactions.
 
 Things to do:
 

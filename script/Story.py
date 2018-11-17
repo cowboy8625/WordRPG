@@ -1,4 +1,4 @@
-import Screen
+from script import Screen
 
 ##-- Global Pronouns --##
 
@@ -36,5 +36,5 @@ def intro_story(name):
  {him_her} to run do to the large deer on {his_her} back.  {he_she.capitalize()} reasured {him_her} self that other people in the village would keep {his_her}\
  village safe. But when {name} finally made it over the hill {he_she} didn't believe {his_her} eyes........."
     
-    
-    Screen.type_to_screen(intro)
+    Screen.display(intro)
+    #Screen.type_to_screen(intro)

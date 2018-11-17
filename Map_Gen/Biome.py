@@ -5,7 +5,7 @@ Biome names          |abriv|            Resourses                      |        
 'Cave'               |'cav'|           'Rock', 'Bones'                       'Skeleton', 'Bears', 'Zombie'
 'Forest'             |'for'|           'Wood'                                'Bandit', 'Wolf'
 'Dark Forest'        |'dfo'|           'Magic Wood'                          'Dark Elif', 'Imp'
-'Woodlands'          |'wld'|           'Logs                                 'Earth Golem'
+'Woodlands'          |'wld'|           'Logs'                                'Earth Golem'
 'Mountains'          |'mou'|           'Rock', 'Flint'                       'Rock Golem'
 'Lake'               |'lak'|           'Water', 'Fish'
 'River'              |'rvr'|           'Water', 'Fish', 'Clay'
@@ -28,17 +28,27 @@ world_biomes = {
     'for': {
             'name': 'Forest', 
             'resource': 'wood', 
-            'spawns': ['Bandit', 'Wolf']
+            'spawns': ['Bandit', 'Wolf'],
+            'rarity': 'Common'
     },
     'dfo': {
             'name': 'Dark Forest',
             'resource': 'wood',
-            'spawns': ['Dark Elif', 'Imp']
+            'spawns': ['Dark Elif', 'Imp'],
+            'rarity': 'Common'
     },
 
     'cav': {
             'name': 'Cave',
             'resource': 'wood',
-            'spawns': ['Skeleton', 'Bears', 'Zombie']
-    }
+            'spawns': ['Skeleton', 'Bears', 'Zombie'],
+            'rarity': 'Common'
+    },
+     
+     'wld': {
+            'name': 'Mountains',
+            'resource': 'Logs',
+            'spawns': ['Earth Golem'],
+            'rarity': 'Common' 
+     }
             }
