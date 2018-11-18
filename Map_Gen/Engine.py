@@ -75,11 +75,21 @@ right_side = [i for i in range(map_width - 1, (map_width * map_hight), map_width
 def ran_diff():
     num = random.randint(1, 10)
     return num
-##-- Map is placed   in to a class here --##
+
+##-- Map is placed into a class here --##
 
 def map_builder():
-    
+    loading_dots = 0
+    clear()
+    print('Loading.')
     for spot in range(0, (map_width * map_hight)):
+        ##-- sopt is index and coord_x and coord_y is finding the (x, y) coordinates from index (AKA spot) --##
+        if spot in [10, 100, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]:
+            loading_dots += 1
+            clear()
+            print('-------------------')
+            print('Loading' + '.' * loading_dots)
+            print('-------------------')
         coord_y = int((spot / map_width))
         coord_x = spot - (map_width * coord_y)
         biome = get_random_biome()
