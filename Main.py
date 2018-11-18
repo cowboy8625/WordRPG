@@ -388,13 +388,14 @@ def attack():
     elif attack_type == '2':
 
         if player_magic_attack == player_in_game.magic_attack / 2: ##-- Player Attack --##
+            clear()
             print('\nYou Missed!')
         else:
             mob.health -= player_magic_attack
             clear()       
             print(f'\nYou just dealed {player_magic_attack} damage.')
 
-        input('\nPess Enter To Continue:> ')
+        input('\nPress Enter To Continue:> ')
         if mob.health <= 0:
             win()
         
@@ -462,21 +463,25 @@ def win():
 def dead():
     print(f'You have died from {mob.name}')
 
+        
 ##-- main_game_loop() is where all the logic for the player to move about the map --##
 ##-- or any other event while not in a fight                                      --##
 
 def main_game_loop():
-    Engine.make_map_datebase()
-    Engine.map_builder()
+    
     ##-- This is for navigating the map --##
     global opening, x, y
-
+    if os.path.getsize('Worldmap.db') == 8192:
+        Engine.map_builder()
+    # while os.path.getsize('Worldmap.db') != 10000:
+    #     print('Loading...........')
     if opening == True:
 
         Story.intro_story(player_in_game.name)
         input("Press Enter to continue: ")
         opening = False
     map_info = Engine.get_tile(x,y)
+
     Screen.display(f"Location: {map_info[0][2]}")
     move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
     ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
@@ -518,6 +523,8 @@ def main_game_loop():
 
     elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
         sys.exit()
-    
 
+Engine.make_map_datebase()
+# if os.path.getsize('Worldmap.db') == 0:
+#     Engine.map_builder()
 main()

@@ -4,7 +4,7 @@ Biome names          |abriv|            Resourses                      |        
 
 'Cave'               |'cav'|           'Rock', 'Bones'                       'Skeleton', 'Bears', 'Zombie'
 'Forest'             |'for'|           'Wood'                                'Bandit', 'Wolf'
-'Dark Forest'        |'dfo'|           'Magic Wood'                          'Dark Elif', 'Imp'
+'Dark Forest'        |'dfo'|           'Magic Wood'                          'Dark Elf', 'Imp'
 'Woodlands'          |'wld'|           'Logs'                                'Earth Golem'
 'Mountains'          |'mou'|           'Rock', 'Flint'                       'Rock Golem'
 'Lake'               |'lak'|           'Water', 'Fish'
@@ -27,28 +27,78 @@ North  if biome is -x is not its own biome and +x -y +y is same biome as its sel
 world_biomes = {
     'for': {
             'name': 'Forest', 
-            'resource': 'wood', 
+            'resource': ['Wood'], 
             'spawns': ['Bandit', 'Wolf'],
             'rarity': 'Common'
-    },
+        },
+
     'dfo': {
             'name': 'Dark Forest',
-            'resource': 'wood',
+            'resource': ['Magic Wood'],
             'spawns': ['Dark Elif', 'Imp'],
-            'rarity': 'Common'
-    },
+            'rarity': 'Rare'
+        },
 
     'cav': {
             'name': 'Cave',
-            'resource': 'wood',
+            'resource': ['Rock', 'Bones'],
             'spawns': ['Skeleton', 'Bears', 'Zombie'],
-            'rarity': 'Common'
-    },
+            'rarity': 'Uncommon'
+        },
      
      'wld': {
-            'name': 'Mountains',
-            'resource': 'Logs',
+            'name': 'Woodlands',
+            'resource': ['Logs'],
             'spawns': ['Earth Golem'],
-            'rarity': 'Common' 
-     }
-            }
+            'rarity': 'Uncommon' 
+        },
+     
+     'mou': {
+            'name': 'Mountains',
+            'resource': ['Rock', 'Flint'],
+            'spawns': ['Rock', 'Flint'],
+            'rarity': 'Uncommon'
+        },
+
+     'lak': {
+            'name': 'Lake',
+            'resource': ['Water'],
+            'spawns': ['Earth Golem'],
+            'rarity': 'Rare'
+        },
+
+      'rvr': {
+             'name': 'Rive',
+             'resource': ['Water'],
+             'spawns': ['Earth Golem'],
+             'rarity': 'Rare'
+        },
+
+       'twn': {
+               'name': 'Town',
+               'resource': ['NaN'],
+               'spawns': ['NaN'],
+               'rarity': 'Rare'
+       },
+
+       'vil': {
+               'name': 'Village',
+               'resource': ['NaN'],
+               'spawns': ['NaN'],
+               'rarity': 'Rare'
+        },
+
+        'fld': {
+               'name': 'Field',
+               'resource': ['Erb'],
+               'spawns': ['Zombie'],
+               'rarity': 'Common'
+        },
+
+        'frm': {
+               'name': 'Farm',
+               'resource': ['Erb'],
+               'spawns': ['Zombie'],
+               'rarity': 'Uncommon'
+        }
+}

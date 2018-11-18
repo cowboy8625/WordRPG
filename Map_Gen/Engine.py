@@ -8,8 +8,10 @@ import pandas
 
 
 ##-- Custom Import --##
+#from Map_Gen import Biome
 
 from Map_Gen import Biome
+
 
 
 #  Clears print screen
@@ -57,8 +59,8 @@ def get_random_biome():
 ##-- I am thinking maybe start with a 50 x 50 map but when all is said and done --##
 ##-- 1000 x 1000 will be the map size                                           --##
  
-map_width = 10  
-map_hight = 10   
+map_width = 100  
+map_hight = 100  
 
 map_list = []
 
@@ -73,10 +75,10 @@ right_side = [i for i in range(map_width - 1, (map_width * map_hight), map_width
 def ran_diff():
     num = random.randint(1, 10)
     return num
-##-- Map is placed in to a class here --##
+##-- Map is placed   in to a class here --##
 
 def map_builder():
-
+    
     for spot in range(0, (map_width * map_hight)):
         coord_y = int((spot / map_width))
         coord_x = spot - (map_width * coord_y)
@@ -98,13 +100,14 @@ def neat_layout():
 def make_map_datebase():
      
     with conn:
-         c.execute("""CREATE TABLE IF NOT EXISTS tile (coords_x int, coords_y int, place_name text, rarity text, difficulty int, enterable boolean, tile_level int, exit_x int, exit_y int, discovord boolean)""")
+        c.execute("""CREATE TABLE IF NOT EXISTS tile (coords_x int, coords_y int, place_name text, rarity text, difficulty int, enterable boolean, tile_level int, exit_x int, exit_y int, discovord boolean)""")
+        
 
 def insert_tile(tile):
     
     with conn:
-            c.execute("INSERT INTO tile VALUES (:coords_x, :coords_y, :place_name, :rarity, :difficulty, :enterable, :tile_level, :exit_x, :exit_y, :discovord)", 
-            {'coords_x': tile.coords_x, 'coords_y': tile.coords_y, 'place_name': tile.name, 'rarity': tile.rarity, 'difficulty': tile.difficulty, 'enterable': tile.enterable, 'tile_level': tile.floor, 'exit_x': tile.exit_x, 'exit_y': tile.exit_y, 'discovord': tile.discovord})
+        c.execute("INSERT INTO tile VALUES (:coords_x, :coords_y, :place_name, :rarity, :difficulty, :enterable, :tile_level, :exit_x, :exit_y, :discovord)", 
+        {'coords_x': tile.coords_x, 'coords_y': tile.coords_y, 'place_name': tile.name, 'rarity': tile.rarity, 'difficulty': tile.difficulty, 'enterable': tile.enterable, 'tile_level': tile.floor, 'exit_x': tile.exit_x, 'exit_y': tile.exit_y, 'discovord': tile.discovord})
 
 def get_tile(x,y):
     c.execute("SELECT * FROM tile WHERE coords_x=:coords_x AND coords_y=:coords_y;", {'coords_x': x, 'coords_y': y})
@@ -118,8 +121,8 @@ def get_all():
 def update_tile():
     pass
 
-#make_map_datebase()
-#map_builder()
-#neat_layout()
+# make_map_datebase()
+# map_builder()
+# neat_layout()
 # print('---------------------------------------------------------------')
-#print(get_tile(0,0))
+# print(get_tile(0,0))
