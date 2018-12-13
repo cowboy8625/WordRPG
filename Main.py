@@ -13,6 +13,7 @@ import time
 
 ##-- Custom Imports --##
 from Map_Gen import Engine
+from Map_Gen import Biome
 from script import InfoDics
 from script import Items
 from script import Map
@@ -30,8 +31,10 @@ mob = 'X'                 ##-- This varible is to hold the current mob player is
 gender = 'X'              ##-- This varible sets the pronouns for the story and is set in the function in char_creation() in gender_call() --##
 opening = True            ##-- Only True if hasnt seen opening story --##
 turn = True               ##-- If True it's the players turn         --##
-x = 40                     ##-- Y Coords --##
-y = 40                     ##-- X Coords --##
+x = 5                     ##-- Y Coords --##
+y = 0                     ##-- X Coords --##
+sub_x = 0                 ##-- For Map in side of biome --##
+sub_y = 0                 ##--  ^^       ^^       ^^    --##
 ##-- Map sizes --##
 small = 100
 medium = 500
@@ -463,15 +466,101 @@ def win():
 def dead():
     print(f'You have died from {mob.name}')
 
-        
+def get_resouces():
+    pass
+
+def sub_map_move():
+    global x, y, sub_x, sub_y
+    clear()
+    map_info = Engine.get_tile(x,y)
+    sub_x = map_info[0][8]
+    sub_y = map_info[0][9]
+    sub_map_info = Engine.get_subTile(x,y,sub_x,sub_y)
+    Engine.update_subTile(x,y,sub_x,sub_y,True)
+    Screen.display(f"Biome in: {sub_map_info[0][4]}    Room: {sub_map_info[0][5]}")
+    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Look For Resources\nInput a Number:>  ")
+    ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
+    if move_to == '1':  ##-- UP --##
+        if sub_y > 0:
+            sub_y -= 1
+            encounter()
+        else:
+            print('Looks Like It Dead Ends Here')
+            pause()
+            main_game_loop()
+    
+    elif move_to == '2':  ##-- DOWN --##
+        if sub_y < small:
+            sub_y += 1
+            encounter()
+        else:
+            print('Looks Like It Dead Ends Here')
+            pause()
+            main_game_loop()
+
+    elif move_to == '3':  ##-- RIGHT --##
+        if sub_x > 0:
+            sub_x += 1
+            encounter()
+        else:
+            print('Looks Like It Dead Ends Here')
+            pause()
+            main_game_loop()
+
+    elif move_to == '4':  ##-- LEFT --##
+        if sub_x < small:
+            sub_x -= 1
+            encounter()
+        else:
+            print('Looks Like It Dead Ends Here')
+            pause()
+            main_game_loop()
+
+    elif move_to == '5':
+        get_resouces()
+
+    elif move_to == 'Quit':  ##-- QUIT, I'll take this out after testing --## 
+        sys.exit()
+
+
+##-- The Inspect function checks the biome for the player to see if it has anything --##
+##-- is interesting and of value.                                                   --## 
+##-- Biome, Tell player about the area they are in                                  --##
+##-- Rarity, Tell player how rare the biome is                                      --##
+##-- Enterable, Tells the player if you can explore the area any more               --##
+##-- Spawnable Mobs, Tells player what mobs can spawn in area                       --##
+##-- Items that can be obtained for crafting                                        --##
+##-- Coords for area                                                                --##
+##-- Time of day..... maybe                                                         --##
+def inspect_area(biome):
+    
+    clear()
+    print(f"Biome Name: {Biome.world_biomes[biome]['name']}")
+    print(f"Resourse: {Biome.world_biomes[biome]['resource']}")
+    print(f"Spawn: {Biome.world_biomes[biome]['spawns']}")
+    print(f"Rarity: {Biome.world_biomes[biome]['rarity']}")
+    #print(f"Enterable: {Biome.world_biomes[biome]['enterable']}")
+    print(f"{Biome.world_biomes[biome]['info']}")
+    print("\n----------------------------------------------\n")
+
+    if Biome.world_biomes[biome]['enterable'] == True:
+        print(f"Looks likes like we can go futher into the {Biome.world_biomes[biome]['name']}\nWhat say you?")
+        player_input = input("\n(1): Enter\n(2): Move on\nChoose a number:> ")
+        if player_input == '1':
+            sub_map_move()
+    else:
+        pause()
+        main_game_loop()
+
+
 ##-- main_game_loop() is where all the logic for the player to move about the map --##
 ##-- or any other event while not in a fight                                      --##
 
 def main_game_loop():
     
     ##-- This is for navigating the map --##
-    global opening, x, y
-    if os.path.getsize('Worldmap.db') == 8192:
+    global opening, x, y, sub_x, sub_y
+    if os.path.getsize('Worldmap.db') == 12288:
         Engine.map_builder()
     # while os.path.getsize('Worldmap.db') != 10000:
     #     print('Loading...........')
@@ -481,9 +570,9 @@ def main_game_loop():
         input("Press Enter to continue: ")
         opening = False
     map_info = Engine.get_tile(x,y)
-
-    Screen.display(f"Location: {map_info[0][2]}")
-    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Quit\nInput a Number:>  ")
+    Engine.update_tile(x,y,True)
+    Screen.display(f"Location: {map_info[0][3]}")
+    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Inspect Area\nInput a Number:>  ")
     ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
     if move_to == '1':  ##-- UP --##
         if y > 0:
@@ -521,10 +610,14 @@ def main_game_loop():
             pause()
             main_game_loop()
 
-    elif move_to == '5':  ##-- QUIT, I'll take this out after testing --## 
+    elif move_to == '5':
+        inspect_area(map_info[0][2])
+
+    elif move_to == 'Quit':  ##-- QUIT, I'll take this out after testing --## 
         sys.exit()
 
 Engine.make_map_datebase()
+Engine.make_sub_map_table()
 # if os.path.getsize('Worldmap.db') == 0:
 #     Engine.map_builder()
 main()

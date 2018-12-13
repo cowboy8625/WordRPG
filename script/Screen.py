@@ -1,4 +1,6 @@
-##-- This module is to hadle all the print screens for the menus --##
+##-- This module is to handle all the print screens for the menus --##
+
+from Map_Gen import Biome
 
 ##-- All Imports --##
 
@@ -256,4 +258,9 @@ def type_to_screen(message):
             add_one_letter.append(add_one_letter.pop(0) + i)
         time.sleep(0.02)
         display(add_one_letter[0])
+
+
+
+
+
         
