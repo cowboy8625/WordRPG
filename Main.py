@@ -35,6 +35,7 @@ x = 5                     ##-- Y Coords --##
 y = 0                     ##-- X Coords --##
 sub_x = 0                 ##-- For Map in side of biome --##
 sub_y = 0                 ##--  ^^       ^^       ^^    --##
+biome_or_subBiome = False ##-- To see if player is in a biome or not --##
 ##-- Map sizes --##
 small = 100
 medium = 500
@@ -238,22 +239,22 @@ def char_creation():
     if player_class_choice == 'Mage':  
         player_in_game = Mage(player_name,'Mage',max_health=80,melee_attack=1,magic_attack=10,
     mana=50, stamina=10, defense=1, pures=0, luck=1)
-        player_inventory.in_hand = Items.staff['weak_staff']
+        player_inventory.in_hand = Items.weak_staff
     ##-- Warrior  --##
     elif player_class_choice == 'Warrior':  
         player_in_game = Warrior(player_name,'Warrior',max_health=150,melee_attack=10,magic_attack=0,
     mana=5, stamina=50, defense=4, pures=0, luck=0)
-        player_inventory.in_hand = Items.swords['rusty_short_sword']
+        player_inventory.in_hand = Items.rusty_short_sword
     ##-- Archer   --##
     elif player_class_choice == 'Archer':  
         player_in_game = Archer(player_name,'Archer',max_health=100,melee_attack=5,magic_attack=0,
     mana=50, stamina=10, defense=1, pures=0, luck=5)
-        player_inventory.in_hand = Items.bow['common_hunting_bow']
+        player_inventory.in_hand = Items.common_hunting_bow
     ##-- Assassin --##
     elif player_class_choice == 'Assassin': 
         player_in_game = Assassin(player_name,'Assassin',max_health=50,melee_attack=20,magic_attack=10,
     mana=25, stamina=10, defense=2, pures=100, luck=10)
-        player_inventory.in_hand = Items.dagger['rusty_dagger']
+        player_inventory.in_hand = Items.rusty_dagger
 
     gender_call()
     ##-- Back to main loop --##           
@@ -263,7 +264,11 @@ def char_creation():
 
 def random_enemy():
     global mob
-    mob = Mobs.random_enemy(player_in_game.level)
+    biome_info = Engine.get_tile(x,y) 
+    spawns = Biome.world_biomes[biome_info[0][2]]['spawns']
+    random_mob = random.choice(spawns)
+    mob = Mobs.hostail_mobs[random_mob]
+    # mob = Mobs.random_enemy(player_in_game.level)
 
 ##-- Encounter is to handle if we fight or not --##
 ##-- This probably needs some work             --##
@@ -273,44 +278,18 @@ def random_enemy():
 def encounter():
     
     ##-- num is subject to change as I add possible encounters --##
-    num = random.randint(1, 6)
-    random_enemy()
-
-    if num is 1:
-        clear()
-        Screen.display("You see a Deer/Animal.")
-        input("Press Enter to continue: ")
-        combat()
     
-    elif num is 2:
-        clear()
-        Screen.display("You came accoss some treaser")
-        input("Press Enter to continue: ")
+    num = random.randint(1, 1000)
+    random_enemy()
+    clear()
+    print(f"You ran in a {mob.name} on the path.")
+    pause()
+    combat()
+    if biome_or_subBiome == False:
         main_game_loop()
-
-    elif num is 3:
-        clear()
-        Screen.display("A mob attacks you!")
-        input("Press Enter to continue: ")
-        combat()
-
-    elif num is 4:
-        clear()
-        Screen.display("You see a person aproching! Do you hide?")
-        input("Press Enter to continue: ")
-        main_game_loop()
-
-    elif num is 5:
-        clear()
-        Screen.display('Some bandits attack you')
-        input("Press Enter to continue: ")
-        combat()
-
-    elif num is 6:
-        clear()
-        Screen.display(" This area is infested with blah blah")
-        input("Press Enter to continue: ")
-        main_game_loop()
+    else:
+        sub_map_move()
+    
 
 ##-- This Function is to level up the player --##
 ##-- Needs to add more stats and change the  --##
@@ -459,26 +438,41 @@ def win():
     message = f"You just defeated a {mob.name}\nGold Looted: {mob.pures}\nEXP Gained: {mob.exp_gained}"
     print(message)
     input('\nPess Enter To Continue:> ')
-    main_game_loop()
-
+    if biome_or_subBiome == False:
+        main_game_loop()
+    else:
+        sub_map_move()
 ##-- If in an unfortunate event the player dies this function is called --##
  
 def dead():
     print(f'You have died from {mob.name}')
 
+
 def get_resouces():
     pass
 
+
+def look_in_inventory():
+    print(player_inventory.in_hand)
+    print(player_inventory.can_carry)
+
+
 def sub_map_move():
-    global x, y, sub_x, sub_y
+    global biome_or_subBiome, x, y, sub_x, sub_y
     clear()
+    biome_or_subBiome = True
     map_info = Engine.get_tile(x,y)
-    sub_x = map_info[0][8]
-    sub_y = map_info[0][9]
+
     sub_map_info = Engine.get_subTile(x,y,sub_x,sub_y)
     Engine.update_subTile(x,y,sub_x,sub_y,True)
     Screen.display(f"Biome in: {sub_map_info[0][4]}    Room: {sub_map_info[0][5]}")
-    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Look For Resources\nInput a Number:>  ")
+    if sub_x == map_info[0][8] and sub_y == map_info[0][9]:
+        options = "Which way do you want to move?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Look For Resources\n(6): Inventory\n(7): Exit\nInput a Number:>  "
+    else:
+        options = "Which way do you want to move?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Look For Resources\n(6): Inventory\nInput a Number:>  "
+
+
+    move_to = input(options)
     ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
     if move_to == '1':  ##-- UP --##
         if sub_y > 0:
@@ -518,6 +512,12 @@ def sub_map_move():
 
     elif move_to == '5':
         get_resouces()
+
+    elif move_to == '6':
+        look_in_inventory()
+
+    elif move_to == '7' and sub_x == map_info[0][8] and sub_y == map_info[0][9]:
+        main_game_loop()
 
     elif move_to == 'Quit':  ##-- QUIT, I'll take this out after testing --## 
         sys.exit()
@@ -559,7 +559,8 @@ def inspect_area(biome):
 def main_game_loop():
     
     ##-- This is for navigating the map --##
-    global opening, x, y, sub_x, sub_y
+    global opening, x, y, sub_x, sub_y, biome_or_subBiome
+    biome_or_subBiome = False
     if os.path.getsize('Worldmap.db') == 12288:
         Engine.map_builder()
     # while os.path.getsize('Worldmap.db') != 10000:
@@ -570,9 +571,11 @@ def main_game_loop():
         input("Press Enter to continue: ")
         opening = False
     map_info = Engine.get_tile(x,y)
+    sub_x = map_info[0][8]
+    sub_y = map_info[0][9]
     Engine.update_tile(x,y,True)
     Screen.display(f"Location: {map_info[0][3]}")
-    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Inspect Area\nInput a Number:>  ")
+    move_to = input("Which way do you want to travel?\n\n(1): North\n(2): South\n(3): East\n(4): West\n(5): Inspect Area\n(6): Inventory\n(7): Look For Resources\nInput a Number:>  ")
     ##-- NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
     if move_to == '1':  ##-- UP --##
         if y > 0:

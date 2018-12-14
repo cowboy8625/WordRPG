@@ -7,160 +7,125 @@ import time
 
 ##-- Zombies are a close fighter, he needs to be with in 1 block from mob to attack --##
 
-class Zombie:
+class Mobs:
+    def __init__(self, name, mob_class, max_health, melee_attack, magic_attack, mana, stamina, defense, luck, gold_drop, exp_drop, item_drop):
+        self.level = 1                      # level can be changed using a function
+        self.name = name
+        self.mob_class = mob_class 
+        ##-- Stats --##               
+        self.max_health = max_health  
+        self.health = self.max_health
+        self.melee_attack = melee_attack
+        self.magic_attack = magic_attack
+        self.mana = mana
+        self.stamina = stamina
+        self.defense = defense
+        self.luck = luck
+        ##-- Equipable Slots --##
+        self.in_hand = ''                    # in hand is the weapon of the mob
+        self.armor = ''
+        ##-- Drops --##
+        self.gold_drop = gold_drop
+        self.exp_drop = exp_drop
+        self.item_drop = item_drop
+
+    def level_up(self):
+        pass
+        ##-- make this function bulit in instead of making it outside --##
     
-    def __init__(self):
+class Boss(Mobs):
 
-        self.name = 'Zombie'
-        self.mob_class = 'Undead'
-        self.in_hand = 'No Weapon'
-        self.max_health = 100 
-        self.health = 100 
-        self.level = 1
-        self.exp_gained = 10
-        self.armor = 0
-        self.melee_attack = 3
-        self.magic_attack = 0
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0 
-        self.pures = 5
-        self.luck = 0
+    def __init__(self, name, mob_class, max_health, melee_attack, magic_attack, mana, stamina, defense, luck, gold_drop, exp_drop, item_drop, special_item_drop):
+        super().__init__(name, mob_class, max_health, melee_attack, magic_attack, mana, stamina, defense, luck, gold_drop, exp_drop, item_drop)
+        self.special_item_drop = item_drop
 
-##-- Skeletons weld swords and some times have sheilds --##
+    def special_move(self):
+        pass
 
-class Skeleton:
-    
-    def __init__(self):
+##-- name, mob_class, max_health, melee_attack, magic_attack, mana, stamina, defense, luck, gold_drop, exp_drop, item_drop --##
+##-- enemy mobs --##
+zombie = Mobs("Zombie", "Undead", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+yeti = Mobs("Yeti", "Undead", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+bandit = Mobs("Bandit", "Human", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+mercinary = Mobs("Mercinary", "Human", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+skeleton = Mobs("Skeleton", "Undead", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+golem = Mobs("Golem", "Elemental", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+witch = Mobs("Witch", "Human", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
+hellHounds = Mobs("Hell Hounds", "Undead", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
 
-        self.name = 'Skeleton'
-        self.mob_class = 'Undead'
-        self.in_hand = 'No Weapon'
-        self.max_health = 100
-        self.health = 120
-        self.level = 1
-        self.exp_gained = 15
-        self.armor = 0
-        self.melee_attack = 5
-        self.magic_attack = 0
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0
-        self.pures = 10
-        self.luck = 0
+##-- animals mobs --##
 
-##-- Golems can either be Rock or Earth and have high health and also are know to throw there elements as projectilse --##
+dog = Mobs("Dog", "Animal", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Flesh")
 
-class Golem:
-
-    def __init__(self):
-        
-        self.name = 'Golem'
-        self.mob_class = 'Elemental'
-        self.in_hand = 'No Weapon'
-        self.max_health = 250
-        self.health = 250
-        self.level = 1
-        self.exp_gained = 55
-        self.armor = 0
-        self.melee_attack = 4
-        self.magic_attack = 0
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0
-        self.pures = 50
-        self.luck = 0
-        
-##-- Witches are magical creatures, they are not physically strong but can invoke spell to make damage or confuse the mob, making him lose a turn. --##
-
-class Witch:
-
-    def __init__(self):
-        
-        self.name = 'Witch'
-        self.mob_class = 'Human'
-        self.in_hand = 'No Weapon'
-        self.max_health = 100
-        self.health = 100
-        self.level = 1
-        self.exp_gained = 20
-        self.armor = 0
-        self.melee_attack = 7
-        self.magic_attack = 50
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0
-        self.pures = 15
-        self.luck = 0
+##-- bosses --##
+wyrm = Boss("Wyrm", "Dragon", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Dragon Scale", "Speical Drop")
+kracken = Boss("Kracken", "Dragon", 100 ,10 ,0 ,0 , 20, 15, 5, 10, 10, "Dragon Scale", "Speical Drop")
 
 
-##-- Hell Wolfes are wolfes speled by evil creatures. They are weak, but really fast. --##
+hostail_mobs = {"Zombie": zombie, "Yeti": yeti, "Bandit": bandit, "Mercinary": mercinary, "Skeleton": skeleton, "Golem": golem, "Witch": witch,
+                "Hell Hounds": hellHounds}
 
-class HellHounds:
+friendly_mobs = {"Dog": dog}
 
-    def __init__(self):
-        
-        self.name = 'Hell Hound'
-        self.mob_class = 'Elemental'
-        self.in_hand = 'No Weapon'
-        self.max_health = 80
-        self.health = 80
-        self.level = 1
-        self.exp_gained = 10
-        self.armor = 0
-        self.melee_attack = 6
-        self.magic_attack = 0
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0
-        self.pures = 5
-        self.luck = 0
+bosses = {"Wyrm": wyrm, "Kracken": kracken}
 
+
+
+
+
+
+
+
+
+
+
+
+
+##----------------------------------------------------------------------------------------------------------##
+##                                   OLD                                 CODE                               ##
 
 
 
 ##-- This is for a random enemy selection                                       --##
 ##-- It also makes sure the enemy is with in range of difficullty of the player --##
 
-def random_enemy(lvl):
+# def random_enemy(lvl):
 
-    lvl = [i for i in range((lvl - 3), (lvl + 5))]
-    lvl = random.choice(lvl)
-    zombie = Zombie()
-    skeleton = Skeleton()
-    golem = Golem()
-    witch = Witch()
-    hell_hound = HellHounds()
+#     lvl = [i for i in range((lvl - 3), (lvl + 5))]
+#     lvl = random.choice(lvl)
+#     zombie = Zombie()
+#     skeleton = Skeleton()
+#     golem = Golem()
+#     witch = Witch()
+#     hell_hound = HellHounds()
 
-    mobs_list = [zombie, skeleton, golem, witch, hell_hound]
-    num = random.randrange(0, len(mobs_list))
-    mob = mobs_list[num]
+#     mobs_list = [zombie, skeleton, golem, witch, hell_hound]
+#     num = random.randrange(0, len(mobs_list))
+#     mob = mobs_list[num]
 
-    while mob.level <= lvl:
-        level_up(mob)
-        
-    return mob
-    
-##-- This Levels up the mobs to make them harder as the player get to a higher level --## 
+#     while mob.level <= lvl:
+#         level_up(mob)
 
-def level_up(mob):
-    
+#     return mob
 
-    mob.level += 1
-    mob.exp_gained += mob.level
-    mob.max_health += mob.level
-    mob.health = mob.max_health
-    mob.defense += mob.level
-    mob.mana += mob.level
-    mob.stamina += mob.level
-    mob.luck += mob.level
-    mob.pures += mob.level
-    
+# ##-- This Levels up the mobs to make them harder as the player get to a higher level --##
+
+# def level_up(mob):
+
+
+#     mob.level += 1
+#     mob.exp_gained += mob.level
+#     mob.max_health += mob.level
+#     mob.health = mob.max_health
+#     mob.defense += mob.level
+#     mob.mana += mob.level
+#     mob.stamina += mob.level
+#     mob.luck += mob.level
+#     mob.pures += mob.level
+
     # print(f"Level: {mob.level}")
     # print(f"Health: {mob.max_health}")
     # print(f"Armor: {mob.armor}")
     # print(f"Mana: {mob.mana}")
     # print(f"Stamina: {mob.stamina}")
     # print(f"Luck: {mob.luck}")
-
-

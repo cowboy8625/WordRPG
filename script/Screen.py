@@ -27,21 +27,25 @@ cyan = Fore.CYAN
 ##-- without crashing for testing                                                     --##
 
 class Blank:
-
+    
     def __init__(self):
-
-        self.name = ' '
-        self.max_health = 0 
-        self.health = 0 
-        self.level = 0
+        
+        self.name = "Filler Mob"
+        self.mob_class = "CRAZY GOO GOO"
+        self.in_hand = "awdawdawawd"
+        self.level = 1
+        self.exp = 0
+        self.max_health = 100
+        self.health = self.max_health 
         self.armor = 0
-        self.melee_attack = 0
-        self.magic_attack = 0
-        self.mana = 0
-        self.stamina = 0
-        self.defense = 0 
-        self.pures = 0
-        self.luck = 0
+        self.melee_attack = 1000
+        self.magic_attack = 99
+        self.mana = 10
+        self.stamina = 70
+        self.defense = 1000
+        self.pures = 100
+        self.luck = 9000
+        self.exp_gained = 100
 filler = Blank()
 
 ##-- Clear Function --##
@@ -176,12 +180,12 @@ def vs_screen(player, mob=filler, width=44):
 def stat_screen(player, inv, mob=filler, width=44):
     ##-- Width sets how big the screen is no matter --##
     width = (len(player.name) + len(mob.name) + 43) 
-
+    
     left_p_class = f"{player.player_class}    "                                                            ##-- Left side is for player        --##    
     right_p_class = f"    {mob.mob_class}"                                                                 ##-- Right side is for Enemy        --##
     line_p_class = left_p_class + ' ' * (width - (len(left_p_class) + len(right_p_class))) + right_p_class ##-- Line puts the Left and Right   --##
                                                                                                            ##-- Sides together and uses width  --##
-    left_in_hand = f"Wielding: {inv.in_hand['name']}    "                                                  ##-- varible to know how many space --##
+    left_in_hand = f"Wielding: {inv.in_hand.name}    "                                                  ##-- varible to know how many space --##
     right_in_hand = f"    {mob.in_hand} :Wielding"                                                         ##-- to print                       --##
     line_in_hand = left_in_hand + ' ' * (width - (len(left_in_hand) + len(right_in_hand))) + right_in_hand
                                                                      
@@ -190,7 +194,7 @@ def stat_screen(player, inv, mob=filler, width=44):
     line_level = left_level + ' ' * (width - (len(left_level) + len(right_level))) + right_level
 
     left_exp = f"Exp: {player.exp}    "
-    right_exp =  f"    {mob.exp_gained} :Exp Drop"
+    right_exp =  f"    {mob.exp_drop} :Exp Drop"
     line_exp = left_exp + ' ' * (width - (len(left_exp) + len(right_exp))) + right_exp
 
     left_health = f"Health: {player.max_health}\\{player.health}    "

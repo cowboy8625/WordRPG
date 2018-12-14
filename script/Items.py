@@ -1,57 +1,84 @@
 ##-- This is for all the weapons, armor, potions or any other item type in the game --##
 
 
-staff = {
-        'weak_staff': {
-                        'name': 'Weak Staff',
-                        'melee_damage': 1, 
-                        'magic_damage': 10, 
-                        'rarity': 'common',
-                        'action_word': 'expelled',
-                        'value': 10},
-        'wooden_staff': {
-                        'name': 'Wooden Staff',
-                        'melee_damage': 2, 
-                        'magic_damage': 15, 
-                        'rarity': 'common',
-                        'action_word': 'expelled',
-                        'value': 10}
-                        }
-
-swords = {
-        'rusty_short_sword': {  
-                                'name': 'Rusty Short Sword',
-                                'melee_damage': 10, 
-                                'magic_damage': 0 , 
-                                'rarity': 'very common',
-                                'action_word': 'swung',
-                                'value': 10}
-                                }
-
-bow = {'common_hunting_bow': {  
-                                'name': 'Common Hunting Bow',
-                                'melee_damage': 10, 
-                                'magic_damage': 0, 
-                                'rarity': 'very common',
-                                'action_word': 'Shot',
-                                'value': 10}
-                                }
-
-dagger = {'rusty_dagger': {
-                            'name': 'Rusty Dagger',
-                            'melee_damage': 7, 
-                            'magic_damage': 0, 
-                            'rarity': 'common',
-                            'action_word': 'jabbed',
-                            'value': 10}
-                            }
+class Item:
+       def __init__(self, name, rarity, value):
+                self.name = name
+                self.rarity = rarity
+                self.value = value 
 
 
-leather = {'soft_leather_hide': {
-                                  'name': 'Soft Leather Hide',
-                                  'melee_armor': 2,
-                                  'magic_armor': 0,
-                                  'rarity': 'common', 
-                                  'value': 10}
-                                  }
+class Weapon(Item):
 
+        def __init__(self, name,  rarity, value, melee_damage, magic_damage, action_word):
+                super().__init__(name, rarity, value)
+                self.melee_damage = melee_damage
+                self.magic_damage = magic_damage
+                self.action_word = action_word
+
+
+class Armor(Item):
+
+        def __init__(self, name,  rarity, value, melee_defence, magic_defence):
+                super().__init__(name, rarity, value)
+                self.melee_defence = melee_defence
+                self.magic_defence = magic_defence
+
+
+class Spells:
+
+        def __init__(self, magic_damage):
+                self.magic_damage = magic_damage
+
+
+
+##-- Rarity Tags --##
+##-- "Very Common", "Common", "Uncommon", "Rare", "Very Rare", "Epic" --##
+
+##-- items --##
+rock = Item("Rock", "Very Common", 1)
+wood = Item("Wood", "Very Common", 1)
+magic_wood = Item("Magic Wood", "Rare", 10)
+bone = Item("Bone", "Common", 1)
+flint = Item("Flint", "Common", 1)
+clay = Item("Clay", "Common", 1)
+herb = Item("Herbs", "Common", 2)
+salt = Item("Salt", "Uncommon", 5)
+
+##-- staffs --##
+weak_staff = Weapon("Weak Staff", "Very Common", 5, 1, 10, "expelled")
+wooden_staff = Weapon("Wooden Staff", "Common", 6, 2, 15, "expelled")
+
+##-- swords --##
+rusty_short_sword = Weapon("Rusty Short Sword", "Very Common", 5, 10, 0, "swung")
+
+##-- bows --##
+common_hunting_bow = Weapon("Common Hunting Bow", "Very Common", 3, 10, 0, "shot")  
+
+##-- daggers --##
+rusty_dagger = Weapon("Rusty Dagger", "Common", 7, 7, 0, "jabbed")
+
+##-- armor --##
+soft_leather_hide = Armor("Soft Leather Hide", "Very Common", 5, 5, 0)
+
+##-- spells --##
+
+
+
+##-- All Items, Weapon, & Armor Dictionary's --##
+resources = {"Rock": rock, "Wood": wood, "Magic Wood": magic_wood, "Bone": bone, "Flint": flint, "Clay": clay, 
+                "Herbs": herb, "Salt": salt}
+
+staffs = {"Weak Staff": weak_staff, "Wooden Staff": wooden_staff}
+
+swords = {"Rusty Short Sword": rusty_short_sword}
+
+bows = {"Common Hunting Bow": common_hunting_bow}
+
+daggers = {"Rusty Dagger": rusty_dagger}
+
+armor = {"Soft Leather Hide": soft_leather_hide}
+
+spells = {}
+
+print(weak_staff.name)
