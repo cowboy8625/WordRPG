@@ -67,6 +67,7 @@ class PlayerInventory:
         self.can_carry = 10 
         self.on_player = []
         self.in_hand = ''
+        self.armor = ''
     ##-- Below code is not in use and will change one I start using it --##
     def add_to_inventory(self, add_item): 
 
@@ -97,8 +98,7 @@ class Player:
         self.level = 1
         self.exp = 0
         self.max_health = max_health
-        self.health = max_health  ##-- Not sure if this is smart but this should only set health to max on making the character --##
-        self.armor = 0
+        self.health = self.max_health  ##-- Not sure if this is smart but this should only set health to max on making the character --##
         self.melee_attack = melee_attack
         self.magic_attack = magic_attack
         self.mana = mana
@@ -396,12 +396,16 @@ def attack():
 
 ##-- Handles Spell Attacks and Healing or what ever else I can dream up --##
 def magic():
-    pass
+    print("not working yet. Sorry!")
+    pause()
+    attack()
 
 ##-- Handles the use of potions or and other usable item --##
 ##-- In combat or out                                    --##
 def use_item():
-    pass
+    print("not working yet. Sorry!")
+    pause()
+    attack()
 
 ##-- Run or Flee is to get away from the enemy in a fight --##
 def run():
@@ -446,10 +450,14 @@ def win():
  
 def dead():
     print(f'You have died from {mob.name}')
+    pause()
+    main()
 
 
 def get_resouces():
-    pass
+    print("not working yet. Sorry!")
+    pause()
+    attack()
 
 
 def look_in_inventory():
