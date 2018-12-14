@@ -335,8 +335,8 @@ def combat():
 
 def attack():
 
-    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand['melee_damage'])
-    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.in_hand['magic_damage'])    
+    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand.melee_damage)
+    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.in_hand.magic_damage)    
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
@@ -344,7 +344,7 @@ def attack():
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
         if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
-            print(f"\n{player_in_game.name} {player_inventory.in_hand['action']}")  ##-- finish me --##
+            print(f"\n{player_in_game.name} {player_inventory.in_hand.action_word}")  ##-- finish me --##
         else:
             mob.health -= player_melee_attack
             clear()       
@@ -455,6 +455,11 @@ def get_resouces():
 def look_in_inventory():
     print(player_inventory.in_hand)
     print(player_inventory.can_carry)
+    pause()
+    if biome_or_subBiome == False:
+        main_game_loop()
+    else:
+        sub_map_move()
 
 
 def sub_map_move():

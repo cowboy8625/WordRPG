@@ -44,6 +44,7 @@ flint = Item("Flint", "Common", 1)
 clay = Item("Clay", "Common", 1)
 herb = Item("Herbs", "Common", 2)
 salt = Item("Salt", "Uncommon", 5)
+flesh = Item("Flesh", "Very Common", 0)
 
 ##-- staffs --##
 weak_staff = Weapon("Weak Staff", "Very Common", 5, 1, 10, "expelled")
@@ -67,7 +68,7 @@ soft_leather_hide = Armor("Soft Leather Hide", "Very Common", 5, 5, 0)
 
 ##-- All Items, Weapon, & Armor Dictionary's --##
 resources = {"Rock": rock, "Wood": wood, "Magic Wood": magic_wood, "Bone": bone, "Flint": flint, "Clay": clay, 
-                "Herbs": herb, "Salt": salt}
+                "Herbs": herb, "Salt": salt, "Flesh": flesh}
 
 staffs = {"Weak Staff": weak_staff, "Wooden Staff": wooden_staff}
 
