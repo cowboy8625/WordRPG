@@ -64,10 +64,10 @@ class PlayerInventory:
 
     def __init__(self):
 
-        self.can_carry = 10 
-        self.on_player = []
-        self.in_hand = ''
-        self.armor = ''
+        self.inventory_item_limit = 10 
+        self.bag = []
+        self.equiped_weapon = ''
+        self.equiped_armor = ''
     ##-- Below code is not in use and will change one I start using it --##
     def add_to_inventory(self, add_item): 
 
@@ -91,7 +91,7 @@ player_inventory = PlayerInventory()
 class Player:
     
     def __init__(self, name, player_class, max_health, melee_attack, magic_attack,
-    mana, stamina, defense, pures, luck):
+    max_mana, max_stamina, defense, pures, luck):
         
         self.name = name
         self.player_class = player_class
@@ -101,8 +101,10 @@ class Player:
         self.health = self.max_health  ##-- Not sure if this is smart but this should only set health to max on making the character --##
         self.melee_attack = melee_attack
         self.magic_attack = magic_attack
-        self.mana = mana
-        self.stamina = stamina
+        self.max_mana = max_mana
+        self.mana = self.max_mana
+        self.max_stamina = max_stamina
+        self.stamina = self.max_stamina
         self.defense = defense
         self.pures = pures
         self.luck = luck
@@ -238,22 +240,22 @@ def char_creation():
     ##-- Mage     --##
     if player_class_choice == 'Mage':  
         player_in_game = Mage(player_name,'Mage',max_health=80,melee_attack=1,magic_attack=10,
-    mana=50, stamina=10, defense=1, pures=0, luck=1)
+    max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
         player_inventory.in_hand = Items.weak_staff
     ##-- Warrior  --##
     elif player_class_choice == 'Warrior':  
         player_in_game = Warrior(player_name,'Warrior',max_health=150,melee_attack=10,magic_attack=0,
-    mana=5, stamina=50, defense=4, pures=0, luck=0)
+    max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
         player_inventory.in_hand = Items.rusty_short_sword
     ##-- Archer   --##
     elif player_class_choice == 'Archer':  
         player_in_game = Archer(player_name,'Archer',max_health=100,melee_attack=5,magic_attack=0,
-    mana=50, stamina=10, defense=1, pures=0, luck=5)
+    max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
         player_inventory.in_hand = Items.common_hunting_bow
     ##-- Assassin --##
     elif player_class_choice == 'Assassin': 
         player_in_game = Assassin(player_name,'Assassin',max_health=50,melee_attack=20,magic_attack=10,
-    mana=25, stamina=10, defense=2, pures=100, luck=10)
+    max_mana=25, max_stamina=10, defense=2, pures=100, luck=10)
         player_inventory.in_hand = Items.rusty_dagger
 
     gender_call()
@@ -461,8 +463,8 @@ def get_resouces():
 
 
 def look_in_inventory():
-    print(player_inventory.in_hand)
-    print(player_inventory.can_carry)
+    print(player_inventory.bag)
+    print(player_inventory.inventory_item_limit)
     pause()
     if biome_or_subBiome == False:
         main_game_loop()
