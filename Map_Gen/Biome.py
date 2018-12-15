@@ -60,8 +60,8 @@ world_biomes = {
      
      'wld': {
             'name': 'Woodlands',
-            'resource': ['Logs'],
-            'spawns': ['Earth Golem'],
+            'resource': ['Wood'],
+            'spawns': ['Zombie'],
             'rarity': 'Uncommon',
             'enterable': False,
             'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -79,7 +79,7 @@ world_biomes = {
      'lak': {
             'name': 'Lake',
             'resource': ['Water'],
-            'spawns': ['Earth Golem'],
+            'spawns': ['Zombie'],
             'rarity': 'Rare',
             'enterable': True,
             'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -88,7 +88,7 @@ world_biomes = {
       'rvr': {
              'name': 'Rive',
              'resource': ['Water'],
-             'spawns': ['Earth Golem'],
+             'spawns': ['Zombie'],
              'rarity': 'Rare',
              'enterable': True,
              'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -96,8 +96,8 @@ world_biomes = {
 
        'twn': {
                'name': 'Town',
-               'resource': ['NaN'],
-               'spawns': ['NaN'],
+               'resource': ['Water'],
+               'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': False,
                'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -105,8 +105,8 @@ world_biomes = {
 
        'vil': {
                'name': 'Village',
-               'resource': ['NaN'],
-               'spawns': ['NaN'],
+               'resource': ['Water'],
+               'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': True,
                'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -132,7 +132,7 @@ world_biomes = {
 
         'gld': {
                'name': 'Grasslands',
-               'resource': ['grass'],
+               'resource': ['Water'],
                'spawns': ['Deer', 'Buffalo', 'Cow', 'Bull', 'Bandit', 'Bear'],
                'rarity': 'Common',
                'enterable': False,
@@ -141,8 +141,8 @@ world_biomes = {
 
         'wtd': {
                'name': 'Wetlands',
-               'resource': ['None'],
-               'spawns': ['None'],
+               'resource': ['Water'],
+               'spawns': ['Zombie'],
                'rarity': 'Common',
                'enterable': False,
                'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
@@ -159,7 +159,7 @@ world_biomes = {
 
         'agl': {
                'name': 'Alpine Grasslands',
-               'resourse': ['Pine'],
+               'resourse': ['Water'],
                'spawns': ['Zombie', 'Bandit'],
                'rarity': 'Rare',
                'enterable': False,
@@ -168,7 +168,7 @@ world_biomes = {
 
         'msh': {
                'name': 'Marsh',
-               'resourse': ['Crawfish'],
+               'resourse': ['Water'],
                'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': False,
@@ -177,8 +177,8 @@ world_biomes = {
 
         'ocn': {
                'name': 'Ocean',
-               'resourse': ['Salt Water'],
-               'spawns': ['Sea Monster'],
+               'resourse': ['Water'],
+               'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': False,
                'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
