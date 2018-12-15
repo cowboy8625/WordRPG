@@ -263,6 +263,9 @@ def random_enemy():
     global mob
     biome_info = Engine.get_tile(x,y) 
     spawns = Biome.world_biomes[biome_info[0][2]]['spawns']
+    if spawns == ["None"]:
+        mob = "X"
+        return
     random_mob = random.choice(spawns)
     mob = Mobs.hostail_mobs[random_mob]
     # mob = Mobs.random_enemy(player_in_game.level)
