@@ -7,8 +7,7 @@ me know.
 
 Cowboy:
 
-    I am working on the map generation at the moment.
-    Working on Inventory interaction
+    working on menu display that can be reused.
 
 BJTMastermind:
 
@@ -21,15 +20,11 @@ Giioke:
 Things to do:
 
 
-    1) The help() menu needs to be made.
+    1) Move all things that arent need in main to new file
 
-        Function of it:
+    2) Make a main based player class
 
-            The Help Menu needs to guide the player in any and every part of the game to how the combat works
-            to how movement works. Pretty much anything in the game needs to be explained.
-            I think the help() screen or some for of help function should be in the game at all times even
-            if you are just roaming around the world and you type help.
-
+    3) Try and move all globel varibles to class or dictionary's
 
 Notes:
     Feel free to add anything you want to add.

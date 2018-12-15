@@ -1,6 +1,7 @@
 ##-- This module is to handle all the print screens for the menus --##
 
 from Map_Gen import Biome
+from script import Items
 
 ##-- All Imports --##
 
@@ -32,12 +33,12 @@ class Blank:
         
         self.name = "Filler Mob"
         self.mob_class = "CRAZY GOO GOO"
-        self.in_hand = "awdawdawawd"
+        self.in_hand = Items.fist
         self.level = 1
         self.exp = 0
         self.max_health = 100
         self.health = self.max_health 
-        self.armor = 0
+        self.armor = Items.farm_clothing
         self.melee_attack = 1000
         self.magic_attack = 99
         self.mana = 10
@@ -201,7 +202,7 @@ def stat_screen(player, inv, mob=filler, width=44):
     right_health = f"    {mob.health}/{mob.max_health} :Health"
     line_health = left_health + ' ' * (width - (len(left_health) + len(right_health))) + right_health
 
-    left_armor = f"Armor: {player.armor}    "
+    left_armor = f"Armor: {inv.equiped_armor.name}    "
     right_armor = f"    {mob.armor} :Armor"
     line_armor = left_armor + ' ' * (width - (len(left_armor) + len(right_armor))) + right_armor
 
@@ -265,6 +266,23 @@ def type_to_screen(message):
 
 
 
+def menu_display(top, middle, bottom):
+
+    top_bottom_border = "#"
+    left_side_border = "#-"
+    right_side_border = "-#"
+    space = " " * 3
+
+    print()
+
+    for line in top:
+        print(left_side_border + space + line + space +right_side_border)
+
+    for line in middle:
+        print(left_side_border + space + line + space +right_side_border)
+
+    for line in bottom:
+        print(left_side_border + space + line + space +right_side_border)
 
 
         

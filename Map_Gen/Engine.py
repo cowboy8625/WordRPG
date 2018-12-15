@@ -187,9 +187,6 @@ def neat_layout():
 def make_map_datebase():
     with conn:
         c.execute("""CREATE TABLE IF NOT EXISTS tile (coords_x int, coords_y int, abriv text, place_name text, rarity text, difficulty int, enterable boolean, tile_level int, exit_x int, exit_y int, discovered boolean)""")
-
-def make_sub_map_table():
-    with conn:
         c.execute("""CREATE TABLE IF NOT EXISTS subTile (from_x int, from_y int, coords_x int, coords_y int, biome_name text, place_name text, difficulty int, tile_level int, discovered boolean)""")
 
 def insert_tile(tile):

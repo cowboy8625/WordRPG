@@ -5,7 +5,17 @@ class Item:
        def __init__(self, name, rarity, value):
                 self.name = name
                 self.rarity = rarity
-                self.value = value 
+                self.value = value
+                
+class Resources(Item):
+        def __init__(self, name, rarity, value, required_tool):
+                super().__init__(name, rarity, value)
+                self.required_tool = required_tool
+
+class Tool(Item):
+        def __init__(self, name, rarity, value):
+                super().__init__(name, rarity, value)
+
 
 
 class Weapon(Item):
@@ -36,15 +46,30 @@ class Spells:
 ##-- "Very Common", "Common", "Uncommon", "Rare", "Very Rare", "Epic" --##
 
 ##-- items --##
-rock = Item("Rock", "Very Common", 1)
-wood = Item("Wood", "Very Common", 1)
-magic_wood = Item("Magic Wood", "Rare", 10)
-bone = Item("Bone", "Common", 1)
-flint = Item("Flint", "Common", 1)
-clay = Item("Clay", "Common", 1)
-herb = Item("Herbs", "Common", 2)
-salt = Item("Salt", "Uncommon", 5)
-flesh = Item("Flesh", "Very Common", 0)
+bucket = Item("Bucket", "Common", 0, )
+
+
+
+##--resources --##
+clay = Resources("Clay", "Common", 1, "Shovel")
+flint = Resources("Flint", "Common", 1, "Fist")
+herb = Resources("Herbs", "Common", 2, "Fist")
+salt = Resources("Salt", "Uncommon", 5, "Pickaxe")
+rock = Resources("Rock", "Very Common", 1, "Pickaxe")
+wood = Resources("Wood", "Very Common", 1, "Axe")
+magic_wood = Resources("Magic Wood", "Rare", 10, "Axe")
+bone = Resources("Bone", "Common", 1, "Fist")
+flesh = Resources("Flesh", "Very Common", 0, "Fist")
+water = Resources("Water", "Very Common", 0, "Bucket")
+
+##-- starting items --##
+fist = Weapon("Fist", "Ultra Epic", 0, 0, 0, "punched")
+farm_clothing = Armor("Farm Clothes", "Epic", 0, 0, 0)
+
+##-- tools --##
+axe = Tool("Axe", "Common", 1)
+pickaxe = Tool("Pickaxe", "Common", 1)
+shovel = Tool("Shovel", "Common", 1)
 
 ##-- staffs --##
 weak_staff = Weapon("Weak Staff", "Very Common", 5, 1, 10, "expelled")
@@ -64,11 +89,16 @@ soft_leather_hide = Armor("Soft Leather Hide", "Very Common", 5, 5, 0)
 
 ##-- spells --##
 
+fire_ball = Spells(200000000000000000000000000) # LOL
 
 
-##-- All Items, Weapon, & Armor Dictionary's --##
+##-- All Tool, Items, Weapon, Armor & Spell Dictionary's --##
 resources = {"Rock": rock, "Wood": wood, "Magic Wood": magic_wood, "Bone": bone, "Flint": flint, "Clay": clay, 
-                "Herbs": herb, "Salt": salt, "Flesh": flesh}
+                "Herbs": herb, "Salt": salt, "Flesh": flesh, "Water": water}
+
+items = {"Bucket": bucket}
+
+tools = {"Axe": axe, "Pickaxe": pickaxe, "Shovel": shovel}
 
 staffs = {"Weak Staff": weak_staff, "Wooden Staff": wooden_staff}
 
@@ -81,5 +111,3 @@ daggers = {"Rusty Dagger": rusty_dagger}
 armor = {"Soft Leather Hide": soft_leather_hide}
 
 spells = {}
-
-print(weak_staff.name)

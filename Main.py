@@ -14,13 +14,8 @@ import time
 ##-- Custom Imports --##
 from Map_Gen import Engine
 from Map_Gen import Biome
-from script import InfoDics
-from script import Items
-from script import Map
-from script import Mobs
-from script import NPC
-from script import Screen
-from script import Story
+from script import InfoDics, Items, Map, Mobs, NPC, Screen, Story
+
 import ChangeLog
 
 ##-- Globel Varibles --##
@@ -66,12 +61,15 @@ class PlayerInventory:
 
         self.inventory_item_limit = 10 
         self.bag = []
-        self.equiped_weapon = ''
-        self.equiped_armor = ''
+        self.equiped_weapon = Items.fist
+        self.equiped_armor = Items.farm_clothing
+    
     ##-- Below code is not in use and will change one I start using it --##
     def add_to_inventory(self, add_item): 
 
         self.add_item = add_item
+        if len(self.bag) < self.inventory_item_limit:
+            self.bag.append(self.add_item)
 
     def remove_from_inv(self, remove_item):
 
@@ -133,13 +131,11 @@ def main():
     choice = input('\n\nSELECT A NUMBER:> ')
     
     if choice == '1':
-        char_creation()
-    
+        char_creation() 
     elif choice == '2':
         print('NOT AN OPTION YET') ##-- LOADED AND SAVE --##
         time.sleep(2)
         main()
-
     elif choice == '3':
         print('NOT AN OPTION YET') ##-- Help  --##
         time.sleep(2)
@@ -148,7 +144,6 @@ def main():
         ChangeLog.change_log_print()
         pause()
         main()
-
     elif choice == '5':
         sys.exit()
     else:
@@ -286,7 +281,7 @@ def encounter():
     clear()
     print(f"You ran in a {mob.name} on the path.")
     pause()
-    combat()
+    #combat()
     if biome_or_subBiome == False:
         main_game_loop()
     else:
@@ -336,9 +331,9 @@ def combat():
 ##-- Different functions                    --##
 
 def attack():
-
-    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.in_hand.melee_damage)
-    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.in_hand.magic_damage)    
+    
+    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.equiped_weapon.melee_damage)
+    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.equiped_weapon.magic_damage)    
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
@@ -457,9 +452,17 @@ def dead():
 
 
 def get_resouces():
-    print("not working yet. Sorry!")
+    biome_into = Engine.get_tile(x,y)
+    biome_item = Biome.world_biomes[biome_into[2]]['resource']
+    random_item = random.choice(biome_item)
+    item = Items.resources[random_item]
+
+    player_inventory.add_item(item)
     pause()
-    attack()
+    if biome_or_subBiome == False:
+        main_game_loop()
+    else:
+        sub_map_move() 
 
 
 def look_in_inventory():
@@ -631,11 +634,21 @@ def main_game_loop():
     elif move_to == '5':
         inspect_area(map_info[0][2])
 
+    elif move_to == '6':
+        look_in_inventory()
+
+    elif move_to == '7':
+        get_resouces()
+
     elif move_to == 'Quit':  ##-- QUIT, I'll take this out after testing --## 
         sys.exit()
+        
+    else:
+        print("Not an option.")
+        pause()
+        main_game_loop()
 
 Engine.make_map_datebase()
-Engine.make_sub_map_table()
-# if os.path.getsize('Worldmap.db') == 0:
-#     Engine.map_builder()
+
+
 main()
