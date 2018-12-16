@@ -149,7 +149,7 @@ world_biomes = {
 
         'stm': {
                'name': 'Salt Marsh',
-               'resourse': ['Salt'],
+               'resource': ['Salt'],
                'spawns': ['Zombies'],
                'rarity': 'Uncommon',
                'enterable': False,
@@ -158,7 +158,7 @@ world_biomes = {
 
         'agl': {
                'name': 'Alpine Grasslands',
-               'resourse': ['Water'],
+               'resource': ['Water'],
                'spawns': ['Zombie', 'Bandit'],
                'rarity': 'Rare',
                'enterable': False,
@@ -167,7 +167,7 @@ world_biomes = {
 
         'msh': {
                'name': 'Marsh',
-               'resourse': ['Water'],
+               'resource': ['Water'],
                'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': False,
@@ -176,7 +176,7 @@ world_biomes = {
 
         'ocn': {
                'name': 'Ocean',
-               'resourse': ['Water'],
+               'resource': ['Water'],
                'spawns': ['Zombie'],
                'rarity': 'Rare',
                'enterable': False,
