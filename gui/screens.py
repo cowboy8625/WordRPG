@@ -1,7 +1,5 @@
 from .const import *
 
-
-
 screen_start = f"""
 WELCOME TO THE WASTELAND
 
@@ -15,7 +13,6 @@ WELCOME TO THE WASTELAND
 ENTER A NUMBER TO CONTINUE
 
 """
-
 
 screen_class = """
 CHOOSE YOUR CLASS

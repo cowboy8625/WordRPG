@@ -1,5 +1,5 @@
-##-- This is dictionarys for all the biomes --##
-'''
+# This is dictionarys for all the biomes
+"""
 Biome names          |abriv|            Resourses                      |            Mob/Animal_Spawns
 
 'Cave'               |'cav'|           'Rock', 'Bones'                       'Skeleton', 'Bears', 'Zombie'
@@ -23,13 +23,12 @@ Biome names          |abriv|            Resourses                      |        
 
 Area Names:
 North  if biome is -x is not its own biome and +x -y +y is same biome as its self.
-'''
-##-- Import Modules --##
+"""
 
+# Import Modules
 from Map_Gen import SubBiome
 
-##-- Biome Dictionarys --##
-
+# Biome Dictionarys
 world_biomes = {
     'for': {
             'name': 'Forest', 
