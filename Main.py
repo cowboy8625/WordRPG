@@ -510,14 +510,14 @@ def sub_map_move():
     clear()
     biome_or_subBiome = True
     map_info = Engine.get_tile(x, y)
-
     sub_map_info = Engine.get_subTile(x, y, sub_x, sub_y)
     Engine.update_subTile(x, y, sub_x, sub_y, True)
     Screen.display(f"Biome in: {sub_map_info[0][4]}    Room: {sub_map_info[0][5]}")
 
     if sub_x == map_info[0][8] and sub_y == map_info[0][9]:
         options = "Which way do you want to move?\n\n" \
-                  "(1): North\n(2): South\n" \
+                  "(1): North\n" \
+                  "(2): South\n" \
                   "(3): East\n" \
                   "(4): West\n" \
                   "(5): Look For Resources\n" \
@@ -640,6 +640,7 @@ def main_game_loop():
     sub_y = map_info[0][9]
     Engine.update_tile(x, y, True)
     Screen.display(f"Location: {map_info[0][3]}")
+
     move_to = input(
         "Which way do you want to travel?\n\n"
         "(1): North\n"

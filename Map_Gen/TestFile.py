@@ -1,9 +1,8 @@
-##-- Nothing In this File is needed --##
-
+# Nothing In this File is needed
 x = 5
 y = 3
 map_width = 6
-map_hight = 6
+map_height = 6
 
 
 position = x + (y * map_width)
@@ -14,7 +13,7 @@ coord_x = position - (map_width * coord_y)
 
 print(f"Postion: {position}")
 print('--------------------')
-print(f"Total Volume of Map: {map_width * map_hight}")
+print(f"Total Volume of Map: {map_width * map_height}")
 print('--------------------')
 print(f"X is: {coord_x} --- {coord_x == x} X Should: {x}")
 print('--------------------')
