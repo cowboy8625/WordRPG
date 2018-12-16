@@ -2,13 +2,13 @@ import sqlite3
 import pandas
 
 
-##-- mapfile is the varible name of the file that the map is stored in --##
+# mapfile is the varible name of the file that the map is stored in
 saveFile = 'player_data.db'
 
-##-- Conn connects to the database --##
+# Conn connects to the database
 conn = sqlite3.connect(saveFile)
 
-##-- c is what lets you write 
+# c is what lets you write
 c = conn.cursor()
 
 
@@ -19,8 +19,23 @@ def neat_layout():
 
 def save_player_datebase():
     with conn:
-        c.execute("""CREATE TABLE IF NOT EXISTS player_stats (player_name TEXT, player_class TEXT, player_level INT, exp_amount INT, max_health INT, health INT, melee_attack INT, magic_attack INT, max_mana INT, mana INT, max_stamina INT, stamina INT, defence INT, pures INT, luck INT)""")
+        c.execute("""CREATE TABLE IF NOT EXISTS player_stats (player_name TEXT, 
+        player_class TEXT, 
+        player_level INT, 
+        exp_amount INT, 
+        max_health INT, 
+        health INT, 
+        melee_attack INT, 
+        magic_attack INT, 
+        max_mana INT, 
+        mana INT, 
+        max_stamina INT, 
+        stamina INT, 
+        defence INT, 
+        pures INT, 
+        luck INT)""")
         c.execute("""CREATE TABLE IF NOT EXISTS player_inventory (inventory_item_limit INT, bag )""")
+
 
 def get_player_info(x,y):
     c.execute("SELECT * FROM tile WHERE coords_x=:coords_x AND coords_y=:coords_y;", {'coords_x': x, 'coords_y': y})

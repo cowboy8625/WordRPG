@@ -88,17 +88,3 @@ class Biome(object):
     @info.deleter
     def info(self):
         del self._info
-        
-
-
-
-
-    
-
-
-        
-
-
-        
-        
-        
