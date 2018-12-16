@@ -10,7 +10,6 @@ import random
 import sys
 import textwrap
 import time
-
 # Custom Imports
 from Map_Gen import Engine
 from Map_Gen import Biome
@@ -49,7 +48,18 @@ small = 100
 medium = 500
 large = 1000
 
-
+# Downloads modules
+def setup():
+    if os.path.isfile("Worldmap.db"):
+        return
+    else:
+        if os.name == 'nt':
+            os.system("pip install colorama > NUL")
+            os.system("pip install Pandas > NUL")
+        else:
+            os.system("pip install colorama > /dev/null")
+            os.system("pip install Pandas > /dev/null")
+    
 # Clears Print Screen
 def clear():
     if os.name == 'nt':
@@ -139,6 +149,7 @@ class Assassin(Player):
 # Main() is the first function
 # Gets input from player to either Start Load Help or Exit
 def main():
+    setup()
     Screen.main_menu_screen()
     choice = input('\n\nSELECT A NUMBER:> ')
 
