@@ -3,26 +3,24 @@
 ##-- Waste Land                     --##
 
 ##-- Import Modules --##
-import cmd
 import os
 import random
 import sys
-import textwrap
 import time
 
 
 ##-- Custom Imports --##
 from Map_Gen import Engine
 from Map_Gen import Biome
-from script import InfoDics, Items, Map, Mobs, NPC, Screen, Story
+from script.Character import *
+from script import InfoDics, Items, Screen, Story
 
 import ChangeLog
 
-##-- Globel Varibles --##
+##-- Global Variables --##
 player_name = 'X'         ##-- This is for the Funtion char_creation()            --##
 player_class_choice = 'X' ##-- This is also for the Funtion char_creation()       --##
-player_in_game = 'X'      ##-- Again this is also for the Funtion char_creation() --##
-mob = 'X'                 ##-- This varible is to hold the current mob player is fighing --##
+player_in_game = None      ##-- Again this is also for the Funtion char_creation() --##
 gender = 'X'              ##-- This varible sets the pronouns for the story and is set in the function in char_creation() in gender_call() --##
 opening = True            ##-- Only True if hasnt seen opening story --##
 turn = True               ##-- If True it's the players turn         --##
@@ -53,75 +51,7 @@ def pause():
     
     input("Press Enter To Continue:> ")
 
-##-- Inventory layout --##
 
-class PlayerInventory:
-
-    def __init__(self):
-
-        self.inventory_item_limit = 10 
-        self.bag = []
-        self.equiped_weapon = Items.fist
-        self.equiped_armor = Items.farm_clothing
-    
-    ##-- Below code is not in use and will change one I start using it --##
-    def add_to_inventory(self, add_item): 
-
-        self.add_item = add_item
-        if len(self.bag) < self.inventory_item_limit:
-            self.bag.append(self.add_item)
-
-    def remove_from_inv(self, remove_item):
-
-        self.remove_item = remove_item
-    
-    def hand_swap(self, requested_item):
-
-        self.requested_item = requested_item
-
-##-- Player Inventory __init__ Call --##
-
-player_inventory = PlayerInventory()
-
-##-- Setting up player classes                                                    --##
-##-- The player class handles all the players stat creation                       --##
-##-- The Mage, Warrior, Archer and Assassin classes will inherit the Player class --##
-class Player:
-    
-    def __init__(self, name, player_class, max_health, melee_attack, magic_attack,
-    max_mana, max_stamina, defense, pures, luck):
-        
-        self.name = name
-        self.player_class = player_class
-        self.level = 1
-        self.exp = 0
-        self.max_health = max_health
-        self.health = self.max_health  ##-- Not sure if this is smart but this should only set health to max on making the character --##
-        self.melee_attack = melee_attack
-        self.magic_attack = magic_attack
-        self.max_mana = max_mana
-        self.mana = self.max_mana
-        self.max_stamina = max_stamina
-        self.stamina = self.max_stamina
-        self.defense = defense
-        self.pures = pures
-        self.luck = luck
-
-class Mage(Player):
-    pass
-    
-class Warrior(Player):  
-    ##-- Adrenaline Junky --##
-    ##-- Lets Warrior the ablity to take 1 hits before death --##
-    ##-- Ability can level up as player gets stronger --##
-    pass
-
-class Archer(Player):
-    pass
-
-class Assassin(Player):
-    pass
-    
 ##-- Main() is the first function --##
 ##-- Gets input from player to either Start Load Help or Exit --##
 
@@ -234,24 +164,24 @@ def char_creation():
     ##-- class to be Mage, Warrior, Archer or Assassin                          --## 
     ##-- Mage     --##
     if player_class_choice == 'Mage':  
-        player_in_game = Mage(player_name,'Mage',max_health=80,melee_attack=1,magic_attack=10,
+        player_in_game = Mage(char_name=player_name, player_class='Mage',max_health=80,melee_attack=1,magic_attack=10,
     max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
-        player_inventory.in_hand = Items.weak_staff
+        player_in_game.equipped_weapon = Items.weak_staff
     ##-- Warrior  --##
     elif player_class_choice == 'Warrior':  
-        player_in_game = Warrior(player_name,'Warrior',max_health=150,melee_attack=10,magic_attack=0,
+        player_in_game = Warrior(char_name=player_name, player_class='Warrior',max_health=150,melee_attack=10,magic_attack=0,
     max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
-        player_inventory.in_hand = Items.rusty_short_sword
+        player_in_game.equipped_weapon = Items.rusty_short_sword
     ##-- Archer   --##
     elif player_class_choice == 'Archer':  
-        player_in_game = Archer(player_name,'Archer',max_health=100,melee_attack=5,magic_attack=0,
+        player_in_game = Archer(char_name=player_name, player_class='Archer',max_health=100,melee_attack=5,magic_attack=0,
     max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
-        player_inventory.in_hand = Items.common_hunting_bow
+        player_in_game.equipped_weapon = Items.common_hunting_bow
     ##-- Assassin --##
     elif player_class_choice == 'Assassin': 
-        player_in_game = Assassin(player_name,'Assassin',max_health=50,melee_attack=20,magic_attack=10,
+        player_in_game = Assassin(char_name=player_name,player_class='Assassin',max_health=50,melee_attack=20,magic_attack=10,
     max_mana=25, max_stamina=10, defense=2, pures=100, luck=10)
-        player_inventory.in_hand = Items.rusty_dagger
+        player_in_game.equipped_weapon = Items.rusty_dagger
 
     gender_call()
     ##-- Back to main loop --##           
@@ -260,12 +190,12 @@ def char_creation():
 ##-- Makes a random mob with in the range of the players level --##
 
 def random_enemy():
-    global mob
-    biome_info = Engine.get_tile(x,y) 
+    biome_info = Engine.get_tile(x,y)
     spawns = Biome.world_biomes[biome_info[0][2]]['spawns']
+    if spawns == ["None"]:
+        return None
     random_mob = random.choice(spawns)
-    mob = Mobs.hostail_mobs[random_mob]
-    # mob = Mobs.random_enemy(player_in_game.level)
+    return hostile_mobs[random_mob]
 
 ##-- Encounter is to handle if we fight or not --##
 ##-- This probably needs some work             --##
@@ -277,9 +207,10 @@ def encounter():
     ##-- num is subject to change as I add possible encounters --##
     
     num = random.randint(1, 1000)
-    random_enemy()
+    mob = random_enemy()
     clear()
-    print(f"You ran in a {mob.name} on the path.")
+    if mob is not None:
+        print(f"You ran in a {mob.char_name} on the path.")
     pause()
     #combat()
     if biome_or_subBiome == False:
@@ -305,24 +236,24 @@ def level_up(player):
 
 ##-- This is to set up the fighting system --##
 
-def combat():
+def combat(mob):
 
     clear()
     Screen.vs_screen(player_in_game, mob)
-    Screen.stat_screen(player_in_game, player_inventory, mob)
+    Screen.stat_screen(player_in_game, mob)
     option = input('\n(1): Attack\n(2): Magic\n(3): Use Item\n(4): Run\nChoose A Number:> ')
 
     if option == '1':
-        attack()
+        attack(mob)
 
     elif option == '2':
-        magic()
+        magic(mob)
 
     elif option == '3':
-        use_item()
+        use_item(mob)
 
     elif option =='4':
-        run()
+        run(mob)
 ##-- Attack handles melee and magic attacks --##
 ##-- Unlike most games magic attacks aren't --##
 ##-- Just spells "magic attack" uses the    --##
@@ -330,18 +261,18 @@ def combat():
 ##-- Damage. But spells will be delt with a --##
 ##-- Different functions                    --##
 
-def attack():
+def attack(mob):
     
-    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_inventory.equiped_weapon.melee_damage)
-    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_inventory.equiped_weapon.magic_damage)    
+    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
+    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_in_game.equipped_weapon.magic_damage)
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
-    Screen.stat_screen(player_in_game,player_inventory, mob)
+    Screen.stat_screen(player_in_game, mob)
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
         if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
-            print(f"\n{player_in_game.name} {player_inventory.in_hand.action_word}")  ##-- finish me --##
+            print(f"\n{player_in_game.name} {player_in_game.equipped_weapon.action_word}")  ##-- finish me --##
         else:
             mob.health -= player_melee_attack
             clear()       
@@ -349,20 +280,20 @@ def attack():
 
         input('\nPess Enter To Continue:> ')
         if mob.health <= 0:
-            win()
+            win(mob)
         
         if enemy_attack == round(mob.melee_attack / 2):  ##--  Mob Attack --##
             clear()
-            print(f'\n{mob.name} missed!')
+            print(f'\n{mob.char_name} missed!')
         else:
             player_in_game.health -= enemy_attack
             clear()
-            print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
-        input('\nPess Enter To Continue:> ')
+            print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
+        input('\nPress Enter To Continue:> ')
         if player_in_game.health <= 0:
-            dead()
+            dead(mob)
         else:
-            combat()
+            combat(mob)
     
     elif attack_type == '2':
 
@@ -376,36 +307,36 @@ def attack():
 
         input('\nPress Enter To Continue:> ')
         if mob.health <= 0:
-            win()
+            win(mob)
         
         if enemy_attack == round(mob.magic_attack / 2):  ##--  Mob Attack --##
             clear()
-            print(f'\n{mob.name} missed!')
+            print(f'\n{mob.char_name} missed!')
         else:
             player_in_game.health -= enemy_attack
             clear()
-            print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+            print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
         input('\nPess Enter To Continue:> ')
         if player_in_game.health <= 0:
-            dead()
+            dead(mob)
         else:
-            combat()
+            combat(mob)
 
 ##-- Handles Spell Attacks and Healing or what ever else I can dream up --##
-def magic():
+def magic(mob):
     print("not working yet. Sorry!")
     pause()
-    attack()
+    attack(mob)
 
 ##-- Handles the use of potions or and other usable item --##
 ##-- In combat or out                                    --##
-def use_item():
+def use_item(mob):
     print("not working yet. Sorry!")
     pause()
-    attack()
+    attack(mob)
 
 ##-- Run or Flee is to get away from the enemy in a fight --##
-def run():
+def run(mob):
     running = random.randint(1, 3)
     if running == 1:
         clear()
@@ -419,34 +350,34 @@ def run():
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     if enemy_attack == round(mob.melee_attack / 2):
         clear()
-        print(f'\n{mob.name} missed!')
+        print(f'\n{mob.char_name} missed!')
     else:
         player_in_game.health -= enemy_attack
         clear()
-        print(f'\n{mob.name} just dealed {enemy_attack} damage to you.')
+        print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
     input('\nPess Enter To Continue:> ')
     if player_in_game.health <= 0:
-        dead()
+        dead(mob)
     else:
-        combat()
+        combat(mob)
 
 ##-- If you when a fight this function handles what happens --##
 
-def win():
+def win(mob):
     clear()
     player_in_game.pures += mob.pures
     player_in_game.exp += mob.exp_gained
-    message = f"You just defeated a {mob.name}\nGold Looted: {mob.pures}\nEXP Gained: {mob.exp_gained}"
+    message = f"You just defeated a {mob.char_name}\nGold Looted: {mob.pures}\nEXP Gained: {mob.exp_gained}"
     print(message)
-    input('\nPess Enter To Continue:> ')
+    input('\nPress Enter To Continue:> ')
     if biome_or_subBiome == False:
         main_game_loop()
     else:
         sub_map_move()
 ##-- If in an unfortunate event the player dies this function is called --##
  
-def dead():
-    print(f'You have died from {mob.name}')
+def dead(mob):
+    print(f'You have died from {mob.char_name}')
     pause()
     main()
 
@@ -457,7 +388,7 @@ def get_resouces():
     random_item = random.choice(biome_item)
     item = Items.resources[random_item]
 
-    player_inventory.add_item(item)
+    player_in_game.add_to_inventory(item)
     pause()
     if biome_or_subBiome == False:
         main_game_loop()
@@ -466,8 +397,8 @@ def get_resouces():
 
 
 def look_in_inventory():
-    print(player_inventory.bag)
-    print(player_inventory.inventory_item_limit)
+    print(player_in_game.inventory)
+    print(player_in_game.inventory_limit)
     pause()
     if biome_or_subBiome == False:
         main_game_loop()
@@ -585,7 +516,7 @@ def main_game_loop():
     #     print('Loading...........')
     if opening == True:
 
-        Story.intro_story(player_in_game.name)
+        Story.intro_story(player_in_game.char_name)
         input("Press Enter to continue: ")
         opening = False
     map_info = Engine.get_tile(x,y)
