@@ -1,186 +1,104 @@
-##-- This is dictionarys for all the biomes --##
-'''
-Biome names          |abriv|            Resourses                      |            Mob/Animal_Spawns
+from typing import List, Dict
 
-'Cave'               |'cav'|           'Rock', 'Bones'                       'Skeleton', 'Bears', 'Zombie'
-'Forest'             |'for'|           'Wood'                                'Bandit', 'Wolf'
-'Dark Forest'        |'dfo'|           'Magic Wood'                          'Dark Elf', 'Imp'
-'Woodlands'          |'wld'|           'Logs'                                'Earth Golem'
-'Mountains'          |'mou'|           'Rock', 'Flint'                       'Rock Golem'
-'Lake'               |'lak'|           'Water', 'Fish'
-'River'              |'rvr'|           'Water', 'Fish', 'Clay'
-'Town'               |'twn'|
-'Village'            |'vil'|
-'Field'              |'fld'|           'Herb'
-'Farm'               |'frm'|
-'Grasslands'         |'gld'|        
-'Wetlands'           |'wtd'|
-'Salt Marsh'         |'stm'|           'Salt'
-'Alpine Grasslands'  |'agl'|
-'Marsh'              |'msh'|         
-'Swamp'              |'swp'|
-'Ocean'              |'ocn'|
-
-Area Names:
-North  if biome is -x is not its own biome and +x -y +y is same biome as its self.
-'''
-##-- Import Modules --##
-
-from Map_Gen import SubBiome
-
-##-- Biome Dictionarys --##
-
-world_biomes = {
-    'for': {
-            'name': 'Forest', 
-            'resource': ['Wood'], 
-            'spawns': ['Bandit', 'Wolf'],
-            'rarity': 'Common',
-            'enterable': False,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-    'dfo': {
-            'name': 'Dark Forest',
-            'resource': ['Magic Wood'],
-            'spawns': ['Dark Elif', 'Imp'],
-            'rarity': 'Rare',
-            'enterable': False,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-    'cav': {
-            'name': 'Cave',
-            'resource': ['Rock', 'Bones'],
-            'spawns': ['Skeleton', 'Bears', 'Zombie'],
-            'rarity': 'Uncommon',
-            'enterable': True,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
+#Biome class used to create regions with the various aspects below.
+#@Property decorator used for readibility and ease of class use later on.
+class Biome(object):
+    def __init__(self):
+        self.name: str = None
+        self.resources: List[str] = None
+        self.spawns: List[str] = None
+        self.rarity: str = None
+        self.enterable: bool = None
+        self.info: str = None
      
-     'wld': {
-            'name': 'Woodlands',
-            'resource': ['Logs'],
-            'spawns': ['Earth Golem'],
-            'rarity': 'Uncommon',
-            'enterable': False,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
+    # name
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name: str):
+        self._name = name
+        
+    @name.deleter
+    def name(self):
+        del self._name
+    
+    # resources
+    @property
+    def resources(self):
+        return self._resources
+    
+    @resources.setter
+    def resources(self, resources: List[str]):
+        self._resources = resources
+        
+    @resources.deleter
+    def resources(self):
+        del self._resources
      
-     'mou': {
-            'name': 'Mountains',
-            'resource': ['Rock', 'Flint'],
-            'spawns': ['Yeti'],
-            'rarity': 'Uncommon',
-            'enterable': False,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
+    # spawns
+    @property
+    def spawns(self):
+        return self._spawns
+    
+    @spawns.setter
+    def spawns(self, spawns: List[str]):
+        self._spawns = spawns
+        
+    @spawns.deleter
+    def spawns(self):
+        del self._spawns
+     
+    # rarity
+    @property
+    def rarity(self):
+        return self._rarity
+    
+    @rarity.setter
+    def rarity(self, rarity: str):
+        self._rarity = rarity
+        
+    @rarity.deleter
+    def rarity(self):
+        del self._rarity
+    
+    # enterable
+    @property
+    def enterable(self):
+        return self._enterable
+    
+    @enterable.setter
+    def enterable(self, enterable: bool):
+        self._enterable = enterable
+        
+    @enterable.deleter
+    def enterable(self):
+        del self._enterable
+    
+    # info
+    @property
+    def info(self):
+        return self._info
+    
+    @info.setter
+    def info(self, info: str):
+        self._info = info
+        
+    @info.deleter
+    def info(self):
+        del self._info
+        
 
-     'lak': {
-            'name': 'Lake',
-            'resource': ['Water'],
-            'spawns': ['Earth Golem'],
-            'rarity': 'Rare',
-            'enterable': True,
-            'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
 
-      'rvr': {
-             'name': 'Rive',
-             'resource': ['Water'],
-             'spawns': ['Earth Golem'],
-             'rarity': 'Rare',
-             'enterable': True,
-             'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
 
-       'twn': {
-               'name': 'Town',
-               'resource': ['NaN'],
-               'spawns': ['NaN'],
-               'rarity': 'Rare',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-       },
 
-       'vil': {
-               'name': 'Village',
-               'resource': ['NaN'],
-               'spawns': ['NaN'],
-               'rarity': 'Rare',
-               'enterable': True,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
+    
 
-        'fld': {
-               'name': 'Field',
-               'resource': ['Herb'],
-               'spawns': ['Zombie'],
-               'rarity': 'Common',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
 
-        'frm': {
-               'name': 'Farm',
-               'resource': ['Erb'],
-               'spawns': ['Zombie'],
-               'rarity': 'Uncommon',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
+        
 
-        'gld': {
-               'name': 'Grasslands',
-               'resource': ['grass'],
-               'spawns': ['Deer', 'Buffalo', 'Cow', 'Bull', 'Bandit', 'Bear'],
-               'rarity': 'Common',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
 
-        'wtd': {
-               'name': 'Wetlands',
-               'resource': ['None'],
-               'spawns': ['None'],
-               'rarity': 'Common',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-        'stm': {
-               'name': 'Salt Marsh',
-               'resourse': ['Salt'],
-               'spawns': ['Zombies'],
-               'rarity': 'Uncommon',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-        'agl': {
-               'name': 'Alpine Grasslands',
-               'resourse': ['Pine'],
-               'spawns': ['Zombie', 'Bandit'],
-               'rarity': 'Rare',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-        'msh': {
-               'name': 'Marsh',
-               'resourse': ['Crawfish'],
-               'spawns': ['Zombie'],
-               'rarity': 'Rare',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        },
-
-        'ocn': {
-               'name': 'Ocean',
-               'resourse': ['Salt Water'],
-               'spawns': ['Sea Monster'],
-               'rarity': 'Rare',
-               'enterable': False,
-               'info': "FILL IN A QUICK ANSWER ABOUT BIOME"
-        }
-}
+        
+        
+        
