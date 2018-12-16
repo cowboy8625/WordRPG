@@ -6,10 +6,9 @@ from script import Items
 ##-- All Imports --##
 
 import os
-import sys
 import textwrap
 import time
-from colorama import Back, Fore, Style, init
+from colorama import Fore, init
 
 ##-- Font Colors --##
 
@@ -178,7 +177,7 @@ def vs_screen(player, mob=filler, width=44):
 
 
 
-def stat_screen(player, inv, mob=filler, width=44):
+def stat_screen(player, mob=filler, width=44):
     ##-- Width sets how big the screen is no matter --##
     width = (len(player.name) + len(mob.name) + 43) 
     
