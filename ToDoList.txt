@@ -5,9 +5,9 @@ on everything! There is no such thing is to many comments.  We need to communica
 sure we dont mess up each other. This is my first project with other so im all ears. if you have any ideas let
 me know.
 
-Cowboy:
+CBruce:
 
-    working on menu display that can be reused.
+    Working on terminal-style GUI using ascimatics
 
 BJTMastermind:
 
