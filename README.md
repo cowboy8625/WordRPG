@@ -8,9 +8,6 @@ or for any thing else.
 Also if you want to help out on the project and have ideas hit me up and show me some code!
 
 ## To Play The Game
-WARNING: Before Playing the game you must run the setup.sh or setup-windows.bat depending 
-on your OS Mac and Linux Users run setup.sh and Windows Users run setup-windows.bat
-(You only need to do this once)
 
 To play the game double click on Main file and make sure you have downloaded the
 "WordRPG Folder not just one file.
