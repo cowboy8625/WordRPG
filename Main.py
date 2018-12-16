@@ -52,9 +52,13 @@ def setup():
         if os.name == 'nt':
             os.system("pip install colorama > NUL")
             os.system("pip install Pandas > NUL")
+            os.system("pip3 install colorama > NUL")
+            os.system("pip3 install Pandas > NUL")
         else:
             os.system("pip install colorama > /dev/null")
             os.system("pip install Pandas > /dev/null")
+            os.system("pip3 install colorama > /dev/null")
+            os.system("pip3 install Pandas > /dev/null")
     
 # Clears Print Screen
 def clear():
