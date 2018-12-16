@@ -435,8 +435,9 @@ def get_resouces():
 
 
 def look_in_inventory():
-    print(player_in_game.inventory)
-    print(player_in_game.inventory_limit)
+    clear()
+    print(f"Current Inventory: {player_in_game.inventory}")
+    print(f"Inventory Limit: {player_in_game.inventory_limit}")
     pause()
 
     if biome_or_subBiome is False:
