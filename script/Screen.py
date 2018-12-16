@@ -1,13 +1,11 @@
 # This module is to handle all the print screens for the menus
 
-from Map_Gen import Biome
-from script import Items
-
 # All Imports
 import os
 import textwrap
 import time
 from colorama import Fore, init
+from script.Character import *
 
 init(convert=True)
 
@@ -20,31 +18,6 @@ blue = Fore.BLUE
 magenta = Fore.MAGENTA
 light_red = Fore.LIGHTRED_EX
 cyan = Fore.CYAN
-
-
-# This class is only here to let the vs_screen() and the stat_screen the be called
-# without crashing for testing
-class Blank:
-    def __init__(self):
-        self.name = "Filler Mob"
-        self.mob_class = "CRAZY GOO GOO"
-        self.in_hand = Items.fist
-        self.level = 1
-        self.exp = 0
-        self.max_health = 100
-        self.health = self.max_health
-        self.armor = Items.farm_clothing
-        self.melee_attack = 1000
-        self.magic_attack = 99
-        self.mana = 10
-        self.stamina = 70
-        self.defense = 1000
-        self.pures = 100
-        self.luck = 9000
-        self.exp_gained = 100
-
-
-filler = Blank()
 
 
 # Clear Function
@@ -163,16 +136,16 @@ def main_game_screen(story):
 
 
 # This shows who is fighing and there stats
-def vs_screen(player, mob=filler, width=44):
-    width = (len(player.name) + len(mob.name) + 43)         # Width sets how big the screen is no matter
+def vs_screen(player, mob=zombie, width=44):
+    width = (len(player.char_name) + len(mob.char_name) + 43)         # Width sets how big the screen is no matter
     print('#' * width)                                      # How big the names or stats are
-    print(f"#              {player.name}  -- VS --  {mob.name}               #")
-    print('#' * (len(player.name) + len(mob.name) + 43))
+    print(f"#              {player.char_name}  -- VS --  {mob.char_name}               #")
+    print('#' * (len(player.char_name) + len(mob.char_name) + 43))
 
 
-def stat_screen(player, mob=filler, width=44):
+def stat_screen(player, mob=zombie, width=44):
     # Width sets how big the screen is no matter
-    width = (len(player.name) + len(mob.name) + 43)
+    width = (len(player.char_name) + len(mob.char_name) + 43)
 
     left_p_class = f"{player.player_class}    "             # Left side is for player
     right_p_class = f"    {mob.mob_class}"                  # Right side is for Enemy
@@ -180,8 +153,8 @@ def stat_screen(player, mob=filler, width=44):
                 len(left_p_class) + len(right_p_class))) + right_p_class  # Line puts the Left and Right
 
     # Sides together and uses width
-    left_in_hand = f"Wielding: {inv.in_hand.name}    "      # varible to know how many space
-    right_in_hand = f"    {mob.in_hand} :Wielding"          # to print
+    left_in_hand = f"Wielding: {player.equipped_weapon.name}    "      # variable to know how many space
+    right_in_hand = f"    {mob.equipped_weapon.name} :Wielding"          # to print
     line_in_hand = left_in_hand + ' ' * (width - (len(left_in_hand) + len(right_in_hand))) + right_in_hand
 
     left_level = f"Level: {player.level}    "
@@ -196,7 +169,7 @@ def stat_screen(player, mob=filler, width=44):
     right_health = f"    {mob.health}/{mob.max_health} :Health"
     line_health = left_health + ' ' * (width - (len(left_health) + len(right_health))) + right_health
 
-    left_armor = f"Armor: {inv.equiped_armor.name}    "
+    left_armor = f"Armor: {player.equipped_armor.name}    "
     right_armor = f"    {mob.armor} :Armor"
     line_armor = left_armor + ' ' * (width - (len(left_armor) + len(right_armor))) + right_armor
 
