@@ -28,8 +28,33 @@ North  if biome is -x is not its own biome and +x -y +y is same biome as its sel
 
 from Map_Gen import SubBiome
 
-##-- Biome Dictionarys --##
 
+class Biome:
+    def __init__(self, name=None, resources=None, spawns=None, enterable=None, rarity=None, info=None):
+        self.name = name
+        self.resources = resources
+        self.spawns = spawns
+        self.enterable = enterable
+        self.rarity = rarity
+        self.info = info
+    ## -- This method is for dictionary indexing, mainly for backwords compatability with the rest of the code -- ##
+    def __getitem__(self, item):
+        if item not in ["name", "resource", "spawns", "rarity", "enterable", "info"]:
+            raise IndexError("index {} is out of range".format(item))
+        if item == "name":
+            return self.name
+        elif item == "resource":
+            return self.resource
+        elif item == "spawns":
+            return self.spawns
+        elif item == "rarity":
+            return self.rarity
+        elif item == "enterable":
+            return self.enterable
+        else:
+            return self.info
+        
+##-- Biome Dictionarys --##
 world_biomes = {
     'for': {
             'name': 'Forest', 
