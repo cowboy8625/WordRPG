@@ -12,6 +12,7 @@ import time
 from Map_Gen import Engine
 from Map_Gen import Biome
 from script.Character import *
+from script.small_func import *
 from script import InfoDics, Items, Screen, Story
 import ChangeLog
 
@@ -43,31 +44,6 @@ biome_or_subBiome = False
 small = 100
 medium = 500
 large = 1000
-
-# Downloads modules
-def setup():
-    if os.path.isfile("Worldmap.db"):
-        return
-    else:
-        if os.name == 'nt':
-            os.system("pip3 install colorama > NUL")
-            os.system("pip3 install Pandas > NUL")
-        else:
-            os.system("pip3 install colorama > /dev/null")
-            os.system("pip3 install Pandas > /dev/null")
-    
-# Clears Print Screen
-def clear():
-    if os.name == 'nt':
-        _ = os.system('cls')
-
-    else:
-        _ = os.system('clear')
-
-
-# This maybe fast then retyping input a bunch
-def pause():
-    input("Press Enter To Continue:> ")
 
 
 # Main() is the first function
@@ -307,7 +283,7 @@ def attack(mob):
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
         if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
-            print(f"\n{player_in_game.name} {player_in_game.equipped_weapon.action_word}")  ##-- finish me --##
+            print(f"\n{player_in_game.char_name} {player_in_game.equipped_weapon.action_word}")  ##-- finish me --##
         else:
             mob.health -= player_melee_attack
             clear()
