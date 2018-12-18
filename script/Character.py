@@ -42,7 +42,7 @@ class Player(Character):
         self.inventory = []
         self.inventory_limit = 10
 
-        
+
 """
 # enemy mobs
 # Zombies are a close fighter, he needs to be with in 1 block from mob to attack

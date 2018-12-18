@@ -1,7 +1,7 @@
 # Starting Data November 6, 2018
 # Made By Cowboy8625
 # Waste Land
-__author__ = 'Cowboy8625', 'Cyy', 'BJTMastermind', 'HexTree', 'Byteme8bit','Giioke'
+__author__ = 'Cowboy8625', 'Cyy', 'BJTMastermind', 'HexTree', 'Byteme8bit', 'Giioke', 'ThePinkChicken'
 
 # Import Modules
 import random
