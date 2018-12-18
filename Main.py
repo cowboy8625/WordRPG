@@ -208,7 +208,11 @@ def char_creation():
 def random_enemy():
 
     biome_info = Engine.get_tile(x,y)
-    spawns = getattr(Biome.World, biome_info[0][2]).spawns
+    if biome_info[0][2] == "for":
+
+        spawns = getattr(Biome.World, 'frt').spawns
+    else:
+        spawns = getattr(Biome.World, biome_info[0][2]).spawns
     if not spawns:
         return None
     random_mob = random.choice(spawns)

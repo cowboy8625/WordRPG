@@ -86,7 +86,8 @@ def set_exit_coords_y():
 # right now there is only Common Uncommon and Rare, But maybe i will add Epic as well
 def rare_control():
     while True:
-        r_biome = Biome.World().get_random_biome()
+        w = Biome.World()
+        r_biome = w.get_random_biome()
         if r_biome.rarity == 'Rare':
             num = random.randint(0, 100)
 
