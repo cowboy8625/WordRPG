@@ -206,9 +206,10 @@ def char_creation():
 
 # Makes a random mob with in the range of the players level
 def random_enemy():
-    biome_info = Engine.get_tile(x, y)
-    spawns = Biome.world_biomes[biome_info[0][2]]['spawns']
-    if spawns == ["None"]:
+
+    biome_info = Engine.get_tile(x,y)
+    spawns = getattr(Biome.World, biome_info[0][2]).spawns
+    if not spawns:
         return None
     random_mob = random.choice(spawns)
     return hostile_mobs[random_mob]
@@ -414,7 +415,7 @@ def dead(mob):
 
 def get_resources():
     biome_into = Engine.get_tile(x, y)
-    biome_item = Biome.world_biomes[biome_into[2]]['resource']
+    biome_item = getattr(Biome.World, biome_into[2]).resources
     random_item = random.choice(biome_item)
     item = Items.resources[random_item]
 
@@ -522,21 +523,19 @@ def sub_map_move():
 # Time of day..... maybe
 def inspect_area(biome):
     clear()
-    print(f"Biome Name: {Biome.world_biomes[biome]['name']}")
-    print(f"Resource: {Biome.world_biomes[biome]['resource']}")
-    print(f"Spawn: {Biome.world_biomes[biome]['spawns']}")
-    print(f"Rarity: {Biome.world_biomes[biome]['rarity']}")
+    print(f"Biome Name: {getattr(Biome.World, biome).name}")
+    print(f"Resourse: {getattr(Biome.World, biome).resource}")
+    print(f"Spawn: {getattr(Biome.World, biome).spawns}")
+    print(f"Rarity: {getattr(Biome.World, biome).rarity}")
     # print(f"Enterable: {Biome.world_biomes[biome]['enterable']}")
-    print(f"{Biome.world_biomes[biome]['info']}")
+    print(f"{getattr(Biome.World, biome).info}")
     print("\n----------------------------------------------\n")
 
-    if Biome.world_biomes[biome]['enterable'] is True:
-        print(f"Looks likes like we can go further into the {Biome.world_biomes[biome]['name']}\n"
-              f"What say you?")
-        player_input = input("\n"
-                             "(1): Enter\n"
-                             "(2): Move on\n"
-                             "Choose a number:> ")
+
+    if getattr(Biome.World, biome).enterable is True:
+        print(f"Looks likes like we can go futher into the {getattr(Biome.World, biome).name}\nWhat say you?")
+        player_input = input("\n(1): Enter\n(2): Move on\nChoose a number:> ")
+
         if player_input == '1':
             sub_map_move()
 
