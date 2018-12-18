@@ -65,17 +65,6 @@ class SubTile:
         self.discovered = False
 
 
-# Finds a random biome to be made in a tile
-def get_random_biome():
-    biome_keys = Biome.world_biomes.keys()
-    list_of_biome_abriv = []
-
-    for bio in biome_keys:
-        list_of_biome_abriv.append(bio)
-
-    return random.choice(list_of_biome_abriv)
-
-
 def get_random_sub_biome(key):
     biome_keys = SubBiome.sub_biome[key].keys()
     list_of_sub_biome_abriv = []
@@ -97,20 +86,20 @@ def set_exit_coords_y():
 # right now there is only Common Uncommon and Rare, But maybe i will add Epic as well
 def rare_control():
     while True:
-        r_biome = get_random_biome()
-        if Biome.world_biomes[r_biome]['rarity'] == 'Rare':
+        r_biome = Biome.World.get_random_biome()
+        if r_biome.rarity == 'Rare':
             num = random.randint(0, 100)
 
             if num == 50:
                 return r_biome
 
-        elif Biome.world_biomes[r_biome]['rarity'] == 'Uncommon':
+        elif r_biome.rarity == 'Uncommon':
             num = random.randint(0, 20)
 
             if num == 10:
                 return r_biome
 
-        elif Biome.world_biomes[r_biome]['rarity'] == 'Common':
+        elif r_biome.rarity == 'Common':
             return r_biome
 
 
@@ -136,10 +125,10 @@ def map_builder():
         coord_y = int((spot / map_width))
         coord_x = spot - (map_width * coord_y)
         biome = rare_control()
-        map_seed.append(biome)
-        biome_name = Biome.world_biomes[biome]['name']
-        biome_rarity = Biome.world_biomes[biome]['rarity']
-        biome_layers = Biome.world_biomes[biome]['enterable']
+        map_seed.append(biome.prefix)
+        biome_name = biome.name
+        biome_rarity = biome.rarity
+        biome_layers = biome.enterable
         # coords_x, coords_y, name, rarity, difficulty, enterable=False, discovered=False
         # coords_x, coords_y, name,        rarity,     difficulty, enterable, exit_x, exit_y, discovered=False
         insert_tile(
@@ -155,7 +144,7 @@ def map_builder():
                 # print(f"SUB Y: {sub_coord_y}")
                 # input("Enter")
                 try:
-                    sub_biome_name = SubBiome.sub_biome[biome][get_random_sub_biome(biome)]['name']
+                    sub_biome_name = SubBiome.sub_biome[biome.prefix][get_random_sub_biome(biome.prefix)]['name']
 
                 except:
                     continue
