@@ -27,7 +27,7 @@ def import_changelog( ):
 		:``str``: changelog as a string
 	"""
 
-	with open( FILENAME_CHANGELOG', 'r') as f:
+	with open( FILENAME_CHANGELOG, 'r') as f:
 		contents = f.read()
 
 	return changelog

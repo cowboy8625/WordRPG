@@ -1,5 +1,5 @@
 
-'''
+"""
 Biome names          |abriv|            Resourses                      |            Mob/Animal_Spawns
 
 'Cave'               |'cav'|           'Rock', 'Bones'                       'Skeleton', 'Bears', 'Zombie'
@@ -23,7 +23,7 @@ Biome names          |abriv|            Resourses                      |        
 
 Area Names:
 North  if biome is -x is not its own biome and +x -y +y is same biome as its self.
-'''
+"""
 # Import Modules
 import random
 from Map_Gen import SubBiome
@@ -38,6 +38,7 @@ class Biome:
         self.enterable = enterable
         self.rarity = rarity
         self.info = info
+
     # This method is for dictionary indexing, mainly for backwords compatability with the rest of the code
     def __getitem__(self, item):
         if item not in ["name", "resource", "spawns", "rarity", "enterable", "info"]:
@@ -54,6 +55,7 @@ class Biome:
             return self.enterable
         else:
             return self.info
+
 
 # World Class to house to biomes
 class World:
@@ -80,6 +82,7 @@ class World:
                        self.lak, self.rvr, self.twn, self.vil, self.fld,
                        self.frm, self.gld, self.stm, self.agl, self.msh,
                        self.ocn]
+
     # returns Biome object
     def get_random_biome(self):
         return random.choice(self.biomes)
