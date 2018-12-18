@@ -418,7 +418,7 @@ def dead(mob):
     main()
 
 
-def resources():
+def get_resources():
     biome_into = Engine.get_tile(x, y)
     biome_item = getattr(Biome.World, biome_into[2]).resources
     random_item = random.choice(biome_item)
