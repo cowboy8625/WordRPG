@@ -596,7 +596,7 @@ def main_game_loop():
                 y += 1
                 encounter()
             else:
-                print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+                print(move_error_msg)
                 pause()
                 # main_game_loop()
 
@@ -605,7 +605,7 @@ def main_game_loop():
                 x += 1
                 encounter()
             else:
-                print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+                print(move_error_msg)
                 pause()
                 # main_game_loop()
 
@@ -614,7 +614,7 @@ def main_game_loop():
                 x -= 1
                 encounter()
             else:
-                print('NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP')
+                print(move_error_msg)
                 pause()
                 # main_game_loop()
 
