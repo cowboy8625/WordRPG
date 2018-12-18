@@ -634,7 +634,12 @@ def main_game_loop():
         pause()
         main_game_loop()
 
+# Engine.make_map_datebase()
 
-Engine.make_map_datebase()
+# main()
 
-main()
+
+if __name__ == "__main__":
+    Engine.make_map_datebase()
+
+    main()
