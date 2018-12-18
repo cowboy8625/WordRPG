@@ -44,9 +44,9 @@ class Player(Character):
     def add_to_inventory(self, item):
         if len(self.inventory) < self.inventory_limit:
             self.inventory.append(item)
-            return True
+            print(f"Added {item} to your inventory.")
         else:
-            return False
+            print(f"Cannot add {item}, inventory is full.")
 
     # Remove item at given position of inventory
     # Note that we can not currently remove an item via its 'identity' because Item does not have an equality override
