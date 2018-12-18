@@ -1,6 +1,7 @@
 # Program imports
 from script import Items
 from Mechanics.core_mechanics import rnd
+from Mechanics.ui_mechanics import *
 
 
 class Character:
@@ -52,6 +53,16 @@ class Player(Character):
         self.exp = 0
         # Inventory
         self.equipped_armor = Items.farm_clothing
+
+    def look_in_inventory(self):
+        clear()
+        print(f"Inventory Limit: {self.inventory_limit}")
+        print(f"Current Inventory:")
+        i = 1
+        for item in self.inventory:
+            print(f"Item #{i}: {item}\n")
+            i += 1
+        pause()
 
     # This Function is to level up the player
     # Needs to add more stats and change the
