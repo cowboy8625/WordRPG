@@ -13,6 +13,7 @@ from Map_Gen import Engine
 from Map_Gen import Biome
 from script.Character import *
 from script import InfoDics, Items, Screen, Story
+from Mechanics.ui_mechanics import *
 import ChangeLog
 
 # Global Variables
@@ -55,19 +56,6 @@ def setup():
         else:
             os.system("pip3 install colorama > /dev/null")
             os.system("pip3 install Pandas > /dev/null")
-    
-# Clears Print Screen
-def clear():
-    if os.name == 'nt':
-        _ = os.system('cls')
-
-    else:
-        _ = os.system('clear')
-
-
-# This maybe fast then retyping input a bunch
-def pause():
-    input("Press Enter To Continue:> ")
 
 
 # Main() is the first function
@@ -234,42 +222,6 @@ def encounter():
     else:
         sub_map_move()
 
-
-# This Function is to level up the player
-# Needs to add more stats and change the
-# the player levels up
-def level_up(player):
-#     player.level += 1
-#     player.max_health = player.max_health + player.level
-#     player.armor = player.armor + player.level
-#     player.mana = player.mana + player.level
-#     player.stamina = player.stamina + player.level
-#     player.luck = player.luck + player.level
-    
-    player.level += 1
-    choices = []
-    skills = {"1": "HP", "2": "Armour", "3": "Mana", "4": "Stamina", "5": "Luck"}
-    rows, columns = os.popen('stty size', 'r').read().split()
-    for num in range(3):
-        option = ""
-        while option not in ["1", "2", "3", "4", "5"]:
-            clear()
-            print(f"Congrats! You have leveled up! You have {num+1} skill points available!")
-            option = input("How would you like to use your skill point\n(1): HP\n(2): Armour\n(3): Mana\n(4): Stamina\n(5): Luck\nChoose A Number:>") 
-        choices.append(option)
-    print(f"Player skills increased ({skills[choices[0]]}, {skills[choices[1]]}, {skills[choices[2]]})")
-    for i in choices:
-        if i == "1":
-            player.max_health = player.max_health + player.level
-        if i == "2":
-            player.armor = player.armor + player.level
-        if i == "3":
-            player.mana = player.mana + player.level
-        if i == "4":
-            player.stamina = player.stamina + player.level
-        else:
-            player.luck = player.luck + player.level
-            
 
 # This is to set up the fighting system
 def combat(mob):
