@@ -22,8 +22,6 @@ class Character:
         self.luck = luck
 
         # Inventory
-        self.inventory = []
-        self.inventory_limit = 10
         self.equipped_weapon = Items.fist
         self.equipped_armor = None
 
@@ -40,8 +38,11 @@ class Player(Character):
         self.xp = xp
         self.equipped_weapon = equipped_weapon
         self.equipped_armor = equipped_armor
-        self.inventory = []
 
+        self.inventory = []
+        self.inventory_limit = 10
+
+        
 """
 # enemy mobs
 # Zombies are a close fighter, he needs to be with in 1 block from mob to attack
