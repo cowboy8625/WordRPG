@@ -7,66 +7,25 @@ __author__ = 'Cowboy8625', 'Cyy', 'BJTMastermind', 'HexTree', 'Byteme8bit','Giio
 import random
 import sys
 import time
-# Custom Imports
-from Map_Gen import Engine
-from Map_Gen import Biome
+
 from script.Character import *
 from script import InfoDics, Items, Screen, Story
 from Mechanics.ui_mechanics import *
 import ChangeLog
 
-# Global Variables
-# These are for the Function char_creation()
-player_name = None
-player_class_choice = None
-player_in_game = None
-
-# Holds pronouns used for player in the story
-gender = None
-
-# Only True if hasn't seen opening story
-opening = True
 
 # If True it's the players turn
 turn = True
-
-# X, Y, SubX, SubY Coordinates:
-x = 5
-y = 0
-sub_x = 0  # For Map in side of biome
-sub_y = 0  # ^^       ^^       ^^
-
-# To see if player is in a biome or not
-biome_or_subBiome = False
-
-# Map sizes
-small = 100
-medium = 500
-large = 1000
-
-
-# Downloads modules
-def setup():
-    if os.path.isfile("Worldmap.db"):
-        return
-    else:
-        if os.name == 'nt':
-            os.system("pip3 install colorama > NUL")
-            os.system("pip3 install Pandas > NUL")
-        else:
-            os.system("pip3 install colorama > /dev/null")
-            os.system("pip3 install Pandas > /dev/null")
 
 
 # Main() is the first function
 # Gets input from player to either Start Load Help or Exit
 def main():
-    setup()
     Screen.main_menu_screen()
     choice = input('\n\nSELECT A NUMBER:> ')
 
     if choice == '1':
-        char_creation()
+        main_game_loop(char_creation(), opening=True)
     elif choice == '2':  # LOADED AND SAVE
         print('NOT AN OPTION YET')
         time.sleep(2)
@@ -96,114 +55,146 @@ def game_help():
 
 # This is where the player chooses what class he will be
 def char_creation():
-    global player_in_game
+    pname = None
+    pclass = None
+    pgender = None
 
     # This function sets the name of the player
-    def name_player():
-        global player_name
+    def player_select_name(__pname, __pclass):
+        while __pname is None:
+            message = f"A {__pclass} is a good choice I think. What shall I call you?"
+            Screen.display(message)
+            option = input("\n\nENTER YOUR NAME:> ")
 
-        message = f"A {player_class_choice} is a good choice I think. What shall I call you?"
-        Screen.display(message)
-        option = input("\n\nENTER YOUR NAME:> ")
-
-        if len(option) == 0:
-            print('\nYou need to enter a name to continue\n')
-            name_player()
-        else:
-            option1 = input("Are you Sure You Want To Keep This Name?\n"
-                            "(1): Yes\n"
-                            "(2): No\n"
-                            "Enter A Number:> ")
-
-            if option1 == '1':
-                player_name = option
+            if len(option) == 0:
+                print('\nYou need to enter a name to continue\n')
             else:
-                name_player()
+                yes_no = input("Are you Sure You Want To Keep This Name?\n"
+                                "(1): Yes\n"
+                                "(2): No\n"
+                                "Enter A Number:> ")
 
-    # This sets the gender of the character
-    def gender_call():
-        global gender
-
-        message = f"{player_name} the {player_class_choice}, has a nice ring to\
-         it I think. I know it is obvious but just let me know what gender you are."
-
-        Screen.display(message)
-        option = input('\n\n'
-                       '(1): Male\n'
-                       '(2): Female\n'
-                       'Enter A Number:> ')
-
-        if option == '1':
-            gender = 'male'
-
-        elif option == '2':
-            gender = 'female'
-
-        else:
-            gender_call()
-        Story.set_gender(gender)
+                if yes_no == '1':
+                    __pname = option
+                    return __pname
 
     # This set the class for the player
-    def class_selection():
-        global player_class_choice
+    def player_select_class(__pclass):
         player_options = ('Mage', 'Warrior', 'Archer', 'Assassin')
         Screen.char_options()
 
-        choice = input('\n\n'
-                       'SELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
+        while __pclass is None:
+            choice = input('\n\n'
+                           'SELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
 
-        if choice == '1':
-            player_class_choice = player_options[int(choice) - 1]
-        elif choice == '2':
-            player_class_choice = player_options[int(choice) - 1]
-        elif choice == '3':
-            player_class_choice = player_options[int(choice) - 1]
-        elif choice == '4':
-            player_class_choice = player_options[int(choice) - 1]
-        # lore is the story and it is found in InfoDics
-        elif choice[0:4].lower() == 'info':
-            lore = InfoDics.info_on_classes[player_options[int(choice[5]) - 1]]
-            Screen.display(lore)
-            pause()
-            class_selection()
-        else:
-            print("Not An Option.")
-            class_selection()
+            if choice == '1':
+                __pclass = player_options[int(choice) - 1]
+            elif choice == '2':
+                __pclass = player_options[int(choice) - 1]
+            elif choice == '3':
+                __pclass = player_options[int(choice) - 1]
+            elif choice == '4':
+                __pclass = player_options[int(choice) - 1]
+            # lore is the story and it is found in InfoDics
+            elif choice[0:4].lower() == 'info':
+                lore = InfoDics.info_on_classes[player_options[int(choice[5]) - 1]]
+                Screen.display(lore)
+                pause()
+            else:
+                print("Not An Option.")
+        return __pclass
 
-    class_selection()
-    name_player()
+    def player_select_gender(__pgender, __pname, __pclass):
+        while pgender is None:
+            message = f"{__pname} the {__pclass}, has a nice ring to\
+                     it I think. I know it is obvious but just let me know what gender you are."
+
+            Screen.display(message)
+            option = input('\n\n'
+                           '(1): Male\n'
+                           '(2): Female\n'
+                           'Enter A Number:> ')
+
+            if option == '1':
+                __pgender = 'male'
+
+            elif option == '2':
+                __pgender = 'female'
+
+            Story.set_gender(__pgender)
+            return __pgender
+
+    pclass = player_select_class(pclass)
+    pname = player_select_name(pname, pclass)
+    pgender = player_select_gender(pgender, pname, pclass)
+
 
     # Mage
-    if player_class_choice == 'Mage':
-        player_in_game = Mage(char_name=player_name, player_class='Mage', max_health=80, melee_attack=1,
-                              magic_attack=10,
-                              max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
-        player_in_game.equipped_weapon = Items.weak_staff
+    if pclass == 'Mage':
+        return Player(
+            name=pname,
+            _class=pclass,
+            max_health=80,
+            melee_attack=1,
+            magic_attack=10,
+            max_mana=50,
+            max_stamina=10,
+            defense=1,
+            luck=1,
+            gender=pgender,
+            gold=0,
+            equipped_weapon=Items.weak_staff
+        )
     # Warrior
-    elif player_class_choice == 'Warrior':
-        player_in_game = Warrior(char_name=player_name, player_class='Warrior', max_health=150, melee_attack=10,
-                                 magic_attack=0,
-                                 max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
-        player_in_game.equipped_weapon = Items.rusty_short_sword
+    elif pclass == 'Warrior':
+        return Player(
+            name=pname,
+            _class=pclass,
+            max_health=150,
+            melee_attack=10,
+            magic_attack=0,
+            max_mana=5,
+            max_stamina=50,
+            defense=5,
+            luck=0,
+            gender=pgender,
+            gold=0,
+            equipped_weapon=Items.rusty_short_sword
+        )
     # Archer
-    elif player_class_choice == 'Archer':
-        player_in_game = Archer(char_name=player_name, player_class='Archer', max_health=100, melee_attack=5,
-                                magic_attack=0,
-                                max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
-        player_in_game.equipped_weapon = Items.common_hunting_bow
+    elif pclass == 'Archer':
+        return  Player(
+            name=pname,
+            _class=pclass,
+            max_health=100,
+            melee_attack=5,
+            magic_attack=0,
+            max_mana=50,
+            max_stamina=10,
+            defense=1,
+            luck=5,
+            gender=pgender,
+            gold=0,
+            equipped_weapon=Items.common_hunting_bow
+        )
     # Assassin
-    elif player_class_choice == 'Assassin':
-        player_in_game = Assassin(char_name=player_name, player_class='Assassin', max_health=50, melee_attack=20,
-                                  magic_attack=10,
-                                  max_mana=25, max_stamina=10, defense=2, pures=100, luck=10)
-        player_in_game.equipped_weapon = Items.rusty_dagger
+    elif pclass == 'Assassin':
+        return Player(
+            name=pname,
+            _class=pclass,
+            max_health=50,
+            melee_attack=20,
+            magic_attack=10,
+            max_mana=25,
+            max_stamina=10,
+            defense=2,
+            luck=10,
+            gender=pgender,
+            gold=100,
+            equipped_weapon=Items.rusty_dagger
+        )
 
-    gender_call()
-
-    # Back to main loop
-    main_game_loop()
-
-
+"""
 # Makes a random mob with in the range of the players level
 def random_enemy():
 
@@ -269,6 +260,7 @@ def combat(mob):
 # Magic of the weapon in hand to deal
 # Damage. But spells will be dealt with a
 # Different functions
+
 def attack(mob):
     player_melee_attack = random.randint(round(player_in_game.melee_attack / 2),
                                          player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
@@ -544,32 +536,21 @@ def inspect_area(biome):
         main_game_loop()
 
 
+"""
+
+
 # main_game_loop() is where all the logic for the player to move about the map
 # or any other event while not in a fight
-def main_game_loop():
-    # This is for navigating the map
-    global opening, x, y, sub_x, sub_y, biome_or_subBiome
-
-    biome_or_subBiome = False
-
-    if os.path.getsize('Worldmap.db') == 12288:
-        Engine.map_builder()
-    # while os.path.getsize('Worldmap.db') != 10000:
-    #     print('Loading...........')
+def main_game_loop(player, opening=True):
 
     if opening:
-        Story.intro_story(player_in_game.char_name)
+        Story.intro_story(player.name)
         input("Press Enter to continue: ")
         opening = False
 
     while True:
-        move_error_msg = 'NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP'
-
-        map_info = Engine.get_tile(x, y)
-        sub_x = map_info[0][8]
-        sub_y = map_info[0][9]
-        Engine.update_tile(x, y, True)
-        Screen.display(f"Location: {map_info[0][3]}")
+        # move_error_msg = 'NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP'
+        clear()
         move_to = input(
             "Which way do you want to travel?\n\n"
             "(1): North\n"
@@ -581,6 +562,7 @@ def main_game_loop():
             "(7): Look For Resources\n"
             "Input a Number:>  ")
 
+        """
         # NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
         if move_to == '1':  # UP
             if y > 0:
@@ -626,21 +608,15 @@ def main_game_loop():
 
         elif move_to == '7':
             get_resources()
-
-        elif move_to == 'Quit':  # QUIT, I'll take this out after testing
+        """
+        if move_to == 'Quit':  # QUIT, I'll take this out after testing
             sys.exit()
 
         else:
-            print("Not an option.")
+            print("Not an option... Yet ;)")
             pause()
-            # main_game_loop()
-
-# Engine.make_map_datebase()
-
-# main()
 
 
 if __name__ == "__main__":
-    Engine.make_map_datebase()
-
     main()
+

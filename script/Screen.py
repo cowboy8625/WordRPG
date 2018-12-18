@@ -134,13 +134,14 @@ def main_game_screen(story):
     for i in lines:
         print(i)
 
-
+"""
 # This shows who is fighing and there stats
 def vs_screen(player, mob=zombie, width=44):
     width = (len(player.char_name) + len(mob.char_name) + 43)         # Width sets how big the screen is no matter
     print('#' * width)                                      # How big the names or stats are
     print(f"#              {player.char_name}  -- VS --  {mob.char_name}               #")
     print('#' * (len(player.char_name) + len(mob.char_name) + 43))
+
 
 
 def stat_screen(player, mob=zombie, width=44):
@@ -195,7 +196,7 @@ def stat_screen(player, mob=zombie, width=44):
     print(line_stamina)
     print(line_luck)
 
-
+"""
 def display(on_screen, width=44):
     # width = 44 max width is 208
     side = round(((width / 2) / 2) - 1)
