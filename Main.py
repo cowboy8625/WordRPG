@@ -4,7 +4,6 @@
 __author__ = 'Cowboy8625', 'Cyy', 'BJTMastermind', 'HexTree', 'Byteme8bit','Giioke'
 
 # Import Modules
-import os
 import random
 import sys
 import time
@@ -84,7 +83,7 @@ def main():
         sys.exit()
     else:
         print("Not an Option.")
-        input("Press Enter to Continue:> ")
+        pause()
         main()
 
 
@@ -111,8 +110,10 @@ def char_creation():
             print('\nYou need to enter a name to continue\n')
             name_player()
         else:
-            option1 = input("Are you Sure You Want To Keep This Name?\
-             \n(1): Yes\n(2): No\n Enter A Number:> ")
+            option1 = input("Are you Sure You Want To Keep This Name?\n"
+                            "(1): Yes\n"
+                            "(2): No\n"
+                            "Enter A Number:> ")
 
             if option1 == '1':
                 player_name = option
@@ -127,7 +128,11 @@ def char_creation():
          it I think. I know it is obvious but just let me know what gender you are."
 
         Screen.display(message)
-        option = input('\n\n(1): Male\n(2): Female\nEnter A Number:> ')
+        option = input('\n\n'
+                       '(1): Male\n'
+                       '(2): Female\n'
+                       'Enter A Number:> ')
+
         if option == '1':
             gender = 'male'
 
@@ -144,7 +149,8 @@ def char_creation():
         player_options = ('Mage', 'Warrior', 'Archer', 'Assassin')
         Screen.char_options()
 
-        choice = input('\n\nSELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
+        choice = input('\n\n'
+                       'SELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
 
         if choice == '1':
             player_class_choice = player_options[int(choice) - 1]
@@ -158,7 +164,7 @@ def char_creation():
         elif choice[0:4].lower() == 'info':
             lore = InfoDics.info_on_classes[player_options[int(choice[5]) - 1]]
             Screen.display(lore)
-            input("\n\nPress Enter to Continue:> ")
+            pause()
             class_selection()
         else:
             print("Not An Option.")
@@ -166,25 +172,26 @@ def char_creation():
 
     class_selection()
     name_player()
-    ##-- Mage     --##
+
+    # Mage
     if player_class_choice == 'Mage':
         player_in_game = Mage(char_name=player_name, player_class='Mage', max_health=80, melee_attack=1,
                               magic_attack=10,
                               max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
         player_in_game.equipped_weapon = Items.weak_staff
-    ##-- Warrior  --##
+    # Warrior
     elif player_class_choice == 'Warrior':
         player_in_game = Warrior(char_name=player_name, player_class='Warrior', max_health=150, melee_attack=10,
                                  magic_attack=0,
                                  max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
         player_in_game.equipped_weapon = Items.rusty_short_sword
-    ##-- Archer   --##
+    # Archer
     elif player_class_choice == 'Archer':
         player_in_game = Archer(char_name=player_name, player_class='Archer', max_health=100, melee_attack=5,
                                 magic_attack=0,
                                 max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
         player_in_game.equipped_weapon = Items.common_hunting_bow
-    ##-- Assassin --##
+    # Assassin
     elif player_class_choice == 'Assassin':
         player_in_game = Assassin(char_name=player_name, player_class='Assassin', max_health=50, melee_attack=20,
                                   magic_attack=10,
@@ -216,8 +223,10 @@ def encounter():
     num = random.randint(1, 1000)
     mob = random_enemy()
     clear()
+
     if mob is not None:
         print(f"You ran in a {mob.char_name} on the path.")
+
     pause()
     # combat()
 
@@ -233,7 +242,12 @@ def combat(mob):
     clear()
     Screen.vs_screen(player_in_game, mob)
     Screen.stat_screen(player_in_game, mob)
-    option = input('\n(1): Attack\n(2): Magic\n(3): Use Item\n(4): Run\nChoose A Number:> ')
+    option = input('\n'
+                   '(1): Attack\n'
+                   '(2): Magic\n'
+                   '(3): Use Item\n'
+                   '(4): Run\n'
+                   'Choose A Number:> ')
 
     if option == '1':
         attack(mob)
@@ -254,7 +268,6 @@ def combat(mob):
 # Magic of the weapon in hand to deal
 # Damage. But spells will be dealt with a
 # Different functions
-
 def attack(mob):
     player_melee_attack = random.randint(round(player_in_game.melee_attack / 2),
                                          player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
@@ -266,50 +279,65 @@ def attack(mob):
     Screen.stat_screen(player_in_game, mob)
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
-        if player_melee_attack == player_in_game.melee_attack / 2:  ##-- Player Attack --##
-            print(f"\n{player_in_game.name} {player_in_game.equipped_weapon.action_word}")  ##-- finish me --##
+        if player_melee_attack == player_in_game.melee_attack / 2:                          # Player Attack
+            print(f"\n{player_in_game.name} {player_in_game.equipped_weapon.action_word}")  # finish me
+
         else:
             mob.health -= player_melee_attack
             clear()
-            print(f'\nYou just dealed {player_melee_attack} damage.')
+            print(f'\nYou just dealt {player_melee_attack} damage.')
 
-        input('\nPess Enter To Continue:> ')
+        pause()
+
         if mob.health <= 0:
             win(mob)
-        if enemy_attack == round(mob.melee_attack / 2):  ##--  Mob Attack --##
+
+        if enemy_attack == round(mob.melee_attack / 2):                                     # Mob Attack
             clear()
             print(f'\n{mob.char_name} missed!')
+
         else:
             player_in_game.health -= enemy_attack
             clear()
-            print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
-        input('\nPress Enter To Continue:> ')
+            print(f'\n{mob.char_name} just dealt {enemy_attack} damage to you.')
+
+        pause()
+
         if player_in_game.health <= 0:
             dead(mob)
+
         else:
             combat(mob)
+
     elif attack_type == '2':
-        if player_magic_attack == player_in_game.magic_attack / 2:  ##-- Player Attack --##
+        if player_magic_attack == player_in_game.magic_attack / 2:                          # Player Attack
             clear()
             print('\nYou Missed!')
+
         else:
             mob.health -= player_magic_attack
             clear()
-            print(f'\nYou just dealed {player_magic_attack} damage.')
+            print(f'\nYou just dealt {player_magic_attack} damage.')
 
-        input('\nPress Enter To Continue:> ')
+        pause()
+
         if mob.health <= 0:
             win(mob)
-        if enemy_attack == round(mob.magic_attack / 2):  ##--  Mob Attack --##
+
+        if enemy_attack == round(mob.magic_attack / 2):                                     # Mob Attack
             clear()
             print(f'\n{mob.char_name} missed!')
+
         else:
             player_in_game.health -= enemy_attack
             clear()
             print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
-        input('\nPess Enter To Continue:> ')
+
+        pause()
+
         if player_in_game.health <= 0:
             dead(mob)
+
         else:
             combat(mob)
 
@@ -336,13 +364,13 @@ def run(mob):
     if running == 1:
         clear()
         print("You have successfully ran away!")
-        input('\nPess Enter To Continue:> ')
+        pause()
         main_game_loop()
 
     else:
         clear()
         print("You Failed To Get Away!")
-        input('\nPess Enter To Continue:> ')
+        pause()
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
 
     if enemy_attack == round(mob.melee_attack / 2):
@@ -352,7 +380,7 @@ def run(mob):
         player_in_game.health -= enemy_attack
         clear()
         print(f'\n{mob.char_name} just dealed {enemy_attack} damage to you.')
-    input('\nPess Enter To Continue:> ')
+    pause()
 
     if player_in_game.health <= 0:
         dead(mob)
@@ -365,9 +393,11 @@ def win(mob):
     clear()
     player_in_game.pures += mob.pures
     player_in_game.exp += mob.exp_gained
-    message = f"You just defeated a {mob.char_name}\nGold Looted: {mob.pures}\nEXP Gained: {mob.exp_gained}"
-    print(message)
-    input('\nPress Enter To Continue:> ')
+    print(f"You just defeated a {mob.char_name}\n"
+          f"Gold Looted: {mob.pures}\n"
+          f"EXP Gained: {mob.exp_gained}")
+    pause()
+
     if not biome_or_subBiome:
         main_game_loop()
 
@@ -382,7 +412,7 @@ def dead(mob):
     main()
 
 
-def get_resouces():
+def get_resources():
     biome_into = Engine.get_tile(x, y)
     biome_item = Biome.world_biomes[biome_into[2]]['resource']
     random_item = random.choice(biome_item)
@@ -400,6 +430,7 @@ def get_resouces():
 
 def sub_map_move():
     global biome_or_subBiome, x, y, sub_x, sub_y
+
     clear()
     biome_or_subBiome = True
     map_info = Engine.get_tile(x, y)
@@ -468,7 +499,7 @@ def sub_map_move():
             main_game_loop()
 
     elif move_to == '5':
-        get_resouces()
+        get_resources()
 
     elif move_to == '6':
         player_in_game.look_in_inventory()
@@ -492,7 +523,7 @@ def sub_map_move():
 def inspect_area(biome):
     clear()
     print(f"Biome Name: {Biome.world_biomes[biome]['name']}")
-    print(f"Resourse: {Biome.world_biomes[biome]['resource']}")
+    print(f"Resource: {Biome.world_biomes[biome]['resource']}")
     print(f"Spawn: {Biome.world_biomes[biome]['spawns']}")
     print(f"Rarity: {Biome.world_biomes[biome]['rarity']}")
     # print(f"Enterable: {Biome.world_biomes[biome]['enterable']}")
@@ -500,8 +531,12 @@ def inspect_area(biome):
     print("\n----------------------------------------------\n")
 
     if Biome.world_biomes[biome]['enterable'] is True:
-        print(f"Looks likes like we can go futher into the {Biome.world_biomes[biome]['name']}\nWhat say you?")
-        player_input = input("\n(1): Enter\n(2): Move on\nChoose a number:> ")
+        print(f"Looks likes like we can go further into the {Biome.world_biomes[biome]['name']}\n"
+              f"What say you?")
+        player_input = input("\n"
+                             "(1): Enter\n"
+                             "(2): Move on\n"
+                             "Choose a number:> ")
         if player_input == '1':
             sub_map_move()
 
@@ -589,7 +624,7 @@ def main_game_loop():
         player_in_game.look_in_inventory()
 
     elif move_to == '7':
-        get_resouces()
+        get_resources()
 
     elif move_to == 'Quit':  # QUIT, I'll take this out after testing
         sys.exit()
