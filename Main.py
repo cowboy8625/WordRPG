@@ -223,8 +223,10 @@ def encounter():
     num = random.randint(1, 1000)
     mob = random_enemy()
     clear()
+
     if mob is not None:
         print(f"You ran in a {mob.char_name} on the path.")
+
     pause()
     # combat()
 
@@ -240,7 +242,12 @@ def combat(mob):
     clear()
     Screen.vs_screen(player_in_game, mob)
     Screen.stat_screen(player_in_game, mob)
-    option = input('\n(1): Attack\n(2): Magic\n(3): Use Item\n(4): Run\nChoose A Number:> ')
+    option = input('\n'
+                   '(1): Attack\n'
+                   '(2): Magic\n'
+                   '(3): Use Item\n'
+                   '(4): Run\n'
+                   'Choose A Number:> ')
 
     if option == '1':
         attack(mob)
@@ -261,7 +268,6 @@ def combat(mob):
 # Magic of the weapon in hand to deal
 # Damage. But spells will be dealt with a
 # Different functions
-
 def attack(mob):
     player_melee_attack = random.randint(round(player_in_game.melee_attack / 2),
                                          player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
