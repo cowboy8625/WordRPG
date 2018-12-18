@@ -58,13 +58,16 @@ class Player(Character):
         clear()
         print(f"Inventory Limit: {self.inventory_limit}")
         print(f"Current Inventory:")
-        i = 1
+
         if self.inventory:
+            i = 1
             for item in self.inventory:
                 print(f"Item #{i}: {item}\n")
                 i += 1
+
         else:
             print("Inventory is empty.")
+
         pause()
 
     # This Function is to level up the player
