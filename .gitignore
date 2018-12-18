@@ -10,4 +10,5 @@ stringaddder.py
 Worldmap.db
 map.csv
 csvReader.py
-
+checkingDB.py
+.idea

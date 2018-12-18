@@ -8,8 +8,6 @@ or for any thing else.
 Also if you want to help out on the project and have ideas hit me up and show me some code!
 
 ## To Play The Game
-WARNING: Before Playing the game you must install a module called Colorama. Go to 
-command prompt and type "pip install colorama" and once done you may start game.
 
 To play the game double click on Main file and make sure you have downloaded the
 "WordRPG Folder not just one file.
@@ -36,11 +34,19 @@ Also depends if I'm doing it alone or with some one. If I'm working on this proj
 
 # Team
 <a name="team-members"></a>Team Members
-* Cowboy8625
+* BJTMastermind
+* Byteme8bit
+* CBruce
+* Cowboy8625 (Owner)
+* Cyy
+* Giioke
+* HexTree
+* tmded
+* tlcowart
 
 # Screen Shots
 
-This is of the Main Menu
+This is the Main Menu
 ![wordrpg_main_menu](https://user-images.githubusercontent.com/43012445/48389982-80e16100-e6c5-11e8-99e1-56bf323d52f7.PNG)
 
 
