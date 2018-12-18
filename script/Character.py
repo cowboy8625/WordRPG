@@ -1,4 +1,6 @@
 # Program imports
+import random
+
 from script import Items
 from Mechanics.core_mechanics import rnd
 from Mechanics.ui_mechanics import *
@@ -12,8 +14,8 @@ class Character:
         # Stats
         self.max_health = max_health
         self.health = self.max_health
-        self.melee_attack = melee_attack
-        self.magic_attack = magic_attack
+        self.melee_damage = melee_attack
+        self.magic_damage = magic_attack
         self.max_mana = max_mana
         self.mana = self.max_mana
         self.max_stamina = max_stamina
@@ -25,6 +27,13 @@ class Character:
         self.inventory_limit = 10
         self.equipped_weapon = Items.fist
         self.equipped_armor = None
+
+    def melee_attack(self):
+        return random.randint(round(self.melee_damage / 2), self.melee_damage)
+
+    def magic_attack(self):
+        return random.randint(round(self.magic_damage / 2),
+                              self.magic_damage + self.equipped_weapon.magic_damage)
 
 
 # The player class handles all the players stat creation
@@ -38,6 +47,10 @@ class Player(Character):
         self.exp = 0
         # Inventory
         self.equipped_armor = Items.farm_clothing
+
+    def melee_attack(self):
+        return random.randint(round(self.melee_damage / 2),
+                              self.melee_damage + self.equipped_weapon.melee_damage)
 
     # Add given item to inventory
     # Returns True if successful (available space in inventory)
