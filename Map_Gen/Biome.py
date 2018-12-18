@@ -1,5 +1,4 @@
-import random
-#-- This is dictionarys for all the biomes --#
+
 '''
 Biome names          |abriv|            Resourses                      |            Mob/Animal_Spawns
 
@@ -25,8 +24,8 @@ Biome names          |abriv|            Resourses                      |        
 Area Names:
 North  if biome is -x is not its own biome and +x -y +y is same biome as its self.
 '''
-##-- Import Modules --##
-
+# Import Modules
+import random
 from Map_Gen import SubBiome
 
 
@@ -39,7 +38,7 @@ class Biome:
         self.enterable = enterable
         self.rarity = rarity
         self.info = info
-    ## -- This method is for dictionary indexing, mainly for backwords compatability with the rest of the code -- ##
+    # This method is for dictionary indexing, mainly for backwords compatability with the rest of the code
     def __getitem__(self, item):
         if item not in ["name", "resource", "spawns", "rarity", "enterable", "info"]:
             raise IndexError("index {} is out of range".format(item))
@@ -76,12 +75,12 @@ class World:
         self.agl = Biome(prefix="agl", name="Alpine Grasslands", resources=['Pine'], spawns=['Zombie', 'Bandit'], enterable=False, rarity="Rare", info="High on the side of a mountain, these grasslands offer some very good hiding spots")
         self.msh = Biome(prefix="msh", name="Marsh", resources=['Crawfish'], spawns=['Zombie'], enterable=False, rarity="Rare", info="Spawnpy water to your knees. This is an unruly landscape")
         self.ocn = Biome(prefix="ocn", name="Ocean", resources=['Salt Water'], spawns=['Sea Monster'], enterable=False, rarity="Rare", info="Deep, dark, unexplored. Last great frontier")
+        # This is so I can write the next function
         self.biomes = [self.frt, self.dfo, self.cav, self.wld, self.mou,
                        self.lak, self.rvr, self.twn, self.vil, self.fld,
                        self.frm, self.gld, self.stm, self.agl, self.msh,
                        self.ocn]
-
+    # returns Biome object
     def get_random_biome(self):
         return random.choice(self.biomes)
-##-- Biome Dictionarys --##
 
