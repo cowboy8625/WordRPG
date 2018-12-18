@@ -45,6 +45,7 @@ small = 100
 medium = 500
 large = 1000
 
+
 # Downloads modules
 def setup():
     if os.path.isfile("Worldmap.db"):
@@ -67,11 +68,11 @@ def main():
 
     if choice == '1':
         char_creation()
-    elif choice == '2':             # LOADED AND SAVE
+    elif choice == '2':  # LOADED AND SAVE
         print('NOT AN OPTION YET')
         time.sleep(2)
         main()
-    elif choice == '3':             # Help
+    elif choice == '3':  # Help
         print('NOT AN OPTION YET')
         time.sleep(2)
         main()
@@ -166,24 +167,28 @@ def char_creation():
     class_selection()
     name_player()
     ##-- Mage     --##
-    if player_class_choice == 'Mage':  
-        player_in_game = Mage(char_name=player_name, player_class='Mage',max_health=80,melee_attack=1,magic_attack=10,
-    max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
+    if player_class_choice == 'Mage':
+        player_in_game = Mage(char_name=player_name, player_class='Mage', max_health=80, melee_attack=1,
+                              magic_attack=10,
+                              max_mana=50, max_stamina=10, defense=1, pures=0, luck=1)
         player_in_game.equipped_weapon = Items.weak_staff
     ##-- Warrior  --##
-    elif player_class_choice == 'Warrior':  
-        player_in_game = Warrior(char_name=player_name, player_class='Warrior',max_health=150,melee_attack=10,magic_attack=0,
-    max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
+    elif player_class_choice == 'Warrior':
+        player_in_game = Warrior(char_name=player_name, player_class='Warrior', max_health=150, melee_attack=10,
+                                 magic_attack=0,
+                                 max_mana=5, max_stamina=50, defense=4, pures=0, luck=0)
         player_in_game.equipped_weapon = Items.rusty_short_sword
     ##-- Archer   --##
-    elif player_class_choice == 'Archer':  
-        player_in_game = Archer(char_name=player_name, player_class='Archer',max_health=100,melee_attack=5,magic_attack=0,
-    max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
+    elif player_class_choice == 'Archer':
+        player_in_game = Archer(char_name=player_name, player_class='Archer', max_health=100, melee_attack=5,
+                                magic_attack=0,
+                                max_mana=50, max_stamina=10, defense=1, pures=0, luck=5)
         player_in_game.equipped_weapon = Items.common_hunting_bow
     ##-- Assassin --##
-    elif player_class_choice == 'Assassin': 
-        player_in_game = Assassin(char_name=player_name,player_class='Assassin',max_health=50,melee_attack=20,magic_attack=10,
-    max_mana=25, max_stamina=10, defense=2, pures=100, luck=10)
+    elif player_class_choice == 'Assassin':
+        player_in_game = Assassin(char_name=player_name, player_class='Assassin', max_health=50, melee_attack=20,
+                                  magic_attack=10,
+                                  max_mana=25, max_stamina=10, defense=2, pures=100, luck=10)
         player_in_game.equipped_weapon = Items.rusty_dagger
 
     gender_call()
@@ -194,7 +199,7 @@ def char_creation():
 
 # Makes a random mob with in the range of the players level
 def random_enemy():
-    biome_info = Engine.get_tile(x,y)
+    biome_info = Engine.get_tile(x, y)
     spawns = Biome.world_biomes[biome_info[0][2]]['spawns']
     if spawns == ["None"]:
         return None
@@ -239,8 +244,10 @@ def combat(mob):
     elif option == '3':
         use_item(mob)
 
-    elif option =='4':
+    elif option == '4':
         run(mob)
+
+
 # Attack handles melee and magic attacks
 # Unlike most games magic attacks aren't
 # Just spells "magic attack" uses the
@@ -249,16 +256,17 @@ def combat(mob):
 # Different functions
 
 def attack(mob):
-    
-    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2), player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
-    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2), player_in_game.magic_attack + player_in_game.equipped_weapon.magic_damage)
+    player_melee_attack = random.randint(round(player_in_game.melee_attack / 2),
+                                         player_in_game.melee_attack + player_in_game.equipped_weapon.melee_damage)
+    player_magic_attack = random.randint(round(player_in_game.magic_attack / 2),
+                                         player_in_game.magic_attack + player_in_game.equipped_weapon.magic_damage)
     enemy_attack = random.randint(round(mob.melee_attack / 2), mob.melee_attack)
     clear()
     Screen.vs_screen(player_in_game, mob)
     Screen.stat_screen(player_in_game, mob)
     attack_type = input('\n(1): Melee Attack\n(2): Magic Attack\nChoose A Number:> ')
     if attack_type == '1':
-        if player_melee_attack == player_in_game.melee_attack / 2: ##-- Player Attack --##
+        if player_melee_attack == player_in_game.melee_attack / 2:  ##-- Player Attack --##
             print(f"\n{player_in_game.name} {player_in_game.equipped_weapon.action_word}")  ##-- finish me --##
         else:
             mob.health -= player_melee_attack
@@ -305,11 +313,13 @@ def attack(mob):
         else:
             combat(mob)
 
+
 # Handles Spell Attacks and Healing or what ever else I can dream up
 def magic(mob):
     print("not working yet. Sorry!")
     pause()
     attack(mob)
+
 
 # Handles the use of potions or and other usable item
 # In combat or out                                 --##
@@ -317,6 +327,7 @@ def use_item(mob):
     print("not working yet. Sorry!")
     pause()
     attack(mob)
+
 
 # Run or Flee is to get away from the enemy in a fight
 def run(mob):
@@ -363,6 +374,7 @@ def win(mob):
     else:
         sub_map_move()
 
+
 # If in an unfortunate event the player dies this function is called
 def dead(mob):
     print(f'You have died from {mob.char_name}')
@@ -377,19 +389,6 @@ def get_resouces():
     item = Items.resources[random_item]
 
     player_in_game.add_to_inventory(item)
-    pause()
-
-    if biome_or_subBiome is False:
-        main_game_loop()
-
-    else:
-        sub_map_move()
-
-
-def look_in_inventory():
-    clear()
-    print(f"Current Inventory: {player_in_game.inventory}")
-    print(f"Inventory Limit: {player_in_game.inventory_limit}")
     pause()
 
     if biome_or_subBiome is False:
@@ -432,7 +431,7 @@ def sub_map_move():
     move_to = input(options)
 
     # NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
-    if move_to == '1':              # UP
+    if move_to == '1':  # UP
         if sub_y > 0:
             sub_y -= 1
             encounter()
@@ -441,7 +440,7 @@ def sub_map_move():
             pause()
             main_game_loop()
 
-    elif move_to == '2':            # DOWN
+    elif move_to == '2':  # DOWN
         if sub_y < small:
             sub_y += 1
             encounter()
@@ -450,7 +449,7 @@ def sub_map_move():
             pause()
             main_game_loop()
 
-    elif move_to == '3':            # RIGHT
+    elif move_to == '3':  # RIGHT
         if sub_x > 0:
             sub_x += 1
             encounter()
@@ -459,7 +458,7 @@ def sub_map_move():
             pause()
             main_game_loop()
 
-    elif move_to == '4':            # LEFT
+    elif move_to == '4':  # LEFT
         if sub_x < small:
             sub_x -= 1
             encounter()
@@ -472,7 +471,7 @@ def sub_map_move():
         get_resouces()
 
     elif move_to == '6':
-        look_in_inventory()
+        player_in_game.look_in_inventory()
 
     elif move_to == '7' and sub_x == map_info[0][8] and sub_y == map_info[0][9]:
         main_game_loop()
@@ -547,7 +546,7 @@ def main_game_loop():
         "Input a Number:>  ")
 
     # NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
-    if move_to == '1':              # UP
+    if move_to == '1':  # UP
         if y > 0:
             y -= 1
             encounter()
@@ -556,7 +555,7 @@ def main_game_loop():
             pause()
             main_game_loop()
 
-    elif move_to == '2':            # DOWN
+    elif move_to == '2':  # DOWN
         if y < small:
             y += 1
             encounter()
@@ -565,7 +564,7 @@ def main_game_loop():
             pause()
             main_game_loop()
 
-    elif move_to == '3':            # RIGHT
+    elif move_to == '3':  # RIGHT
         if x > 0:
             x += 1
             encounter()
@@ -574,7 +573,7 @@ def main_game_loop():
             pause()
             main_game_loop()
 
-    elif move_to == '4':            # LEFT
+    elif move_to == '4':  # LEFT
         if x < small:
             x -= 1
             encounter()
@@ -587,12 +586,12 @@ def main_game_loop():
         inspect_area(map_info[0][2])
 
     elif move_to == '6':
-        look_in_inventory()
+        player_in_game.look_in_inventory()
 
     elif move_to == '7':
         get_resouces()
 
-    elif move_to == 'Quit':         # QUIT, I'll take this out after testing
+    elif move_to == 'Quit':  # QUIT, I'll take this out after testing
         sys.exit()
 
     else:
