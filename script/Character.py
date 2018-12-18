@@ -1,4 +1,6 @@
+# Program imports
 from script import Items
+from Mechanics.core_mechanics import rnd
 
 
 class Character:
@@ -50,6 +52,88 @@ class Player(Character):
         self.exp = 0
         # Inventory
         self.equipped_armor = Items.farm_clothing
+
+    # This Function is to level up the player
+    # Needs to add more stats and change the
+    # the player levels up
+    def level_up(self):
+        """
+        Defines how the character levels up
+        :return:
+        """
+
+        # Defines low levels
+        low_levels = list(range(10))
+
+        # Defines mid levels
+        mid_levels = list(range(10, 20))
+
+        # Defines high levels
+        high_levels = list(range(20, 30))
+
+        # Abbreviates code
+        cl = self.level  # Current level
+        sxp = rnd(self.exp)  # Current XP, rounded for UI prints
+
+        def current_xp_check(rxp):
+            """
+            Determines if current XP grants a level up
+            :param rxp: Required XP
+            :return: None
+            """
+
+            # If current XP matches or is greater than required XP
+            if self.exp >= rxp:
+
+                # Increase current level by 1
+                self.level += 1
+
+                # Recalculate base stats
+                # self.base_stat_calculations()
+
+                # Reset resources to max
+                # self.resource_reset()
+
+                # UI Message
+                print(f'{self.char_name} leveled up and is now level {self.level}!\n'
+                      f'[ Current Lvl ]: {self.level}\t [ Next level ]: {self.level + 1}\n'
+                      f'[ Current XP ]: {sxp:.2f}\t [ Required XP ]: {rxp}')
+
+            # If current XP is less than required XP
+            else:
+                print(f'[ Current Lvl ]: {self.level}\t [ Next level ]: {self.level + 1}\n'
+                      f'[ Current XP ]: {sxp:.2f}\t [ Required XP ]: {rxp}')
+
+        # Initiates required XP
+        req_xp = 0
+
+        # For levels 1-9
+        if self.level in low_levels:
+
+            # Sets value for required XP
+            req_xp = (-0.4 * (cl ** 3) + (40 * (cl ** 2)) + (360 * cl) + ((cl ** 2 * 2) - (cl ** 2)))
+
+        # For levels 10-19
+        elif self.level in mid_levels:
+
+            # Sets value for required XP
+            req_xp = (-0.4 * (cl ** 3) + (55 * (cl ** 2)) + (350 * cl) + ((cl ** 2 * 2) - (cl ** 2)))
+
+        # For levels 20-29
+        elif self.level in high_levels:
+
+            # Sets value for required XP
+            req_xp = (-0.2 * (cl ** 3) + (65 * (cl ** 2)) + (420 * cl))
+
+        # For level 30
+        else:
+            print('Max level reached')
+
+        # Rounds required XP up to nearest 100
+        rounded_xp = rnd(req_xp, 100)
+
+        # Checks XP
+        current_xp_check(rounded_xp)
 
 
 # The Mage, Warrior, Archer and Assassin classes inherit the Player class
