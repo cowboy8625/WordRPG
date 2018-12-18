@@ -13,6 +13,7 @@ from Map_Gen import Engine
 from Map_Gen import Biome
 from script.Character import *
 from script import InfoDics, Items, Screen, Story
+from Mechanics.ui_mechanics import *
 import ChangeLog
 
 # Global Variables
@@ -55,19 +56,6 @@ def setup():
         else:
             os.system("pip3 install colorama > /dev/null")
             os.system("pip3 install Pandas > /dev/null")
-    
-# Clears Print Screen
-def clear():
-    if os.name == 'nt':
-        _ = os.system('cls')
-
-    else:
-        _ = os.system('clear')
-
-
-# This maybe fast then retyping input a bunch
-def pause():
-    input("Press Enter To Continue:> ")
 
 
 # Main() is the first function
