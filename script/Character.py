@@ -1,9 +1,9 @@
 # Program imports
 import random
 
-from script import Items, Screen
-from Mechanics.core_mechanics import rnd
-from Mechanics.ui_mechanics import *
+from script import Items
+# from Mechanics.core_mechanics import rnd
+# from Mechanics.ui_mechanics import *
 
 
 class Character:
@@ -14,8 +14,8 @@ class Character:
         # Stats
         self.max_health = max_health
         self.health = self.max_health
-        self.melee_attack = melee_attack
-        self.magic_attack = magic_attack
+        self.melee_damage = melee_attack
+        self.magic_damage = magic_attack
         self.max_mana = max_mana
         self.max_stamina = max_stamina
         self.defense = defense
@@ -24,6 +24,12 @@ class Character:
         # Inventory
         self.equipped_weapon = Items.fist
         self.equipped_armor = None
+
+    def melee_attack(self):
+        return random.randint(self.melee_damage // 2, self.melee_damage)
+
+    def magic_attack(self):
+        return random.randint(self.magic_damage // 2, self.magic_damage)
 
 
 class Player(Character):
