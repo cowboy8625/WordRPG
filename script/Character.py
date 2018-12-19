@@ -1,9 +1,9 @@
 # Program imports
 import random
 
-from script import Items, Screen
-from Mechanics.core_mechanics import rnd
-from Mechanics.ui_mechanics import *
+from script import Items
+# from Mechanics.core_mechanics import rnd
+# from Mechanics.ui_mechanics import *
 
 
 class Character:

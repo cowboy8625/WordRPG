@@ -5,7 +5,7 @@ import os
 import textwrap
 import time
 from colorama import Fore, init
-from script.Character import *
+from Mechanics.ui_mechanics import *
 
 init(convert=True)
 
@@ -18,15 +18,6 @@ blue = Fore.BLUE
 magenta = Fore.MAGENTA
 light_red = Fore.LIGHTRED_EX
 cyan = Fore.CYAN
-
-
-# Clear Function
-def clear():
-    if os.name == 'nt':
-        _ = os.system('cls')
-
-    else:
-        _ = os.system('clear')
 
 
 # Main Menu I have Ideas for a better more custom and reusable screen

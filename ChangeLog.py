@@ -13,7 +13,7 @@ be used in the game for the changelog menu.
 '''
 
 from os import system, name
-
+from Mechanics.ui_mechanics import *
 
 FILENAME_CHANGELOG = 'CHANGELOG.md'
 
@@ -33,18 +33,6 @@ def import_change_log():
 	return contents
 
 
-def clear():
-	'''
-	Clears the terminal screen
-
-	**Returns:**
-	
-		:``str``: Resultof os.system command
-	'''
-
-	return system( 'cls' if name == 'nt' else 'clear' )
-    
-
 def change_log_print():
 	'''
 	Prints changelog to terminal
@@ -54,7 +42,7 @@ def change_log_print():
 		:``str``: Result of print command
 	'''
 
-	change_log = import_change_log( )
-	clear( )
+	change_log = import_change_log()
+	clear()
 
-	return print( change_log )
+	return print(change_log)
