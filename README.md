@@ -39,10 +39,12 @@ Also depends if I'm doing it alone or with some one. If I'm working on this proj
 * CBruce
 * Cowboy8625 (Owner)
 * Cyy
+* Djsurry
 * Giioke
 * HexTree
 * tmded
 * tlcowart
+
 
 # Screen Shots
 
