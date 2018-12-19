@@ -4,7 +4,6 @@
 __author__ = 'Cowboy8625', 'Cyy', 'BJTMastermind', 'HexTree', 'Byteme8bit', 'Giioke', 'ThePinkChicken'
 
 # Import Modules
-import random
 import sys
 import time
 

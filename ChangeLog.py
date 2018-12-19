@@ -12,7 +12,6 @@ be used in the game for the changelog menu.
 
 '''
 
-from os import system, name
 from Mechanics.ui_mechanics import *
 
 FILENAME_CHANGELOG = 'CHANGELOG.md'
