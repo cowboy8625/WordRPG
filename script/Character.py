@@ -14,8 +14,8 @@ class Character:
         # Stats
         self.max_health = max_health
         self.health = self.max_health
-        self.melee_attack = melee_attack
-        self.magic_attack = magic_attack
+        self.melee_damage = melee_attack
+        self.magic_damage = magic_attack
         self.max_mana = max_mana
         self.max_stamina = max_stamina
         self.defense = defense
