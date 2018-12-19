@@ -20,29 +20,35 @@ turn = True
 # Main() is the first function
 # Gets input from player to either Start Load Help or Exit
 def main():
-    Screen.main_menu_screen()
-    choice = input('\n\nSELECT A NUMBER:> ')
 
-    if choice == '1':
-        main_game_loop(char_creation(), opening=True)
-    elif choice == '2':  # LOADED AND SAVE
-        print('NOT AN OPTION YET')
-        time.sleep(2)
-        main()
-    elif choice == '3':  # Help
-        print('NOT AN OPTION YET')
-        time.sleep(2)
-        main()
-    elif choice == '4':
-        ChangeLog.change_log_print()
-        pause()
-        main()
-    elif choice == '5':
-        sys.exit()
-    else:
-        print("Not an Option.")
-        pause()
-        main()
+    choice = ''             # Initializes variable
+
+    while choice != '1':            # Continues loop while choice is not to start the game - will change later
+        Screen.main_menu_screen()
+        choice = input('\n\nSELECT A NUMBER:> ')
+
+        if choice == '1':           # Starts Game
+            main_game_loop(char_creation(), opening=True)
+
+        elif choice == '2':  # LOADED AND SAVE
+            print('NOT AN OPTION YET')
+            time.sleep(2)
+
+        elif choice == '3':  # Help
+            print('NOT AN OPTION YET')
+            time.sleep(2)
+
+        elif choice == '4':
+            ChangeLog.change_log_print()
+            pause()
+
+        elif choice == '5':
+            sys.exit()
+
+        else:
+            print("Not an Option.")
+            pause()
+
 
 
 """
