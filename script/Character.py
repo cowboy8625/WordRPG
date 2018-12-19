@@ -25,6 +25,12 @@ class Character:
         self.equipped_weapon = Items.fist
         self.equipped_armor = None
 
+    def melee_attack(self):
+        return random.randint(self.melee_damage // 2, self.melee_damage)
+
+    def magic_attack(self):
+        return random.randint(self.magic_damage // 2, self.magic_damage)
+
 
 class Player(Character):
     def __init__(self, name, _class, max_health, melee_attack, magic_attack,
