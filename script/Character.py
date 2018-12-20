@@ -52,7 +52,7 @@ class Player(Character):
         self.pos_x = 0
         self.pos_y = 0
 
-    def player_move(self, _dir):
+    def move(self, _dir):
         if _dir == "North":
             self.pos_y += 1
         elif _dir == "South":
