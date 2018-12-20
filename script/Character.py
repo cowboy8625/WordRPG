@@ -49,8 +49,22 @@ class Player(Character):
         self.inventory_limit = 10
 
         # Map position
-        self.x_pos = 0
-        self.y_pos = 0
+        self.pos_x = 0
+        self.pos_y = 0
+
+    def player_move(self, _dir):
+        if _dir == "North":
+            self.pos_y += 1
+        elif _dir == "South":
+            self.pos_y += 1
+        elif _dir == "East":
+            self.pos_x += 1
+        elif _dir == "West":
+            self.pos_x -= 1
+        
+        print(str(self.pos_x)  + " : " + str(self.pos_y))
+
+
 
 
 """

@@ -3,13 +3,15 @@ from Map_Gen import Biome
 class Map:
     def __init__(self, map_file):
         self.map = open(map_file, 'r')
-    """
-    def populate(self):
-        __map = self.parse()
-        for y in range(len(__map)):
-            for x in range(len(__map)):
-                node = __map[x][y]
-    """
+        self.mapList = self.parse()
+
+    def access_information(self, x, y, item):
+        _biome = Biome.BiomeDict[self.mapList[x][y]]
+        if item == "Name":
+            return _biome.name
+
+
+
 
     def parse(self):
         __map = list(self.map.read().split())
@@ -21,7 +23,3 @@ class Map:
 
 
 mp = Map("World.map")
-mp.populate()
-
-
-
