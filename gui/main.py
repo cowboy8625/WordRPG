@@ -7,16 +7,22 @@ from .const import *
 
 
 
-class MainWindow( ):
-	"""[summary]
+def setup_terminal( cols = 40, lines = 15):
+	""" sets the size of the terminal window and clears it before printing"""
+	os.system(f"mode con cols={cols} lines={lines}")
+	os.system( 'cls' if os.name == 'nt' else 'clear' )
 
+
+class MainWindow( ):
+	"""Main window and text parser for displaying the main window frame and game text
+	
 	Returns:
-		[type]: [description]
+		None
 	"""
 
 	def __init__( self ):
-		self.HEIGHT				= 14					# character height of frame
-		self.WIDTH				= 64					# character width of frame
+		self.HEIGHT				= 30					# character height of frame
+		self.WIDTH				= 40					# character width of frame
 		self.INNER				= self.WIDTH - 2	# character width inside of frame
 		self.TITLE				= 'WORDRPG'
 		self.VERSION			= 1.0
@@ -29,15 +35,17 @@ class MainWindow( ):
 
 
 	def center_text( self, text, width, fillchar = ' '  ):
-		"""[summary]
+		"""Centers a text string in a given 'width' and fills empty space with given 'fillchar'
 		
-		Args:
-			text (str): Text to be centered
-			width (int): [Character width of the field to center text in
-			fillchar (str, optional): Defaults to ' '. String character to fill empty space with.
+		Arguments:
+			text {str} -- Text to be centered
+			width {int} -- Width of the text field to center within
+		
+		Keyword Arguments:
+			fillchar {str} -- String character to fill empty space (default: {' '})
 		
 		Returns:
-			str: New centered and padded string
+			str -- New centered and space-filled string
 		"""
 
 		return text.center( width, fillchar )
@@ -48,6 +56,8 @@ class MainWindow( ):
 
 		Args:
 			text (str): Multiline string of contents to put inside of frame
+			fillchar (str, optional): Defaults to ' '. String character to fill empty space
+			fillchar (str, optional): Defaults to ' '. String character to fill empty space
 
 		Returns:
 			[list]: List of f-strings
@@ -68,17 +78,19 @@ class MainWindow( ):
 
 
 	def frame_edge( self, text, lc = 'boxDR', rc = 'boxDL', col_text = COL_HEADER, col_frame = COL_FRAME ):
-		"""Builds the top or bottom line of the window frame
-
-		Args:
-			text (str): Text to include in middle of frame edge
-			lc (str, optional): Defaults to 'boxDR'. Name of key in FRAME to use for left corner of frame edge.
-			rc (str, optional): Defaults to 'boxDL'. Name of key in FRAME to use for right corner of frame edge.
-			col_text (colorama.fore, optional): Defaults to const.COL_HEADER. Color to use for text
-			col_frame (colorama.fore, optional): Defaults to const.COL_FRAME. Color to use for frame
+		"""[summary]
+		
+		Arguments:
+			text {str} -- Text to include in center of frame edge
+		
+		Keyword Arguments:
+			lc {str} -- Name of key in FRAME to use for left corner of frame edge. (default: {'boxDR'})
+			rc {str} -- Name of key in FRAME to use for right corner of frame edge. (default: {'boxDL'})
+			col_text {colorama.fore} -- Color to use for text (default: {COL_HEADER})
+			col_frame {colorama.fore} -- Color to use for frame (default: {COL_FRAME})
 		
 		Returns:
-			str: string of frame edge
+			str -- Frame edge as a string
 		"""
 
 		_text	= f"┤ {text} ├"
