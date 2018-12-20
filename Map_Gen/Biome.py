@@ -48,7 +48,7 @@ class Biome:
         if item == "name":
             return self.name
         elif item == "resource":
-            return self.resource
+            return self.resources
         elif item == "spawns":
             return self.spawns
         elif item == "rarity":
