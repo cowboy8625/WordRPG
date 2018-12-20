@@ -129,19 +129,17 @@ BiomeDict = {
     # Village
     'V': Wld.biomes[8],
     # Field
-    'F': Wld.biomes[9],
+    'E': Wld.biomes[9],
+    # Farm
+    'F': Wld.biomes[10],
     # Grasslands
-    'G': Wld.biomes[10],
-    # Wetlands
-    'E': Wld.biomes[11],
+    'G': Wld.biomes[11],
     # Salt Marsh
     'S': Wld.biomes[12],
     # Alpine Grasslands
     'P': Wld.biomes[13],
     # Marsh
     'H': Wld.biomes[14],
-    # Swamp
-    'A': Wld.biomes[15],
     # Ocean
-    '#': Wld.biomes[16]
+    '#': Wld.biomes[15]
 }

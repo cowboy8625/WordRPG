@@ -10,9 +10,6 @@ class Map:
         if item == "Name":
             return _biome.name
 
-
-
-
     def parse(self):
         __map = list(self.map.read().split())
 

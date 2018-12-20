@@ -62,7 +62,7 @@ class Player(Character):
         elif _dir == "West":
             self.pos_x -= 1
         
-        print(str(self.pos_x)  + " : " + str(self.pos_y))
+        print(str(self.pos_x) + " : " + str(self.pos_y))
 
 
 
