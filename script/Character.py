@@ -42,6 +42,10 @@ class Player(Character):
         self.inventory = []
         self.inventory_limit = 10
 
+        # Map position
+        self.x_pos = 0
+        self.y_pos = 0
+
 
 """
 # enemy mobs
