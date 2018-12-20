@@ -1,5 +1,6 @@
 from Map_Gen import Biome
 
+
 class Map:
     def __init__(self, map_file):
         self.map = open(map_file, 'r')
@@ -18,5 +19,8 @@ class Map:
 
         return __map
 
+    def get_length(self):
+        return len(self.mapList)
 
-mp = Map("World.map")
+
+WorldMap = Map("World.map")
