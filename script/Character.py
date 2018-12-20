@@ -92,9 +92,9 @@ class Player(Character):
                 print("You cannot cross here:")
                 print(WorldMap.access_information(new_x, self.pos_y, "Name"))
                 pause()
-        
-        print(str(self.pos_x) + " : " + str(self.pos_y))
 
+    def inspect_area(self):
+        pass
 
 
 

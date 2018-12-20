@@ -85,7 +85,8 @@ def main_game_loop(player, opening=True):
             else:
                 player.move(directions[move_to])
         except KeyError:
-            pass
+            if move_to == 5:
+                player.inspect_area(move_to)
 
 
 if __name__ == "__main__":
