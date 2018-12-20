@@ -72,18 +72,16 @@ def main_game_loop(player, opening=True):
             "(6): Inventory\n"
             "(7): Look For Resources\n"
             "Input a Number:>  ")
-        DirectionDict = {
-            1: "North",
-            2: "South",
-            3: "East",
-            4: "West"
+        directions = {
+            "1": "North",
+            "2": "South",
+            "3": "East",
+            "4": "West"
         }
         if move_to == 'Quit':  # QUIT, I'll take this out after testing
             sys.exit()
-
         else:
-            print("Not an option... Yet ;)")
-            pause()
+            player.move(directions[move_to])
 
 
 if __name__ == "__main__":
