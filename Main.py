@@ -78,10 +78,13 @@ def main_game_loop(player, opening=True):
             "3": "East",
             "4": "West"
         }
-        if move_to == 'Quit':  # QUIT, I'll take this out after testing
-            sys.exit()
-        else:
-            player.move(directions[move_to])
+        try:
+            if move_to == 'Quit':  # QUIT, I'll take this out after testing
+                sys.exit()
+            else:
+                player.move(directions[move_to])
+        except KeyError:
+            pass
 
 
 if __name__ == "__main__":
