@@ -12,6 +12,12 @@ class Map:
             return _biome.name
         elif item == "Crossable":
             return _biome.crossable
+        elif item == "Resources":
+            return _biome.resources
+        elif item == "Spawns":
+            return _biome.spawns
+        elif item == "Info":
+            return _biome.info
 
     def parse(self):
         __map = list(self.map.read().split())

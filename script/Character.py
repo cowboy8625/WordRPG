@@ -94,7 +94,19 @@ class Player(Character):
                 pause()
 
     def inspect_area(self):
-        pass
+        print("======CALLED=======")
+        info = {
+            "Name": WorldMap.access_information(self.pos_x, self.pos_y, "Name"),
+            "Resources": WorldMap.access_information(self.pos_x, self.pos_y, "Resources"),
+            "Spawns": WorldMap.access_information(self.pos_x, self.pos_x, "Spawns"),
+            "Info": WorldMap.access_information(self.pos_x, self.pos_y, "Info")
+        }
+        clear()
+        print("Name: " + str(info["Name"]))
+        print("Resources: " + str(info["Resources"]))
+        print("Spawns: " + str(info["Spawns"]))
+        print("Info: " + str(info["Info"]))
+        pause()
 
 
 
