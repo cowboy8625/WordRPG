@@ -100,10 +100,40 @@ class World:
 
     def __init__(self):
         # This is so I can write the next function
-        self.biomes = [self.frt, self.dfo, self.cav, self.wld, self.mou,
-                       self.lak, self.rvr, self.twn, self.vil, self.fld,
-                       self.frm, self.gld, self.stm, self.agl, self.msh,
-                       self.ocn]
+        self.BiomeDict = {
+            # Forest
+            'O': self.frt,
+            # Dark Forest
+            'D': self.dfo,
+            # Cave
+            'C': self.cav,
+            # Woodlands
+            'W': self.wld,
+            # Mountains
+            'M': self.mou,
+            # Lake
+            'L': self.lak,
+            # River
+            'I': self.rvr,
+            # Town
+            'T': self.twn,
+            # Village
+            'V': self.vil,
+            # Field
+            'E': self.fld,
+            # Farm
+            'F': self.frm,
+            # Grasslands
+            'G': self.gld,
+            # Salt Marsh
+            'S': self.stm,
+            # Alpine Grasslands
+            'P': self.agl,
+            # Marsh
+            'H': self.msh,
+            # Ocean
+            '#': self.ocn
+        }
 
     # returns Biome object
     def get_random_biome(self):
@@ -111,37 +141,4 @@ class World:
 
 
 Wld = World()
-BiomeDict = {
-    # Forest
-    'O': Wld.biomes[0],
-    # Dark Forest
-    'D': Wld.biomes[1],
-    # Cave
-    'C': Wld.biomes[2],
-    # Woodlands
-    'W': Wld.biomes[3],
-    # Mountains
-    'M': Wld.biomes[4],
-    # Lake
-    'L': Wld.biomes[5],
-    # River
-    'I': Wld.biomes[6],
-    # Town
-    'T': Wld.biomes[7],
-    # Village
-    'V': Wld.biomes[8],
-    # Field
-    'E': Wld.biomes[9],
-    # Farm
-    'F': Wld.biomes[10],
-    # Grasslands
-    'G': Wld.biomes[11],
-    # Salt Marsh
-    'S': Wld.biomes[12],
-    # Alpine Grasslands
-    'P': Wld.biomes[13],
-    # Marsh
-    'H': Wld.biomes[14],
-    # Ocean
-    '#': Wld.biomes[15]
-}
+
