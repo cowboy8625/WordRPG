@@ -10,6 +10,8 @@ class Map:
         _biome = Biome.BiomeDict[self.mapList[x][y]]
         if item == "Name":
             return _biome.name
+        elif item == "Crossable":
+            return _biome.crossable
 
     def parse(self):
         __map = list(self.map.read().split())
@@ -23,4 +25,4 @@ class Map:
         return len(self.mapList)
 
 
-WorldMap = Map("World.map")
+WorldMap = Map("Map_Gen/World.map")

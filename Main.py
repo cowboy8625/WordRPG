@@ -63,7 +63,8 @@ def main_game_loop(player, opening=True):
         # move_error_msg = 'NEED TO MAKE THE PLAYER TO TELEPORT TO OTHER SIDE OF MAP'
         clear()
         move_to = input(
-            "Which way do you want to travel?\n\n"
+            "Which way do you want to travel?\n"
+            f"Coords: {player.pos_x}:{player.pos_y}\n\n"
             "(1): North\n"
             "(2): South\n"
             "(3): East\n"

@@ -30,7 +30,8 @@ from Map_Gen import SubBiome
 
 
 class Biome:
-    def __init__(self, name=None, resources=None, spawns=None, enterable=None, rarity=None, info=None, prefix=None):
+    def __init__(self, name=None, resources=None, spawns=None, enterable=None, rarity=None, info=None, prefix=None,
+                 crossable=True):
         self.prefix = prefix
         self.name = name
         self.resources = resources
@@ -38,6 +39,7 @@ class Biome:
         self.enterable = enterable
         self.rarity = rarity
         self.info = info
+        self.crossable = crossable
 
     # This method is for dictionary indexing, mainly for backwords compatability with the rest of the code
     def __getitem__(self, item):
@@ -94,7 +96,7 @@ class World:
     msh = Biome(prefix="msh", name="Marsh", resources=['Crawfish'], spawns=['Zombie'], enterable=False, rarity="Rare",
                 info="Spawnpy water to your knees. This is an unruly landscape")
     ocn = Biome(prefix="ocn", name="Ocean", resources=['Salt Water'], spawns=['Sea Monster'], enterable=False,
-                rarity="Rare", info="Deep, dark, unexplored. Last great frontier")
+                rarity="Rare", info="Deep, dark, unexplored. Last great frontier", crossable=False)
 
     def __init__(self):
         # This is so I can write the next function
