@@ -59,24 +59,44 @@ class Biome:
 
 # World Class to house to biomes
 class World:
-    def __init__(self):
+    vil = Biome(prefix="vil", name="Village", resources=None, spawns=None, enterable=True, rarity="Rare",
+                info="A coloumn of smoke rises from a chimney. Could this be a place to rest?")
+    frt = Biome(prefix="frt", name="Forest", resources=['Wood'], spawns=['Bandit', 'Wolf'], enterable=False,
+                rarity="Common", info="Dark and ominous forest, filled with wolfs and bandits")
+    dfo = Biome(prefix="dfo", name="Dark Forest", resources=['Magic Wood'], spawns=['Dark Elif', 'Imp'],
+                enterable=False, rarity="Rare", info="Once a light place filled with life, now consumed by dark forces")
+    cav = Biome(prefix="cav", name="Cave", resources=['Rock', 'Bones'], spawns=['Skeleton', 'Bears', 'Zombie'],
+                enterable=True, rarity="Uncommon",
+                info="Deep, dark and void of life. Who knows what could be down there")
+    wld = Biome(prefix="wld", name="Woodlands", resources=['Logs'], spawns=['Earth Golem'], enterable=False,
+                rarity="Uncommon",
+                info="Peaceful place, little fairies, pretty flowers. Wait, whats the thumping noise?")
+    mou = Biome(prefix="mou", name="Mountains", resources=['Rock', 'Flint'], spawns=['Yeti'], enterable=False,
+                rarity="Uncommon", info="There could be anything hiding in the blizzards of the mountain")
+    lak = Biome(prefix="lak", name="Lake", resources=['Water'], spawns=['Earth Golem'], enterable=True, rarity="Rare",
+                info="Just a lake. Nothing to see here")
+    rvr = Biome(prefix="rvr", name="River", resources=['Water'], spawns=['Earth Golem'], enterable=True, rarity="Rare",
+                info="Running water, peaceful serenity. Finally")
+    twn = Biome(prefix="twn", name="Town", resources=None, spawns=None, enterable=False, rarity="Rare",
+                info="People going about their day, a sense of normality")
+    fld = Biome(prefix="fld", name="Field", resources=['Herb'], spawns=['Zombie'], enterable=False, rarity="Common",
+                info="Miles and miles of hay, theres no way there are any monsters here. Right?")
+    frm = Biome(prefix="frm", name="Farm", resources=['Herb'], spawns=['Zombie'], enterable=False, rarity="Uncommon",
+                info="Theres got to be something of value here")
+    gld = Biome(prefix="gld", name="Grasslands", resources=['grass'],
+                spawns=['Deer', 'Buffalo', 'Cow', 'Bull', 'Bandit', 'Bear'], enterable=False, rarity="Common",
+                info="So much life. These grasslands provide habitat for more than just animals though...")
+    stm = Biome(prefix="stm", name="Salt Marsh", resources=['Salt'], spawns=['Zombies'], enterable=False,
+                rarity="Uncommon", info="I wonder what materials can be found in the SALT march")
+    agl = Biome(prefix="agl", name="Alpine Grasslands", resources=['Pine'], spawns=['Zombie', 'Bandit'],
+                enterable=False, rarity="Rare",
+                info="High on the side of a mountain, these grasslands offer some very good hiding spots")
+    msh = Biome(prefix="msh", name="Marsh", resources=['Crawfish'], spawns=['Zombie'], enterable=False, rarity="Rare",
+                info="Spawnpy water to your knees. This is an unruly landscape")
+    ocn = Biome(prefix="ocn", name="Ocean", resources=['Salt Water'], spawns=['Sea Monster'], enterable=False,
+                rarity="Rare", info="Deep, dark, unexplored. Last great frontier")
 
-        self.frt = Biome(prefix="frt", name="Forest", resources=['Wood'], spawns=['Bandit', 'Wolf'], enterable=False, rarity="Common", info="Dark and ominous forest, filled with wolfs and bandits")
-        self.dfo = Biome(prefix="dfo", name="Dark Forest", resources=['Magic Wood'], spawns=['Dark Elif', 'Imp'], enterable=False, rarity="Rare", info="Once a light place filled with life, now consumed by dark forces")
-        self.cav = Biome(prefix="cav", name="Cave", resources=['Rock', 'Bones'], spawns=['Skeleton', 'Bears', 'Zombie'], enterable=True, rarity="Uncommon", info="Deep, dark and void of life. Who knows what could be down there")
-        self.wld = Biome(prefix="wld", name="Woodlands", resources=['Logs'], spawns=['Earth Golem'], enterable=False, rarity="Uncommon", info="Peaceful place, little fairies, pretty flowers. Wait, whats the thumping noise?")
-        self.mou = Biome(prefix="mou", name="Mountains", resources=['Rock', 'Flint'], spawns=['Yeti'], enterable=False, rarity="Uncommon", info="There could be anything hiding in the blizzards of the mountain")
-        self.lak = Biome(prefix="lak", name="Lake", resources=['Water'], spawns=['Earth Golem'], enterable=True, rarity="Rare", info="Just a lake. Nothing to see here")
-        self.rvr = Biome(prefix="rvr", name="River", resources=['Water'], spawns=['Earth Golem'], enterable=True, rarity="Rare", info="Running water, peaceful serenity. Finally")
-        self.twn = Biome(prefix="twn", name="Town", resources=None, spawns=None, enterable=False, rarity="Rare", info="People going about their day, a sense of normality")
-        self.vil = Biome(prefix="vil", name="Village", resources=None, spawns=None, enterable=True, rarity="Rare", info="A coloumn of smoke rises from a chimney. Could this be a place to rest?")
-        self.fld = Biome(prefix="fld", name="Field", resources=['Herb'], spawns=['Zombie'], enterable=False, rarity="Common", info="Miles and miles of hay, theres no way there are any monsters here. Right?")
-        self.frm = Biome(prefix="frm", name="Farm", resources=['Herb'], spawns=['Zombie'], enterable=False, rarity="Uncommon", info="Theres got to be something of value here")
-        self.gld = Biome(prefix="gld", name="Grasslands", resources=['grass'], spawns=['Deer', 'Buffalo', 'Cow', 'Bull', 'Bandit', 'Bear'], enterable=False, rarity="Common",info="So much life. These grasslands provide habitat for more than just animals though...")
-        self.stm = Biome(prefix="stm", name="Salt Marsh", resources=['Salt'], spawns=['Zombies'], enterable=False, rarity="Uncommon", info="I wonder what materials can be found in the SALT march")
-        self.agl = Biome(prefix="agl", name="Alpine Grasslands", resources=['Pine'], spawns=['Zombie', 'Bandit'], enterable=False, rarity="Rare", info="High on the side of a mountain, these grasslands offer some very good hiding spots")
-        self.msh = Biome(prefix="msh", name="Marsh", resources=['Crawfish'], spawns=['Zombie'], enterable=False, rarity="Rare", info="Spawnpy water to your knees. This is an unruly landscape")
-        self.ocn = Biome(prefix="ocn", name="Ocean", resources=['Salt Water'], spawns=['Sea Monster'], enterable=False, rarity="Rare", info="Deep, dark, unexplored. Last great frontier")
+    def __init__(self):
         # This is so I can write the next function
         self.biomes = [self.frt, self.dfo, self.cav, self.wld, self.mou,
                        self.lak, self.rvr, self.twn, self.vil, self.fld,

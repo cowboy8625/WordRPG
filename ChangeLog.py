@@ -1,4 +1,4 @@
-"""
+'''
 This will grab the changes from CHANGELOG.md and put them in a variable to
 be used in the game for the changelog menu.
 
@@ -10,51 +10,38 @@ be used in the game for the changelog menu.
 	# reads in CHANGELOG.md and prints it to the terminal
 	print_changelog( )
 
-"""
+'''
 
-from os import system, name
-
+from Mechanics.ui_mechanics import *
 
 FILENAME_CHANGELOG = 'CHANGELOG.md'
 
 
-def import_changelog( ):
-	"""
+def import_change_log():
+	'''
 	Imports CHANGELOG.md and returns contents as str
 	
 	**Returns:**
 	
 		:``str``: changelog as a string
-	"""
-
+	'''
+	
 	with open( FILENAME_CHANGELOG, 'r') as f:
 		contents = f.read()
 
-	return changelog
+	return contents
 
 
-def clear( ):
-	"""
-	Clears the terminal screen
-
-	**Returns:**
-	
-		:``str``: Resultof os.system command
-	"""
-
-	return os.system( 'cls' if os.name == 'nt' else 'clear' )
-    
-
-def print_changelog( ):
-	"""
+def change_log_print():
+	'''
 	Prints changelog to terminal
 
 	**Returns:**
 	
 		:``str``: Result of print command
-	"""
+	'''
 
-	change_log = import_change_log( )
-	clear( )
+	change_log = import_change_log()
+	clear()
 
-	return print( change_log )
+	return print(change_log)
