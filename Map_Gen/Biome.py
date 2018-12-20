@@ -87,3 +87,41 @@ class World:
     def get_random_biome(self):
         return random.choice(self.biomes)
 
+
+Wld = World()
+BiomeDict = {
+    # Forest
+    'O': Wld.biomes[0],
+    # Dark Forest
+    'D': Wld.biomes[1],
+    # Cave
+    'C': Wld.biomes[2],
+    # Woodlands
+    'W': Wld.biomes[3],
+    # Mountains
+    'M': Wld.biomes[4],
+    # Lake
+    'L': Wld.biomes[5],
+    # River
+    'I': Wld.biomes[6],
+    # Town
+    'T': Wld.biomes[7],
+    # Village
+    'V': Wld.biomes[8],
+    # Field
+    'F': Wld.biomes[9],
+    # Grasslands
+    'G': Wld.biomes[10],
+    # Wetlands
+    'E': Wld.biomes[11],
+    # Salt Marsh
+    'S': Wld.biomes[12],
+    # Alpine Grasslands
+    'P': Wld.biomes[13],
+    # Marsh
+    'H': Wld.biomes[14],
+    # Swamp
+    'A': Wld.biomes[15],
+    # Ocean
+    '#': Wld.biomes[16]
+}
