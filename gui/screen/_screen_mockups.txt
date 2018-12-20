@@ -1,5 +1,26 @@
-Main Window Frame:
+Splash-screen:
+generated at https://www.text-image.com/convert/
+|------------------40------------------|
+                   /ys.          
+              .dhhdMMMN.  ``-::  
+          .//:oNMMMMMMNd+sdNMMM- 
+         :MMMMNdsso+/:----/MMm/  
+         `odmm/ .+oosyyso/+y/`   
+            `.` +MN+smMhyy       
+             +y+oMM/yMdh/h       
+             +osymmdmNyhdy`      
+                `:-/ooo/.        
+             :--/ydo+h-          
+             ` -../ymM/          
+                    `.           
 
+         COWBOY GAMING © 2018           
+|------------------40------------------|
+
+
+Main Window Frame:
+Inner dimensions are 38x13
+|------------------40------------------|
 ╔══════════════════════════════════════╗
 ║                                      ║
 ║                                      ║
@@ -17,7 +38,7 @@ Main Window Frame:
 
 
 Header and footer added:
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -35,7 +56,7 @@ Header and footer added:
 
 
 Main Menu(A):
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║       WELCOME TO THE WASTELAND       ║
@@ -54,6 +75,7 @@ Main Menu(A):
 
 Main Menu(B):
 Alternate layout where we replace header/footer
+|------------------40------------------|
 ╔═════┤ WELCOME TO THE WASTELAND ├═════╗
 ║                                      ║
 ║                                      ║
@@ -71,7 +93,7 @@ Alternate layout where we replace header/footer
 
 
 Save/Load file:
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -91,6 +113,7 @@ Save/Load file:
 Player:
 Screen used during character creation or
 examining character stats
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -110,7 +133,7 @@ examining character stats
 Main Game Loop(A):
 Note tight space constraints require player name to be capped at 8 characters
 Othwerise we could truncate. Ex.'JOHNA..'
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║┌─ PLAYER78 ────┐┌─────── ROAD ──────┐║
 ║│ MAGE - LVL 12 ││..TT.TTT...........│║
@@ -127,6 +150,7 @@ Othwerise we could truncate. Ex.'JOHNA..'
 ╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
 
 ::player_frame
+|------17-------|
 ┌───────────────┐
 │               │
 │               │
@@ -139,10 +163,26 @@ Othwerise we could truncate. Ex.'JOHNA..'
 │               │
 │               │
 └───────────────┘
+::map_frame
+|---------21--------|
+┌─────── ROAD ──────┐
+│                   │
+│                   │
+│                   │
+│                   │
+│                   │  
+│                   │
+│                   │
+│                   │
+│                   │
+│                   │
+└───────────────────┘
+
 
 Combat:
 Player pane could be simplied to pertinent
 data.  Can use BG/FG color to indicate turn
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
 ║│ MAGE - LVL 12 │     │ HP   - 20/25 │║
@@ -159,6 +199,7 @@ data.  Can use BG/FG color to indicate turn
 ╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
 
 Up to 3 enemies AT A TIME
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
 ║│ MAGE - LVL 12 │     │ HP   100/100 │║
@@ -177,6 +218,7 @@ Up to 3 enemies AT A TIME
 
 Story(A):
 Space for 7 rows 36 character
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║              THE QUEST               ║
@@ -197,6 +239,7 @@ Space for 7 rows 36 character
 Story(B):
 Moving title into the header and other command options into the footer
 gives us space for 11 rows 36 character
+|------------------40------------------|
 ╔════════════┤ THE QUEST ├═════════════╗
 ║                                      ║
 ║ 123456789012345678901234567890123456 ║
@@ -215,7 +258,7 @@ gives us space for 11 rows 36 character
 
 
 Inventory:
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -233,7 +276,7 @@ Inventory:
 
 
 Shop:
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -251,7 +294,7 @@ Shop:
 
 
 Dialogue:
-
+|------------------40------------------|
 ╔══════════┤ WORDRPG - 1.0 ├═══════════╗
 ║                                      ║
 ║                                      ║
@@ -266,5 +309,3 @@ Dialogue:
 ║                                      ║
 ║                                      ║
 ╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
-
-
