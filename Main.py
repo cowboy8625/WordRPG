@@ -422,54 +422,12 @@ def main_game_loop(player, opening=True):
             "(6): Inventory\n"
             "(7): Look For Resources\n"
             "Input a Number:>  ")
-
-        """
-        # NORTH = 1, SOUTH = 2, EAST = 3, & WEST = 4
-        if move_to == '1':  # UP
-            if y > 0:
-                y -= 1
-                encounter()
-            else:
-                print(move_error_msg)
-                pause()
-                # main_game_loop()
-
-        elif move_to == '2':  # DOWN
-            if y < small:
-                y += 1
-                encounter()
-            else:
-                print(move_error_msg)
-                pause()
-                # main_game_loop()
-
-        elif move_to == '3':  # RIGHT
-            if x > 0:
-                x += 1
-                encounter()
-            else:
-                print(move_error_msg)
-                pause()
-                # main_game_loop()
-
-        elif move_to == '4':  # LEFT
-            if x < small:
-                x -= 1
-                encounter()
-            else:
-                print(move_error_msg)
-                pause()
-                # main_game_loop()
-
-        elif move_to == '5':
-            inspect_area(map_info[0][2])
-
-        elif move_to == '6':
-            player_in_game.look_in_inventory()
-
-        elif move_to == '7':
-            get_resources()
-        """
+        DirectionDict = {
+            1: "North",
+            2: "South",
+            3: "East",
+            4: "West"
+        }
         if move_to == 'Quit':  # QUIT, I'll take this out after testing
             sys.exit()
 
