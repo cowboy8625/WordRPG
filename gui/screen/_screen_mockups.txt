@@ -1,0 +1,270 @@
+Main Window Frame:
+
+╔══════════════════════════════════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚══════════════════════════════════════╝
+
+
+Header and footer added:
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Main Menu(A):
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║       WELCOME TO THE WASTELAND       ║
+║                                      ║
+║           (1) - START                ║
+║           (2) - LOAD                 ║
+║           (3) - HELP                 ║
+║           (4) - CHANGE LOG           ║
+║           (5) - QUIT                 ║
+║                                      ║
+║                                      ║
+║      ENTER A NUMBER TO CONTINUE      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Main Menu(B):
+Alternate layout where we replace header/footer
+╔═════┤ WELCOME TO THE WASTELAND ├═════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║           (1) - START                ║
+║           (2) - LOAD                 ║
+║           (3) - HELP                 ║
+║           (4) - CHANGE LOG           ║
+║           (5) - QUIT                 ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚════┤ ENTER A NUMBER TO CONTINUE ├════╝
+
+
+Save/Load file:
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Player:
+Screen used during character creation or
+examining character stats
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Main Game Loop(A):
+Note tight space constraints require player name to be capped at 8 characters
+Othwerise we could truncate. Ex.'JOHNA..'
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║┌─ PLAYER78 ────┐┌─────── ROAD ──────┐║
+║│ MAGE - LVL 12 ││..TT.TTT...........│║
+║│ HP     99/100 ││.T..T.DTTTTT.......│║
+║│ MANA    20/25 ││.TT...║.TT.........│║
+║│ XP   400/5000 ││......║............│║
+║│ GOLD    49999 ││......║............│║  
+║├─ COMMANDS─────┤│......╚══■══╗......│║
+║│   W - NORTH   ││...▒▒.......║......│║
+║│   A - WEST    ││..▒▒▒▒▒.....╚══T...│║
+║│   S - SOUTH   ││.....▒▒............│║
+║│   D - EAST    ││...................│║
+║└───────────────┘└───────────────────┘║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+::player_frame
+┌───────────────┐
+│               │
+│               │
+│               │
+│               │
+│               │
+├───────────────┤
+│               │
+│               │
+│               │
+│               │
+└───────────────┘
+
+Combat:
+Player pane could be simplied to pertinent
+data.  Can use BG/FG color to indicate turn
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
+║│ MAGE - LVL 12 │     │ HP   - 20/25 │║
+║│ HP     99/100 │     │ MANA - 20/25 │║
+║│ MANA   20/25  │     └──────────────┘║
+║│               │     FIGHT!          ║
+║│               │     YOU ATTACK...   ║
+║├─ COMMANDS─────┤       MISSED!       ║
+║│  A - ATTACK   │     LICH ATTACKS... ║
+║│  S - SPELL    │       11 DAMAGE!    ║
+║│  I - ITEM     │     USE POTION...   ║
+║│  F - FLEE     │       HEAL 10 HP    ║
+║└───────────────┘                     ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+Up to 3 enemies AT A TIME
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
+║│ MAGE - LVL 12 │     │ HP   100/100 │║
+║│ HP     99/100 │     │ MANA   20/25 │║
+║│ MANA   20/25  │     ├─ ZOMBIE - 2 ─┤║
+║│               │     │ HP     25/25 │║
+║│               │     │              │║
+║├─ COMMANDS─────┤     ├─ ZOMBIE - 2 ─┤║
+║│  A - ATTACK   │     │ HP     10/10 │║
+║│  S - SPELL    │     │              │║
+║│  I - ITEM     │     └──────────────┘║
+║│  F - FLEE     │     YOU ATTACK...   ║
+║└───────────────┘       MISSED!       ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Story(A):
+Space for 7 rows 36 character
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║              THE QUEST               ║
+║                                      ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║                                      ║
+║      PRESS ANY KEY TO CONTINUE       ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Story(B):
+Moving title into the header and other command options into the footer
+gives us space for 11 rows 36 character
+╔════════════┤ THE QUEST ├═════════════╗
+║                                      ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║ 123456789012345678901234567890123456 ║
+║                                      ║
+╚═════┤ PRESS ANY KEY TO CONTINUE ├════╝
+
+
+Inventory:
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Shop:
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
+Dialogue:
+
+╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+║                                      ║
+╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+
+
