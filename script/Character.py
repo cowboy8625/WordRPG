@@ -46,7 +46,7 @@ class Player(Character):
         self.equipped_weapon = equipped_weapon
         self.equipped_armor = equipped_armor
 
-        self.inventory = []
+        self.inventory = [equipped_weapon, equipped_armor]
         self.inventory_limit = 10
 
         # Map position
@@ -107,6 +107,10 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
+
+    def inv_view(self):
+        for item in self.inventory:
+            print(item.name)
 
 
 
