@@ -1,33 +1,41 @@
 import json
 
-
+# just an example class to save and load data from
 class example:
     def __init__(self):
         self.running = 4
         self.ran = 5
 
-
+# adds functionality for saving classes with __dict__
 def jdefault(o):
     return o.__dict__
 
-
+# main class its quite simple and it just has two functions
 class save_engine:
-    def save(self, object):
-        data = open('saved_data.txt', 'wb')
+    # saves the a class in a file with json
+    def save(self,file, object):
+        # opens/creates file in write mode
+        data = open(file, 'wb')
+        # dumps all of the  __dict__ for a class into a variable in json
         save = json.dumps(object, default=jdefault)
+        # writes all of the json to said file
         data.write(save.encode())
+        # closes save file
         data.close()
+
+
+
+    # loads a class with json into an object
     def load(self,file,object):
+        # open the save file in read mode
         data = open(file,'r')
+        # reads data into variable
         raw_data = data.read()
+        # closes the save file
         data.close()
+        # makes the data be python and not json
         read_data = json.loads(raw_data)
+        # loads the data into the object
         object.__dict__ = read_data
-        print(object.running)
 
-
-save_engine1 = save_engine()
-eg = example()
-save_engine1.save(eg)
-save_engine1.load("saved_data.txt",eg)
 
