@@ -94,6 +94,7 @@ class Player(Character):
                 pause()
 
     def inspect_area(self):
+<<<<<<< HEAD
         print("======CALLED=======")
         info = {
             "Name": WorldMap.access_information(self.pos_x, self.pos_y, "Name"),
@@ -107,6 +108,9 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
+=======
+        pass
+>>>>>>> master
 
 
 

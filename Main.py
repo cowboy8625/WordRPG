@@ -82,12 +82,21 @@ def main_game_loop(player, opening=True):
         try:
             if move_to == 'Quit':  # QUIT, I'll take this out after testing
                 sys.exit()
+<<<<<<< HEAD
             if move_to == "5":
                 player.inspect_area()
             else:
                 player.move(directions[move_to])
         except KeyError:
             pass
+=======
+            else:
+                player.move(directions[move_to])
+        except KeyError:
+            if move_to == 5:
+                player.inspect_area(move_to)
+
+>>>>>>> master
 
 if __name__ == "__main__":
     main()
