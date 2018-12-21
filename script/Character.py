@@ -43,8 +43,10 @@ class Player(Character):
         self.gender = gender
         self.gold = gold
         self.xp = xp
-        self.equipped_weapon = equipped_weapon
-        self.equipped_armor = equipped_armor
+        self.equipped = {
+            "Weapon": equipped_weapon,
+            "Armor": equipped_armor
+        }
 
         self.inventory = [equipped_weapon, equipped_armor]
         self.inventory_limit = 10
@@ -109,8 +111,24 @@ class Player(Character):
         pause()
 
     def inv_view(self):
+        clear()
         for item in self.inventory:
-            print(item.name)
+            print(item.name, end="")
+            if item in self.equipped.values():
+                print(": Equipped")
+            else:
+                print("")
+        pause()
+
+    def inv_add(self, item):
+        if len(self.inventory) < self.inventory_limit:
+            self.inventory.append(item)
+        else:
+            clear()
+            print("Inventory is full")
+            pause()
+
+
 
 
 
