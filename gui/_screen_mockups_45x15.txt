@@ -1,27 +1,34 @@
-Splash-screen:
-generated at https://www.text-image.com/convert/
-|------------------40------------------|
-                   /ys.          
-              .dhhdMMMN.  ``-::  
-          .//:oNMMMMMMNd+sdNMMM- 
-         :MMMMNdsso+/:----/MMm/  
-         `odmm/ .+oosyyso/+y/`   
-            `.` +MN+smMhyy       
-             +y+oMM/yMdh/h       
-             +osymmdmNyhdy`      
-                `:-/ooo/.        
-             :--/ydo+h-          
-             ` -../ymM/          
-                    `.           
+Window dimensions are 40 x 15 characters @ 8x16. 640 x 480 resolution. Here is a handy ruler:
+├──────────────────40──────────────────┤
 
-         COWBOY GAMING © 2018           
-|------------------40------------------|
+Total height should be 15 lines (0-14)
 
 
-Main Window Frame:
-Inner dimensions are 38x13
-|------------------40------------------|
+Splash-screen:generated at https://asciiart.club/
+
+├──────────────────40──────────────────┤
+                  ▄███▄                 
+             █▀█▄██████▄       ,,       
+            █████████████ ¿▄██████▌     
+      ████████████████▀▀▀▀▀▀█████▀      
+      ██████▀╙              ▐██▀└       
+       ▀▀███   ▄██▀▀▀████▀▀M▀▀          
+               ████▀███████             
+           ▄▄  ███  ████- █             
+          ▐█▌█████████Ü████╕            
+               ▀▀▀▄█▄█Q▄█Å▀             
+                   ╙╙╙└'                
+          .▒  ▄ ██▄⌐▄█                  
+             ▀▀ ╙▀█████                 
+                    ╙▀                  
+         COWBOY GAMING - 2018            
+├──────────────────40──────────────────┤
+
+Main Window Frame: Inner dimensions are 38x13
+
+├──────────────────40──────────────────┤
 ╔══════════════════════════════════════╗
+║                                      ║
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -37,9 +44,10 @@ Inner dimensions are 38x13
 ╚══════════════════════════════════════╝
 
 
+
 Header and footer added:
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -52,12 +60,14 @@ Header and footer added:
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
+
 
 
 Main Menu(A):
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║                                      ║
 ║       WELCOME TO THE WASTELAND       ║
 ║                                      ║
@@ -68,15 +78,16 @@ Main Menu(A):
 ║           (5) - QUIT                 ║
 ║                                      ║
 ║                                      ║
+║                                      ║
 ║      ENTER A NUMBER TO CONTINUE      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
 
-Main Menu(B):
-Alternate layout where we replace header/footer
-|------------------40------------------|
-╔═════┤ WELCOME TO THE WASTELAND ├═════╗
+
+Main Menu(B): Alternate layout where we replace header/footer
+
+╔═════» WELCOME TO THE WASTELAND «═════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -89,12 +100,14 @@ Alternate layout where we replace header/footer
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚════┤ ENTER A NUMBER TO CONTINUE ├════╝
+║                                      ║
+╚════» ENTER A NUMBER TO CONTINUE «════╝
+
 
 
 Save/Load file:
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -107,14 +120,14 @@ Save/Load file:
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
 
-Player:
-Screen used during character creation or
-examining character stats
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+Player:Screen used during character creation or examining character stats
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -127,14 +140,14 @@ examining character stats
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
 
-Main Game Loop(A):
-Note tight space constraints require player name to be capped at 8 characters
-Othwerise we could truncate. Ex.'JOHNA..'
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+Main Game Loop(A): Note tight space constraints require player name to be capped at 8 characters
+Otherwise we could truncate. Ex.'JOHNA..'
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║┌─ PLAYER78 ────┐┌─────── ROAD ──────┐║
 ║│ MAGE - LVL 12 ││..TT.TTT...........│║
 ║│ HP     99/100 ││.T..T.DTTTTT.......│║
@@ -146,11 +159,14 @@ Othwerise we could truncate. Ex.'JOHNA..'
 ║│   A - WEST    ││..▒▒▒▒▒.....╚══T...│║
 ║│   S - SOUTH   ││.....▒▒............│║
 ║│   D - EAST    ││...................│║
+║│               ││...................│║
 ║└───────────────┘└───────────────────┘║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
+
+Sub frame height is 13char
 ::player_frame
-|------17-------|
+├───────17──────┤
 ┌───────────────┐
 │               │
 │               │
@@ -162,10 +178,16 @@ Othwerise we could truncate. Ex.'JOHNA..'
 │               │
 │               │
 │               │
+│               │
 └───────────────┘
+
+
+
+
+
 ::map_frame
-|---------21--------|
-┌─────── ROAD ──────┐
+├─────────21────────┤
+┌───────────────────┐
 │                   │
 │                   │
 │                   │
@@ -176,14 +198,16 @@ Othwerise we could truncate. Ex.'JOHNA..'
 │                   │
 │                   │
 │                   │
+│                   │
 └───────────────────┘
 
 
-Combat:
-Player pane could be simplied to pertinent
+
+
+Combat: Player pane could be simplied to pertinent
 data.  Can use BG/FG color to indicate turn
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════════» COMBAT «══════════════╗
 ║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
 ║│ MAGE - LVL 12 │     │ HP   - 20/25 │║
 ║│ HP     99/100 │     │ MANA - 20/25 │║
@@ -195,12 +219,15 @@ data.  Can use BG/FG color to indicate turn
 ║│  S - SPELL    │       11 DAMAGE!    ║
 ║│  I - ITEM     │     USE POTION...   ║
 ║│  F - FLEE     │       HEAL 10 HP    ║
+║│               │     YOU ATTACK...   ║
 ║└───────────────┘                     ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+╚═══════» COWBOY GAMING - 2018 «═══════╝
+
+
 
 Up to 3 enemies AT A TIME
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════════» COMBAT «══════════════╗
 ║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
 ║│ MAGE - LVL 12 │     │ HP   100/100 │║
 ║│ HP     99/100 │     │ MANA   20/25 │║
@@ -212,14 +239,15 @@ Up to 3 enemies AT A TIME
 ║│  S - SPELL    │     │              │║
 ║│  I - ITEM     │     └──────────────┘║
 ║│  F - FLEE     │     YOU ATTACK...   ║
-║└───────────────┘       MISSED!       ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║│               │       MISSED!       ║
+║└───────────────┘                     ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
 
-Story(A):
-Space for 7 rows 36 character
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+Story(A): Space for 7 rows 36 character
+
+
+╔══════════» WORDRPG - 1.0 «═══════════╗
 ║                                      ║
 ║              THE QUEST               ║
 ║                                      ║
@@ -233,14 +261,13 @@ Space for 7 rows 36 character
 ║                                      ║
 ║      PRESS ANY KEY TO CONTINUE       ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+╚═══════» COWBOY GAMING - 2018 «═══════╝
 
 
-Story(B):
-Moving title into the header and other command options into the footer
-gives us space for 11 rows 36 character
-|------------------40------------------|
-╔════════════┤ THE QUEST ├═════════════╗
+Story(B): 11 rows 36 character
+
+
+╔════════════» THE QUEST «═════════════╗
 ║                                      ║
 ║ 123456789012345678901234567890123456 ║
 ║ 123456789012345678901234567890123456 ║
@@ -254,12 +281,13 @@ gives us space for 11 rows 36 character
 ║ 123456789012345678901234567890123456 ║
 ║ 123456789012345678901234567890123456 ║
 ║                                      ║
-╚═════┤ PRESS ANY KEY TO CONTINUE ├════╝
+╚═════» PRESS ANY KEY TO CONTINUE «════╝
+
 
 
 Inventory:
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔════════════» INVENTORY «═════════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -272,12 +300,14 @@ Inventory:
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
+
 
 
 Shop:
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔══════════» GENERAL GOODS «═══════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -290,12 +320,14 @@ Shop:
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
+
 
 
 Dialogue:
-|------------------40------------------|
-╔══════════┤ WORDRPG - 1.0 ├═══════════╗
+
+╔═══════════» TAVERN WENCH «═══════════╗
 ║                                      ║
 ║                                      ║
 ║                                      ║
@@ -308,4 +340,5 @@ Dialogue:
 ║                                      ║
 ║                                      ║
 ║                                      ║
-╚═══════┤ COWBOY GAMING © 2018 ├═══════╝
+║                                      ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝

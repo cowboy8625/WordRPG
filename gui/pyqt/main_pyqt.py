@@ -11,7 +11,10 @@ import PySide2
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4e01f47a6d4a787a7cb3c5824f9e9a33c92e2d8
 class MainWindow( PySide2.QtWidgets.QWidget ):
 	"""
 	Main Window widget for WORDRPG game
@@ -33,14 +36,20 @@ class MainWindow( PySide2.QtWidgets.QWidget ):
 	# PATH = os.path.dirname(os.path.abspath( __file__ ))
 	PATH			= r"C:\Users\chris.bruce\Documents\Python\Personal\WordRPG\gui"
 	STYLESHEET	= os.path.join(PATH, 'stylesheet.css')
+<<<<<<< HEAD
 	WINDOW_SIZE = ( 640, 480 )		# 40 x 30 @ 16pt font size
 	FONT_SIZE	= 16
 	FRAME_SIZE	= ( WINDOW_SIZE[ 0 ] - 24, WINDOW_SIZE[ 1 ] - 24) 
 	MAP_SIZE		= ( FONT_SIZE * 17, FONT_SIZE * 17 )
+=======
+	WINDOW_SIZE = ( 640, 480 )
+	FRAME_SIZE	= ( WINDOW_SIZE[ 0 ] - 24, WINDOW_SIZE[ 1 ] - 24) 
+>>>>>>> e4e01f47a6d4a787a7cb3c5824f9e9a33c92e2d8
 	TITLE			= 'WORDRPG'
 	VERSION		= 1.0
 
 
+<<<<<<< HEAD
 	# TEST_MAP		= ( '{}\n'.format( 'O' * 16 ) ) * 16
 	TEST_MAP		= '''
 	~^^..###........
@@ -59,6 +68,10 @@ class MainWindow( PySide2.QtWidgets.QWidget ):
 	.OOO............
 	...O............
 	................
+=======
+	TEST_MAP		= '''
+	֍۞۩
+>>>>>>> e4e01f47a6d4a787a7cb3c5824f9e9a33c92e2d8
 	'''
 
 	def __init__( self ):
@@ -98,6 +111,7 @@ class MainWindow( PySide2.QtWidgets.QWidget ):
 		self.layout.addWidget( self.frame )
 
 
+<<<<<<< HEAD
 		# self.world_map = PySide2.QtWidgets.QLabel( )
 		# self.world_map.setText( self.TEST_MAP )
 		# self.world_map.setFixedSize( *self.MAP_SIZE )
@@ -111,6 +125,11 @@ class MainWindow( PySide2.QtWidgets.QWidget ):
 		self.frame_layout.addWidget( self.world_map )
 
 		self.frame_layout.addStretch( )
+=======
+		self.world_map = PySide2.QtWidgets.QTextEdit( )
+		self.world_map.setText( self.TEST_MAP )
+		self.frame_layout.addWidget( self.world_map )
+>>>>>>> e4e01f47a6d4a787a7cb3c5824f9e9a33c92e2d8
 		
 
 #if __name__ == 'main':

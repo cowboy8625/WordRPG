@@ -1,0 +1,15 @@
+╔══════════════» COMBAT «══════════════╗
+║┌─ PLAYER78 ────┐     ┌─ LICH - 10 ──┐║
+║│ MAGE - LVL 12 │     │ HP   - 20/25 │║
+║│ HP     99/100 │     │ MANA - 20/25 │║
+║│ MANA   20/25  │     └──────────────┘║
+║│               │     FIGHT!          ║
+║│               │     YOU ATTACK...   ║
+║├─ COMMANDS─────┤       MISSED!       ║
+║│  A - ATTACK   │     LICH ATTACKS... ║
+║│  S - SPELL    │       11 DAMAGE!    ║
+║│  I - ITEM     │     USE POTION...   ║
+║│  F - FLEE     │       HEAL 10 HP    ║
+║│               │     YOU ATTACK...   ║
+║└───────────────┘                     ║
+╚═══════» COWBOY GAMING - 2018 «═══════╝
