@@ -24,8 +24,7 @@ def main():
         choice = input('\n\nSELECT A NUMBER:> ')
 
         if choice == '1':           # Starts Game
-            temp = char_creation()
-            main_game_loop(temp, opening=True)
+            main_game_loop(char_creation(), opening=True)
 
         elif choice == '2':  # LOADED AND SAVE
             print('NOT AN OPTION YET')
