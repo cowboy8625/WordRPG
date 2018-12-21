@@ -2,7 +2,6 @@
 import random
 
 from script import Items
-# from Mechanics.core_mechanics import rnd
 from Mechanics.ui_mechanics import *
 from Map_Gen.ParseMap import WorldMap
 
@@ -54,44 +53,16 @@ class Player(Character):
         self.pos_y = 1
 
     def move(self, _dir):
-        if _dir == "North":
-            new_y = self.pos_y - 1
-            if WorldMap.access_information(self.pos_x, new_y, "Crossable"):
-                self.pos_y -= 1
-                del new_y
-            else:
-                clear()
-                print("You cannot cross here:")
-                print(WorldMap.access_information(self.pos_x, new_y, "Name"))
-                pause()
-                del new_y
-        elif _dir == "South":
-            new_y = self.pos_y + 1
-            if WorldMap.access_information(self.pos_x, new_y, "Crossable"):
-                self.pos_y += 1
-            else:
-                clear()
-                print("You cannot cross here:")
-                print(WorldMap.access_information(self.pos_x, new_y, "Name"))
-                pause()
-        elif _dir == "East":
-            new_x = self.pos_x + 1
-            if WorldMap.access_information(new_x, self.pos_y, "Crossable"):
-                self.pos_x += 1
-            else:
-                clear()
-                print("You cannot cross here:")
-                print(WorldMap.access_information(new_x, self.pos_y, "Name"))
-                pause()
-        elif _dir == "West":
-            new_x = self.pos_x - 1
-            if WorldMap.access_information(new_x, self.pos_y, "Crossable"):
-                self.pos_x -= 1
-            else:
-                clear()
-                print("You cannot cross here:")
-                print(WorldMap.access_information(new_x, self.pos_y, "Name"))
-                pause()
+        directions = {"North":(0, -1), "South":(0, 1), "East":(1, 0), "West":(-1, 0)}
+        delta_x, delta_y = directions[_dir]
+        new_x, new_y = self.pos_x + delta_x, self.pos_y + delta_y
+        if WorldMap.access_information(new_x, new_y, "Crossable"):
+            self.pos_x, self.pos_y = new_x, new_y
+        else:
+            clear()
+            print("You cannot cross here:")
+            print(WorldMap.access_information(new_x, new_y, "Name"))
+            pause()
 
     def inspect_area(self):
         print("======CALLED=======")
@@ -107,10 +78,6 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
-
-
-
-
 
 
 """
