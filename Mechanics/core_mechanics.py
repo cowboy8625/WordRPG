@@ -28,17 +28,13 @@ def game_help():
 
 # This is where the player chooses what class he will be
 def char_creation():
-    pname = None
-    pclass = None
-    pgender = None
-
     # This function sets the name of the player
-    def player_select_name(__pname, __pclass):
-        while __pname is None:
-            message = f"A {__pclass} is a good choice I think. What shall I call you?"
+    def player_select_name(__pclass):
+        while True:
+            a_an = "An" if __pclass[0] in "AEIOU" else "A"
+            message = f"{a_an} {__pclass} is a good choice I think. What shall I call you?"
             Screen.display(message)
             option = input("\n\nENTER YOUR NAME:> ")
-
             if len(option) == 0:
                 print('\nYou need to enter a name to continue\n')
             else:
@@ -46,28 +42,19 @@ def char_creation():
                                 "(1): Yes\n"
                                 "(2): No\n"
                                 "Enter A Number:> ")
-
                 if yes_no == '1':
-                    __pname = option
-                    return __pname
+                    return option
 
     # This set the class for the player
-    def player_select_class(__pclass):
+    def player_select_class():
         player_options = ('Mage', 'Warrior', 'Archer', 'Assassin')
         Screen.char_options()
 
-        while __pclass is None:
+        while True:
             choice = input('\n\n'
                            'SELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
-
-            if choice == '1':
-                __pclass = player_options[int(choice) - 1]
-            elif choice == '2':
-                __pclass = player_options[int(choice) - 1]
-            elif choice == '3':
-                __pclass = player_options[int(choice) - 1]
-            elif choice == '4':
-                __pclass = player_options[int(choice) - 1]
+            if choice in "1234":
+                return player_options[int(choice) - 1]
             # lore is the story and it is found in InfoDics
             elif choice[0:4].lower() == 'info':
                 lore = InfoDics.info_on_classes[player_options[int(choice[5]) - 1]]
@@ -75,32 +62,25 @@ def char_creation():
                 pause()
             else:
                 print("Not An Option.")
-        return __pclass
 
-    def player_select_gender(__pgender, __pname, __pclass):
-        while pgender is None:
+    def player_select_gender(__pname, __pclass):
+        while True:
             message = f"{__pname} the {__pclass}, has a nice ring to\
                      it I think. I know it is obvious but just let me know what gender you are."
-
             Screen.display(message)
             option = input('\n\n'
                            '(1): Male\n'
                            '(2): Female\n'
                            'Enter A Number:> ')
-
             if option == '1':
-                __pgender = 'male'
-
+                return 'male'
             elif option == '2':
-                __pgender = 'female'
+                return 'female'
 
-            Story.set_gender(__pgender)
-            return __pgender
-
-    pclass = player_select_class(pclass)
-    pname = player_select_name(pname, pclass)
-    pgender = player_select_gender(pgender, pname, pclass)
-
+    pclass = player_select_class()
+    pname = player_select_name(pclass)
+    pgender = player_select_gender(pname, pclass)
+    Story.set_gender(pgender)
 
     # Mage
     if pclass == 'Mage':

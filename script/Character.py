@@ -36,7 +36,7 @@ class Player(Character):
     def __init__(self, name, _class, max_health, melee_attack, magic_attack,
                  max_mana, max_stamina, defense, luck, gender, gold=0, xp=0,
                  equipped_weapon= Items.fist, equipped_armor=Items.farm_clothing):
-        super().__init__(self, name, max_health, melee_attack, magic_attack,
+        super().__init__(name, max_health, melee_attack, magic_attack,
                          max_mana, max_stamina, defense, luck)
         self._class = _class
         self.gender = gender
