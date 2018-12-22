@@ -1,7 +1,14 @@
+""" Some test screen-building functions """
+
+import os
 from random import randrange
 
 from . import const, main
 
+
+
+DIRNAME = os.path.dirname(__file__)
+FILEPATH = os.path.join(DIRNAME, 'screens')
 
 
 def draw_screen(screen):
@@ -19,14 +26,14 @@ def fill_screen(char = '#'):
 
 
 def create_splash():
-    filename = r"E:\Python\WordRPG\gui\screens_80x25\splash.txt"
+    filename = os.path.join(FILEPATH, 'splash.txt')
     text = main.load_txt(filename)
     # convert text to array of characters
     return main.string_to_char_array(text)
 
 
 def create_frame():
-    filename = r"E:\Python\WordRPG\gui\screens_80x25\frame.txt"
+    filename = os.path.join(FILEPATH, 'frame.txt')
     text = main.load_txt(filename)
     # convert text to array of characters
     screen = main.string_to_char_array(text)
@@ -35,7 +42,7 @@ def create_frame():
 
 
 def create_title():
-    filename = r"E:\Python\WordRPG\gui\screens_80x25\title.txt"
+    filename = os.path.join(FILEPATH, 'title.txt')
     text = main.load_txt(filename)
     # convert text to array of characters
     return main.string_to_char_array(text)
@@ -53,13 +60,15 @@ def fill():
     draw_screen(screen)
 
 
-def splash():
+def splash( company = 'COMBOY GAMING', year = '2018' ):
+    """ this tests compositing screens and adding text at a centered offset
+    using string formatters and paramaters """
     screen = fill_screen(char=' ')
 
     _splash = create_splash()
-    main.write_to_array(_splash, screen, col = 0, row = 0, fgcolor = 'red')
+    main.write_to_array(_splash, screen, col = 0, row = 0, fgcolor = 'white', bgcolor = 'black')
 
-    text = f'<<  COMBOY GAMING - 2018  >>'
+    text = f'<<  {company} - {year}  >>'
     start = main.center_offset(text, const.SCREEN_SIZE[0])
     main.write_to_array(text, screen, col = start, row = 25, fgcolor = 'red')
    
@@ -80,7 +89,7 @@ def menu():
 def title():
     screen = create_frame()
     _title = create_title()
-    main.write_to_array(_title, screen, col = 20, row = 8, fgcolor='cyan', bgcolor='magenta')
+    main.write_to_array(_title, screen, col = 12, row = 6, fgcolor='cyan', bgcolor='magenta')
     # print the screen
     draw_screen(screen)
 

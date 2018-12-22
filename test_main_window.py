@@ -5,8 +5,6 @@ import gui
 
 
 if __name__ == '__main__':
-    # testing stuff
-
     # always start by setting up the terminal
     gui.main.setup_terminal()
 
@@ -24,5 +22,8 @@ if __name__ == '__main__':
     for _ in range(3):
         gui.tests.random_words()
         sleep(1)
+
+    for _ in range(30):
+        gui.tests.random_words()
 
     sleep(3)
