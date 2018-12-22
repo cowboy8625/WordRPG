@@ -1,202 +1,207 @@
+""" Main functions for gui-related tasks """
 import os
-import sys
 import codecs
-from time import sleep
-import textwrap
+from collections import deque
+import logging
+logging.basicConfig(filename=r'E:\Python\WordRPG\gui\gui_error.log',level=logging.ERROR)
+logging.debug('debug logging:')
+# import textwrap
+from colorama import init as colorama_init
+# imports from gui module
+from . import const
+from . import font
 
-from .const import *
 
 
+def setup_terminal():
+    """ sets the size of the terminal window and clears it before printing"""
+    colorama_init( convert = True )
+    cols, lines = const.SCREEN_SIZE
+    os.system(f"mode con cols={cols} lines={lines}")
 
-def setup_terminal( cols = 40, lines = 15):
-	""" sets the size of the terminal window and clears it before printing"""
-	os.system(f"mode con cols={cols} lines={lines}")
-	os.system( 'cls' if os.name == 'nt' else 'clear' )
+
+def clear():
+    """ clear terminal window """
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def make_unicode(text):
+    """ Ensures that text is encoded as unicode for error-logging """
+    # if type(text) != unicode:
+    #     return text.decode('utf-8')
+    # else:
+    return text.encode( encoding="utf-8")
+
+
+def draw(screen):
+    """ Prints to the output window
+
+    Prints the given 'screen' to the output window.
+
+    **Arguments:**
+        :``screen``: `str` Multi-line string to print.
+     """
+    clear()
+    print(screen)
 
 
 def load_txt(filename, codec = 'utf-8'):
-   """reads in txt file encoded in utf-8"""
-   with codecs.open(filename, encoding = codec)as f:
-      txt = f.read()
+    """ Load .txt file
 
-   return txt
+    Reads in contets of a .txt file into a variable
+
+    Arguments:
+        filename {[type]} -- [description]
+
+    Keyword Arguments:
+        codec {str} -- [description] (default: {'utf-8'})
+
+    Returns:
+        [type] -- [description]
+    """
+
+    with codecs.open(filename, encoding = codec)as f:
+        return f.read()
 
 
 def string_to_char_array(_string, seperator = '\n'):
-   """
-   converts multi-line string into a 2D array of characters
-   
-   **Arguments:**
-   
-      :``_string``: `str` Multi-line string block
-   
-   **Keword Arguments:**
-   
-      :``seperator``: `str` Character to split _string by. Default is newline ('\n')
-      :``ignore_first``: `bool` If True, ignore the first line of _string.
-      :``ignore_last``: `bool` If True, ignore the last line of _string.
-   
-   **Author:**
-   
-      Chris Bruce, chris.bruce@dsvolition.com, 12/20/2018
-   """
-   
-   _lines = _string.split('\n')
-   char_array = deque([ list( line ) for line in _lines ], maxlen = 15)
+    """ Convert string to 2D array
 
-   return char_array
+    Converts a multi-line string into a two-dimensional deque array of string
+    characters.
 
+    **Arguments:**
+
+        :``_string``: `str` Multi-line string block
+
+    **Keword Arguments:**
+
+        :``seperator``: `str` Character to split _string by. Default is newline ('\n')
+        :``ignore_first``: `bool` If True, ignore the first line of _string.
+        :``ignore_last``: `bool` If True, ignore the last line of _string.
+    """
+    # split text into lines/rows
+    _rows = _string.split(seperator)
+
+    # cols, rows = const.FIELD_SIZE
+    # return deque([deque(col, maxlen=cols + 1) for col in _rows], maxlen=rows + 3)
+    return [list(col) for col in _rows]
 
 
-def char_array_to_string(_array):
-   """
-   converts 2D array of characters into a multi-line string
-   
-   **Arguments:**
-   
-      :``_array``: `list` 2D array of characters
-   
-   **Keword Arguments:**
-   
-      None   
+def char_array_to_string(_array ):
+    """ Convert array to string
 
-   **Author:**
-   
-      Chris Bruce, chris.bruce@dsvolition.com, 12/20/2018
-   """
+    Converts a two-dimensional deque array of string characters into a
+    multi-line string that can be printed to the output window.
 
-   lines = [''.join(char) for char in _array]
-   _string = '\n'.join(lines)
+    **Arguments:**
+        :``_array``: `list` 2D array of characters
 
-   return _string
+    **Keword Arguments:**
+        None
+    """
 
-class MainWindow( ):
-	"""Main window and text parser for displaying the main window frame and game text
-	
-	Returns:
-		None
-	"""
-
-	def __init__( self ):
-		self.HEIGHT				= 30					# character height of frame
-		self.WIDTH				= 40					# character width of frame
-		self.INNER				= self.WIDTH - 2	# character width inside of frame
-		self.TITLE				= 'WORDRPG'
-		self.VERSION			= 1.0
-		self.HEADER				= f'{self.TITLE} - {self.VERSION}'
-		self.FOOTER				= 'COWBOY GAMING © 2018'
+    lines = [''.join(char) for char in _array]
+    return '\n'.join(lines)
 
 
-	def clear( self ):
-	   os.system( 'cls' if os.name == 'nt' else 'clear' )
+def center_text(text, width, fillchar = ' '):
+    """ Centers text
+
+    Centers the given text string in the given 'width' and fills empty space
+    with the supplied 'fillchar'. This modifies the original string object.
+
+    Arguments:
+        text {str} -- Text to be centered
+        width {int} -- Width of the text field to center within
+
+    Keyword Arguments:
+        fillchar {str} -- String character to fill empty space (default: {' '})
+
+    Returns:
+        str -- New centered and space-filled string
+    """
+
+    return text.center( width, fillchar )
 
 
-	def center_text( self, text, width, fillchar = ' '  ):
-		"""Centers a text string in a given 'width' and fills empty space with given 'fillchar'
-		
-		Arguments:
-			text {str} -- Text to be centered
-			width {int} -- Width of the text field to center within
-		
-		Keyword Arguments:
-			fillchar {str} -- String character to fill empty space (default: {' '})
-		
-		Returns:
-			str -- New centered and space-filled string
-		"""
+def center_offset(text, width):
+    """ Get offset to center text
 
-		return text.center( width, fillchar )
+    Gets the offset needed to center the given 'text' string within the given
+    'width' of the field. Unlike '.center_text()' this does not modify the
+    'text string.
 
+    Arguments:
+        text {str} -- string to center
+        width {int} -- widgth of the field in characters
 
-	def format_contents( self, text, col_text = COL_TEXT, col_frame = COL_FRAME ):
-		"""Formats block of raw text as frame contents
+    Returns:
+        int -- column offset as an int
+    """
 
-		Args:
-			text (str): Multiline string of contents to put inside of frame
-			fillchar (str, optional): Defaults to ' '. String character to fill empty space
-			fillchar (str, optional): Defaults to ' '. String character to fill empty space
-
-		Returns:
-			[list]: List of f-strings
-		"""
-
-		contents		= [ ]
-		lines			= text.splitlines( )
-
-		for line in lines:
-			if len( line ) < 1:
-				line	= ' ' * ( self.INNER )
-			else:
-				line	= self.center_text( line, self.INNER )
-
-			contents.append( f"{col_frame}{FRAME[ 'boxV' ]}{col_text}{line}{col_frame}{FRAME[ 'boxV' ]}")
-
-		return contents
+    return int((width - len(text)) / 2)
 
 
-	def frame_edge( self, text, lc = 'boxDR', rc = 'boxDL', col_text = COL_HEADER, col_frame = COL_FRAME ):
-		"""[summary]
-		
-		Arguments:
-			text {str} -- Text to include in center of frame edge
-		
-		Keyword Arguments:
-			lc {str} -- Name of key in FRAME to use for left corner of frame edge. (default: {'boxDR'})
-			rc {str} -- Name of key in FRAME to use for right corner of frame edge. (default: {'boxDL'})
-			col_text {colorama.fore} -- Color to use for text (default: {COL_HEADER})
-			col_frame {colorama.fore} -- Color to use for frame (default: {COL_FRAME})
-		
-		Returns:
-			str -- Frame edge as a string
-		"""
-
-		_text	= f"┤ {text} ├"
-		_text	= self.center_text( _text, self.INNER, fillchar = FRAME[ 'boxH' ] )
-		_text	= _text.replace( text, f'{col_text}{text}{col_frame}')
-
-		return f"{col_frame}{FRAME[ lc ]}{_text}{col_frame}{FRAME[ rc ]}"
+def write_character(char,array,col=0,row=0):
+    """ write character to a specific [row][col] in the array """
+    try:
+        array[row][col] = char
+    except IndexError:
+        err = f".write_character( ) - IndexError\nTried to assign {char} to [{col}][{row}] in a {len(array)}x{len(array[0])} array."
+        logging.warning(err)
 
 
-	def build_frame( self, content, col_frame = COL_FRAME ):
-		""" Main function to draw the window frame
+def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, format_space=False,
+                    fgcolor = None, bgcolor = None, style = None, ):
+    """ Writes a string to an array
 
-		Args:
-			content (str): Multiline string of contents to put inside of frame
-	
-		"""
+    Arguments:
+        text {str} -- string to wrie to the array
+        array {deque} -- 2D array of string characters to write to
+        col {int} -- column to offset start of arr1
 
-		# top border with header text
-		top		= self.frame_edge( self.HEADER,
-					'boxDR', 'boxDL',
-					col_text		= COL_HEADER,
-					col_frame	= col_frame
-					)
-		contents = [ top ]
+    Keyword Arguments:
+        row {int} -- row to offset start of arr1 (default: {0})
+    """
 
-		# content parsed from multiline string
-		mid		= self.format_contents( content,
-					col_text		= COL_TEXT,
-					col_frame	= col_frame
-					)
-		contents += mid
+    # get string formatters
+    formatted = font.get_formatter(fgcolor, bgcolor, style)
+    unformatted = font.get_formatter('RESET', 'RESET', 'RESET_ALL')
 
-		# bottom border with footer text
-		btm		= self.frame_edge( self.FOOTER,
-					'boxUR', 'boxUL',
-					col_text		= COL_FOOTER,
-					col_frame	= col_frame
-					)
-		contents.append( btm )
+    # writing a string to an array
+    if isinstance(text, str):
+        logging.info('Writing string to screen_buffer...')
 
-		return contents
+        # remove any newline characters from line
+        # clean_line = [c for c in text if c != '\n']
+        for c, char in enumerate(text):
+            if format_text:
+                char = f'{formatted["fgcolor"]}{formatted["bgcolor"]}{formatted["style"]}{char}'
+            if char == ' ' and not format_space:        #if format_space is False don't add color or style to space characters
+                char = f'{unformatted["fgcolor"]}{unformatted["bgcolor"]}{unformatted["style"]}{char}'
 
+            info = f'"{char}" @ col:{col} + {c}, row:{row}'
+            logging.info(make_unicode(info))
+            write_character(char, array, col = col + c, row = row)
+        return array
 
-	def draw( self, content, col_frame = COL_FRAME ):
-		""" Main function to draw the screen
-		"""
+    # writing an array to an array
+    if isinstance(text, deque) or isinstance(text, list):
+        logging.info('Writing array to screen_buffer...')
+        for r, line in enumerate(text):
+            info = f'{line}\n'
+            logging.info(make_unicode(info))
 
-		contents	= self.build_frame( content, col_frame = col_frame )
+            # remove any newline characters from line
+            # clean_line = [c for c in line if c != '\n']
+            for c, char in enumerate(line):
+                if format_text:
+                    char = f'{formatted["fgcolor"]}{formatted["bgcolor"]}{formatted["style"]}{char}'
+                if char == ' ' and not format_space:
+                    char = f'{unformatted["fgcolor"]}{unformatted["bgcolor"]}{unformatted["style"]}{char}'
 
-		self.clear( )
-		for line in contents:
-			print( line )
+                info = f'"{char}" @ col:{col} + {c}, row:{row} + {r}'
+                logging.info(make_unicode(info))
+                write_character(char, array, col = col + c, row = row + r)
+        return array

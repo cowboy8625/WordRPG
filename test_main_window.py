@@ -1,20 +1,28 @@
 from time import sleep
 
-from gui.const import *
-from gui.main import MainWindow, setup_terminal
-from gui import screens
+import gui
 
 
 
 if __name__ == '__main__':
-	setup_terminal( )
-	window = MainWindow( )
-	window.draw( screens.screen_start )
+    # testing stuff
 
-	sleep( 30 )
+    # always start by setting up the terminal
+    gui.main.setup_terminal()
 
-	window.draw( screens.screen_class )
+    gui.tests.empty()
+    sleep(2)
+    gui.tests.fill()
+    sleep(2)
+    gui.tests.splash()
+    sleep(2)
+    gui.tests.title()
+    sleep(2)
+    gui.tests.menu()
+    sleep(2)
 
-	sleep( 3 )
+    for _ in range(3):
+        gui.tests.random_words()
+        sleep(1)
 
-	window.draw( screens.screen_mage, col_frame = Fore.YELLOW )
+    sleep(3)
