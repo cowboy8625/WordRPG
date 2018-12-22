@@ -8,10 +8,10 @@ if __name__ == '__main__':
     # always start by setting up the terminal
     gui.main.setup_terminal()
 
-    gui.tests.empty()
-    sleep(2)
-    gui.tests.fill()
-    sleep(2)
+    # gui.tests.empty()
+    # sleep(2)
+    # gui.tests.fill()
+    # sleep(2)
     gui.tests.splash()
     sleep(2)
     gui.tests.title()

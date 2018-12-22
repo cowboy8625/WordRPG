@@ -37,4 +37,26 @@ def get_formatter(fgcolor = None, bgcolor = None, style = None):
         else:
             results.append('')
 
-    return {'fgcolor':results[0],'bgcolor':results[1],'style':results[2]}
+    return {'f':results[0],'b':results[1],'s':results[2]}
+
+
+def add_escape( char, fgcolor = None, bgcolor = None, style = None ):
+    """ Create formatter using colorama
+
+    Convenience method to get colorama values using string arguement and return
+    the string formatter for foreground color, background color, and style
+
+    Arguments:
+        fgcolor {str} -- String name of colorama.Fore color
+        bgcolor {str} -- String name of colorama.Back color
+        style {str} -- String name of colorama.Style
+    
+    Returns:
+        [dict] -- Dictionary congtaining string formatters for 'fgcolor',
+                'bgcolor', and 'style'
+    """
+    
+    a, b, c = [getattr(b, a.upper()) if isinstance(a, str) else '' for a, b in zip([fgcolor, bgcolor, style], [Fore, Back, Style])]
+    d, e, f = (Fore.RESET, Back.RESET, Style.RESET_ALL)
+
+    return f'{a}{b}{c}{char}{d}{e}{f}'

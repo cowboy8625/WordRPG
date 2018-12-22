@@ -16,7 +16,7 @@ SCREEN_RES = (SCREEN_SIZE[0] * CHAR_SIZE[0], SCREEN_SIZE[1] * CHAR_SIZE[1])
 HEADER = f'{TITLE} - {VERSION}'
 FOOTER = 'COWBOY GAMING - 2018'  # © can cause problems with encoding
 # This constant sets color/style formatting on or off
-FORMAT_TEXT = False
+FORMAT_TEXT = True
 
 # # Extended ascii characters used to build frame elements
 # FRAME = {

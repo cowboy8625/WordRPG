@@ -164,24 +164,16 @@ def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, for
     Keyword Arguments:
         row {int} -- row to offset start of arr1 (default: {0})
     """
-
-    # get string formatters
-    col_tag = font.get_formatter(fgcolor, bgcolor, style)
-    un_tag = font.get_formatter('RESET', 'RESET', 'RESET_ALL')
+    
+    kwargs = {'fgcolor':fgcolor, 'bgcolor':bgcolor, 'style':style}
 
     # writing a string to an array
     if isinstance(text, str):
         logging.info('Writing string to screen_buffer...')
 
-        # remove any newline characters from line
-        clean_line = [c for c in text if c != '\n']
         for c, char in enumerate(text):
-            if format_text:
-                char = f'{col_tag["fgcolor"]}{col_tag["bgcolor"]}{col_tag["style"]}{char}'
-            #if format_space is False don't add color or style to space characters
-            if char == ' ' and not format_space:
-                char = f'{un_tag["fgcolor"]}{un_tag["bgcolor"]}{un_tag["style"]}{char}'
-
+            if char != ' ' or format_space:
+                char = font.add_escape(char, **kwargs)
             info = f'"{char}" @ col:{col} + {c}, row:{row}'
             logging.info(make_unicode(info))
             write_character(char, array, col = col + c, row = row)
@@ -194,14 +186,9 @@ def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, for
             info = f'{line}\n'
             logging.info(make_unicode(info))
 
-            # remove any newline characters from line
-            clean_line = [c for c in line if c != '\n']
             for c, char in enumerate(line):
-                if format_text:
-                    char = f'{col_tag["fgcolor"]}{col_tag["bgcolor"]}{col_tag["style"]}{char}'
-                if char == ' ' and not format_space:
-                    char = f'{un_tag["fgcolor"]}{un_tag["bgcolor"]}{un_tag["style"]}{char}'
-
+                if char != ' ' or format_space:
+                    char = font.add_escape(char, **kwargs)
                 info = f'"{char}" @ col:{col} + {c}, row:{row} + {r}'
                 logging.info(make_unicode(info))
                 write_character(char, array, col = col + c, row = row + r)
