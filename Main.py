@@ -8,7 +8,7 @@ import sys
 import time
 
 from Mechanics.core_mechanics import *
-from script import Screen
+from script import Screen, Story
 from Mechanics.ui_mechanics import *
 import ChangeLog
 
@@ -50,7 +50,7 @@ def main():
 # or any other event while not in a fight
 def main_game_loop(player, opening=True):
     if opening:
-        Story.intro_story(player.name)
+        Story.intro_story(player)
         input("Press Enter to continue: ")
         opening = False
 
