@@ -1,7 +1,7 @@
 __author__ = "byteme8bit"
 
 # File imports
-from script import InfoDics, Story, Screen
+from script import InfoDics, Screen
 from script.Character import *
 from Mechanics.ui_mechanics import *
 
@@ -80,7 +80,6 @@ def char_creation():
     pclass = player_select_class()
     pname = player_select_name(pclass)
     pgender = player_select_gender(pname, pclass)
-    Story.set_gender(pgender)
 
     # Mage
     if pclass == 'Mage':
