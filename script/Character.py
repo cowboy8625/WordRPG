@@ -35,7 +35,7 @@ class Character:
 class Player(Character):
     def __init__(self, name, _class, max_health, melee_attack, magic_attack,
                  max_mana, max_stamina, defense, luck, gender, gold=0, xp=0,
-                 equipped_weapon= Items.fist, equipped_armor=Items.farm_clothing):
+                 equipped_weapon= None, equipped_armor=Items.farm_clothing):
         super().__init__(name, max_health, melee_attack, magic_attack,
                          max_mana, max_stamina, defense, luck)
         self._class = _class
@@ -65,6 +65,20 @@ class Player(Character):
             print(WorldMap.access_information(new_x, new_y, "Name"))
             pause()
 
+    # Add item to inventory if space is available
+    # Return true if add was successful
+    def add_to_inv(self, item):
+        if len(self.inventory) >= self.inventory_limit:
+            return False
+        self.inventory.append(item)
+        
+    # Remove item at given position
+    def remove_from_inv(self, index):
+        if index in range(len(self.inventory)):
+            del self.inventory[index]
+        else:
+            raise ValueError(f'Index {index} invalid for inventory {self.inventory}')
+        
     # TODO methods like this should probably be moved to mechanics
     # the script classes shouldn't be dealing with UI, only handling the class instances
     def inspect_area(self):
