@@ -125,14 +125,6 @@ def main_game_screen(story):
     for i in lines:
         print(i)
 
-"""
-
-
-
-
-
-
-"""
 def display(on_screen, width=44):
     # width = 44 max width is 208
     side = round(((width / 2) / 2) - 1)
