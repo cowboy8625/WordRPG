@@ -45,7 +45,8 @@ class Player(Character):
         self.equipped_weapon = equipped_weapon
         self.equipped_armor = equipped_armor
 
-        self.inventory = []
+        self.inventory = [Items.flint, Items.water]
+        # start with a couple of things so we can play with inventory management
         self.inventory_limit = 10
 
         # Map position
@@ -64,8 +65,9 @@ class Player(Character):
             print(WorldMap.access_information(new_x, new_y, "Name"))
             pause()
 
+    # TODO methods like this should probably be moved to mechanics
+    # the script classes shouldn't be dealing with UI, only handling the class instances
     def inspect_area(self):
-        print("======CALLED=======")
         info = {
             "Name": WorldMap.access_information(self.pos_x, self.pos_y, "Name"),
             "Resources": WorldMap.access_information(self.pos_x, self.pos_y, "Resources"),
@@ -78,45 +80,3 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
-
-
-"""
-# enemy mobs
-# Zombies are a close fighter, he needs to be with in 1 block from mob to attack
-zombie = Mob(name="Zombie", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-             defense=15, luck=5, mob_class="Undead", gold_drop=10, exp_drop=10, item_drop="Flesh")
-yeti = Mob(name="Yeti", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-           defense=15, luck=5, mob_class="Undead", gold_drop=10, exp_drop=10, item_drop="Flesh")
-bandit = Mob(name="Bandit", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-             defense=15, luck=5, mob_class="Human", gold_drop=10, exp_drop=10, item_drop="Flesh")
-mercenary = Mob(name="Mercenary", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-                defense=15, luck=5, mob_class="Human", gold_drop=10, exp_drop=10, item_drop="Flesh")
-skeleton = Mob(name="Skeleton", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-               defense=15, luck=5, mob_class="Undead", gold_drop=10, exp_drop=10, item_drop="Flesh")
-golem = Mob(name="Golem", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-            defense=15, luck=5, mob_class="Elemental", gold_drop=10, exp_drop=10, item_drop="Flesh")
-witch = Mob(name="Witch", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-            defense=15, luck=5, mob_class="Human", gold_drop=10, exp_drop=10, item_drop="Flesh")
-hellHounds = Mob(name="Hell Hounds", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-                 defense=15, luck=5, mob_class="Undead", gold_drop=10, exp_drop=10, item_drop="Flesh")
-
-# animal mobs
-dog = Mob(name="Dog", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-          defense=15, luck=5, mob_class="Animal", gold_drop=10, exp_drop=10, item_drop="Flesh")
-
-# bosses
-wyrm = Mob(name="Wyrm", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-           defense=15, luck=5, mob_class="Dragon", gold_drop=10, exp_drop=10, item_drop="Dragon Scale",
-           special_item_drop="Special Drop")
-kraken = Mob(name="Kraken", max_health=100, melee_attack=10, magic_attack=0, max_mana=0, max_stamina=20,
-             defense=15, luck=5, mob_class="Dragon", gold_drop=10, exp_drop=10, item_drop="Dragon Scale",
-             special_item_drop="Special Drop")
-
-hostile_mobs = {"Zombie": zombie, "Yeti": yeti, "Bandit": bandit, "Mercenary": mercenary, "Skeleton": skeleton,
-                "Golem": golem, "Witch": witch,
-                "Hell Hounds": hellHounds}
-
-friendly_mobs = {"Dog": dog}
-
-bosses = {"Wyrm": wyrm, "Kraken": kraken}
-"""

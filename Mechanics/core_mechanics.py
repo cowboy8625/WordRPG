@@ -53,7 +53,7 @@ def char_creation():
         while True:
             choice = input('\n\n'
                            'SELECT A NUMBER OR TYPE HELP THEN NUMBER:> ')
-            if choice in "1234":
+            if choice in ['1', '2', '3', '4']:
                 return player_options[int(choice) - 1]
             # lore is the story and it is found in InfoDics
             elif choice[0:4].lower() == 'info':
@@ -145,3 +145,29 @@ def char_creation():
             gold=100,
             equipped_weapon=Items.rusty_dagger
         )
+
+# Handle inventory management
+def inventory_mode(player):
+    while True:
+        Screen.display('INVENTORY')
+        print('Stored inventory:\n\n' + '\n'.join([f'({i+1}) {item}' for i, item in enumerate(player.inventory)]))
+        print('\nEquipped weapon: ' + str(player.equipped_weapon))
+        print('\nEquipped armor: ' + str(player.equipped_armor))
+        # TODO handle equipping and unequipping
+        option = input('\n\n'
+                           '(1): Examine item\n'
+                           '(2): Drop item\n'
+                           '(x): Exit inventory screen\n'
+                           'Enter your choice:> ')
+        if option in ['1', '2']:
+            index = input('\n\nWhich item? '
+            'Enter item number: ')
+            if index.isdigit() and int(index) in range(1, len(player.inventory) + 1):
+                if option == '1':
+                    clear()
+                    print(player.inventory[int(index)-1].desc())
+                    pause()
+                elif option == '2':
+                    del player.inventory[int(index)-1]
+        elif option == 'x':
+            break

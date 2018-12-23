@@ -8,8 +8,8 @@ import sys
 import time
 
 from Mechanics.core_mechanics import *
-from script import Screen, Story
 from Mechanics.ui_mechanics import *
+from script import Screen, Story
 import ChangeLog
 
 
@@ -56,7 +56,13 @@ def main_game_loop(player, opening=True):
 
     while True:
         clear()
-        move_to = input(
+        directions = {
+            "1": "North",
+            "2": "South",
+            "3": "East",
+            "4": "West"
+        }
+        choice = input(
             "Which way do you want to travel?\n"
             f"Coords: {player.pos_x}:{player.pos_y}\n\n"
             "(1): North\n"
@@ -67,21 +73,19 @@ def main_game_loop(player, opening=True):
             "(6): Inventory\n"
             "(7): Look For Resources\n"
             "Input a Number:>  ")
-        directions = {
-            "1": "North",
-            "2": "South",
-            "3": "East",
-            "4": "West"
-        }
-        try:
-            if move_to == 'Quit':  # QUIT, I'll take this out after testing
-                sys.exit()
-            if move_to == "5":
-                player.inspect_area()
-            else:
-                player.move(directions[move_to])
-        except KeyError:
+        if choice in ['1', '2', '3', '4']:
+            player.move(directions[choice])
+        elif choice == "5":
+            player.inspect_area()
+        elif choice == "6":
+            inventory_mode(player)
+        elif choice == "7":
             pass
+        elif choice == 'Quit':  # QUIT, I'll take this out after testing
+            sys.exit()
+        else:
+            print(f'Invalid choice {choice}')
+            pause()
 
 if __name__ == "__main__":
     main()

@@ -4,6 +4,12 @@ class Item:
         self.name = name
         self.rarity = rarity
         self.value = value
+    def __str__(self):
+        return f'{self.rarity} {self.name}'
+    # Give user friendly description of item
+    # TODO each item subclass should override this desc method
+    def desc(self):
+        return f'{self.rarity} {self.name}, value {self.value}'
 
 
 class Resources(Item):
