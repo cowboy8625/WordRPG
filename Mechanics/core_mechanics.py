@@ -1,7 +1,7 @@
 __author__ = "byteme8bit"
 
 # File imports
-from script import InfoDics, Screen
+from script import InfoDics, Items, Screen
 from script.Character import *
 from Mechanics.ui_mechanics import *
 
@@ -153,21 +153,42 @@ def inventory_mode(player):
         print('Stored inventory:\n\n' + '\n'.join([f'({i+1}) {item}' for i, item in enumerate(player.inventory)]))
         print('\nEquipped weapon: ' + str(player.equipped_weapon))
         print('\nEquipped armor: ' + str(player.equipped_armor))
-        # TODO handle equipping and unequipping
         option = input('\n\n'
                            '(1): Examine item\n'
                            '(2): Drop item\n'
+                           '(3): Equip Weapon\n'
+                           '(4): Equip Armor\n'
                            '(x): Exit inventory screen\n'
                            'Enter your choice:> ')
-        if option in ['1', '2']:
-            index = input('\n\nWhich item? '
+        if option in ['1', '2', '3', '4']:
+            num = input('\n\nWhich item? '
             'Enter item number: ')
-            if index.isdigit() and int(index) in range(1, len(player.inventory) + 1):
+            if num.isdigit() and int(num) in range(1, len(player.inventory) + 1):
+                index = int(num)-1
+                item = player.inventory[index]
                 if option == '1':
                     clear()
-                    print(player.inventory[int(index)-1].desc())
+                    print(item.desc())
                     pause()
                 elif option == '2':
-                    del player.inventory[int(index)-1]
+                    player.remove_from_inv(index)
+                elif option == '3':
+                    if isinstance(item, Items.Weapon):
+                        player.remove_from_inv(index)
+                        if player.equipped_weapon is not None:
+                            player.add_to_inv(player.equipped_weapon)
+                        player.equipped_weapon = item
+                    else:
+                        print('Not a weapon!')
+                        pause()
+                elif option == '4':
+                    if isinstance(item, Items.Armor):
+                        player.remove_from_inv(index)
+                        if player.equipped_armor is not None:
+                            player.add_to_inv(player.equipped_armor)
+                        player.equipped_armor = item
+                    else:
+                        print('Not an armor item!')
+                        pause()
         elif option == 'x':
             break
