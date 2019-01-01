@@ -1,29 +1,49 @@
+""" test script """
+
 from time import sleep
 
 import gui
 
 
+def tests(pause=2):
+    """ Cycle through multiple tests of screen composition and drawing """
 
-if __name__ == '__main__':
-    # always start by setting up the terminal
-    gui.main.setup_terminal()
+    gui.tests.empty()
+    sleep(pause)
 
-    # gui.tests.empty()
-    # sleep(2)
-    # gui.tests.fill()
-    # sleep(2)
+    gui.tests.fill()
+    sleep(pause)
+
+    gui.tests.logo()
+    sleep(pause)
+
     gui.tests.splash()
-    sleep(2)
-    gui.tests.title()
-    sleep(2)
-    gui.tests.menu()
-    sleep(2)
+    sleep(pause)
 
+    gui.tests.title()
+    sleep(pause)
+
+    gui.tests.menu()
+    sleep(pause)
+
+    # test random words with pause
     for _ in range(3):
         gui.tests.random_words()
-        sleep(1)
+        sleep(pause)
 
+    # test udpating screen as fast as possible
     for _ in range(30):
         gui.tests.random_words()
 
-    sleep(3)
+
+def main():
+    # always start by setting up the terminal
+    gui.main.setup_terminal()
+
+    tests()
+
+
+
+if __name__ == '__main__':
+    while True:
+        main()

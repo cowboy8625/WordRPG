@@ -1,15 +1,27 @@
 """ Main functions for gui-related tasks """
 import os
+from sys import stdout
 import codecs
 from collections import deque
 import logging
-logging.basicConfig(filename=r'E:\Python\WordRPG\gui\gui_error.log',level=logging.ERROR)
-logging.debug('debug logging:')
+
 # import textwrap
 from colorama import init as colorama_init
+
 # imports from gui module
 from . import const
 from . import font
+from . import cursor
+
+
+
+## logging setup
+logging.basicConfig(
+        filename=r'E:\Python\WordRPG\gui\gui_error.log',
+        format='%(levelname)s - %(message)s',
+        level=logging.INFO,
+        )
+logging.debug('debug logging:')
 
 
 
@@ -18,6 +30,8 @@ def setup_terminal():
     colorama_init( convert = True )
     cols, lines = const.SCREEN_SIZE
     os.system(f"mode con cols={cols} lines={lines}")
+
+    cursor.hide()
 
 
 def clear():
@@ -42,7 +56,9 @@ def draw(screen):
         :``screen``: `str` Multi-line string to print.
      """
     clear()
-    print(screen)
+    # strdout.write seems to be much faster than print()
+    stdout.write(screen)
+    #print(screen)
 
 
 def load_txt(filename, codec = 'utf-8'):
@@ -64,7 +80,7 @@ def load_txt(filename, codec = 'utf-8'):
         return f.read()
 
 
-def string_to_char_array(_string, seperator = '\n'):
+def string_to_char_array(_string):
     """ Convert string to 2D array
 
     Converts a multi-line string into a two-dimensional deque array of string
@@ -80,11 +96,10 @@ def string_to_char_array(_string, seperator = '\n'):
         :``ignore_first``: `bool` If True, ignore the first line of _string.
         :``ignore_last``: `bool` If True, ignore the last line of _string.
     """
-    # split text into lines/rows
-    _rows = _string.split(seperator)
 
-    # cols, rows = const.FIELD_SIZE
-    # return deque([deque(col, maxlen=cols + 1) for col in _rows], maxlen=rows + 3)
+    # split text into lines/rows
+    _rows = _string.splitlines()
+
     return [list(col) for col in _rows]
 
 
@@ -148,11 +163,14 @@ def write_character(char,array,col=0,row=0):
     try:
         array[row][col] = char
     except IndexError:
-        err = f".write_character( ) - IndexError\nTried to assign {char} to [{col}][{row}] in a {len(array)}x{len(array[0])} array."
+        err = f".write_character( ) - IndexError \
+                Tried to assign {char} to [{col}][{row}] in a \
+                {len(array)}x{len(array[0])} array."
         logging.warning(err)
 
 
-def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, format_space=False,
+def write_to_array(text, array, col=0, row=0,
+                    format_space=False, #format_text=const.FORMAT_TEXT,
                     fgcolor = None, bgcolor = None, style = None, ):
     """ Writes a string to an array
 
@@ -174,7 +192,7 @@ def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, for
         for c, char in enumerate(text):
             if char != ' ' or format_space:
                 char = font.add_escape(char, **kwargs)
-            info = f'"{char}" @ col:{col} + {c}, row:{row}'
+            info = f'"{char}" @ col:{col + c}, row:{row}'
             logging.info(make_unicode(info))
             write_character(char, array, col = col + c, row = row)
         return array
@@ -183,13 +201,13 @@ def write_to_array(text, array, col=0, row=0, format_text=const.FORMAT_TEXT, for
     if isinstance(text, deque) or isinstance(text, list):
         logging.info('Writing array to screen_buffer...')
         for r, line in enumerate(text):
-            info = f'{line}\n'
+            info = f'{line}'
             logging.info(make_unicode(info))
 
             for c, char in enumerate(line):
                 if char != ' ' or format_space:
                     char = font.add_escape(char, **kwargs)
-                info = f'"{char}" @ col:{col} + {c}, row:{row} + {r}'
+                info = f'"{char}" @ col:{col + c}, row:{row + r}'
                 logging.info(make_unicode(info))
                 write_character(char, array, col = col + c, row = row + r)
         return array
