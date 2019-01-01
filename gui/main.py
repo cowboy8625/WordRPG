@@ -17,9 +17,9 @@ from . import cursor
 
 ## logging setup
 logging.basicConfig(
-        filename=r'E:\Python\WordRPG\gui\gui_error.log',
+        filename=os.path.join( os.path.dirname(__file__), 'gui_error.log' ),
         format='%(levelname)s - %(message)s',
-        level=logging.INFO,
+        level=logging.ERROR,
         )
 logging.debug('debug logging:')
 
