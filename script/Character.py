@@ -94,3 +94,15 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
+
+    def set_health(self, new_hp):
+        if new_hp <= self.max_health:
+            self.health = new_hp
+
+    # Instead of having 2 functions for adding and subtracting damage, use a negative increment to decrease hp
+    def change_health(self, inc):
+        if (self.health + inc) <= self.max_health:
+            self.health += inc
+        else:
+            pass
+            # He be a ded boi
