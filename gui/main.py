@@ -11,7 +11,12 @@ from colorama import init as colorama_init
 # imports from gui module
 from . import const
 from . import font
-from . import cursor
+
+# import appropriate module for dealing with cursor
+if os.name == 'nt':
+    from . import cursor_win32 as cursor
+elif os.name == 'posix':
+    from . import cursor_linux as cursor
 
 
 
@@ -19,7 +24,7 @@ from . import cursor
 logging.basicConfig(
         filename=os.path.join( os.path.dirname(__file__), 'gui_error.log' ),
         format='%(levelname)s - %(message)s',
-        level=logging.ERROR,
+        level=logging.INFO,
         )
 logging.debug('debug logging:')
 
@@ -30,7 +35,7 @@ def setup_terminal():
     colorama_init( convert = True )
     cols, lines = const.SCREEN_SIZE
     os.system(f"mode con cols={cols} lines={lines}")
-
+    os.system("title " + const.TITLE)
     cursor.hide()
 
 
@@ -54,11 +59,31 @@ def draw(screen):
 
     **Arguments:**
         :``screen``: `str` Multi-line string to print.
-     """
+    """
     clear()
-    # strdout.write seems to be much faster than print()
+
+    if not isinstance(screen, str):
+        screen = char_array_to_string(screen)
+    
+    # strdout.write mioght be faster than print()
     stdout.write(screen)
     #print(screen)
+
+
+def new_screen(char = '#'):
+    """ creates a new screen by filling it with given character
+
+    Keyword Arguments:
+        char {str} -- String to fill screen with. (default: {'#'})
+
+    Returns:
+        list -- 2D array of string characters
+    """
+    cols, rows = const.FIELD_SIZE
+    line = f'{char}' * cols
+    text = f'{line}\n' * rows
+
+    return string_to_char_array(text)
 
 
 def load_txt(filename, codec = 'utf-8'):
@@ -75,7 +100,6 @@ def load_txt(filename, codec = 'utf-8'):
     Returns:
         [type] -- [description]
     """
-
     with codecs.open(filename, encoding = codec)as f:
         return f.read()
 
@@ -96,7 +120,6 @@ def string_to_char_array(_string):
         :``ignore_first``: `bool` If True, ignore the first line of _string.
         :``ignore_last``: `bool` If True, ignore the last line of _string.
     """
-
     # split text into lines/rows
     _rows = _string.splitlines()
 
@@ -115,7 +138,6 @@ def char_array_to_string(_array ):
     **Keword Arguments:**
         None
     """
-
     lines = [''.join(char) for char in _array]
     return '\n'.join(lines)
 
@@ -136,7 +158,6 @@ def center_text(text, width, fillchar = ' '):
     Returns:
         str -- New centered and space-filled string
     """
-
     return text.center( width, fillchar )
 
 
@@ -154,7 +175,6 @@ def center_offset(text, width):
     Returns:
         int -- column offset as an int
     """
-
     return int((width - len(text)) / 2)
 
 
@@ -170,8 +190,8 @@ def write_character(char,array,col=0,row=0):
 
 
 def write_to_array(text, array, col=0, row=0,
-                    format_space=False, #format_text=const.FORMAT_TEXT,
-                    fgcolor = None, bgcolor = None, style = None, ):
+                    format_space=False, transparent=False, #format_text=const.FORMAT_TEXT,
+                    fgcolor=None, bgcolor=None, style=None, ):
     """ Writes a string to an array
 
     Arguments:
@@ -182,7 +202,6 @@ def write_to_array(text, array, col=0, row=0,
     Keyword Arguments:
         row {int} -- row to offset start of arr1 (default: {0})
     """
-    
     kwargs = {'fgcolor':fgcolor, 'bgcolor':bgcolor, 'style':style}
 
     # writing a string to an array
@@ -190,8 +209,13 @@ def write_to_array(text, array, col=0, row=0,
         logging.info('Writing string to screen_buffer...')
 
         for c, char in enumerate(text):
+            if char == '\t':
+                continue
+            if char == ' ' and transparent:
+                continue
             if char != ' ' or format_space:
                 char = font.add_escape(char, **kwargs)
+
             info = f'"{char}" @ col:{col + c}, row:{row}'
             logging.info(make_unicode(info))
             write_character(char, array, col = col + c, row = row)
@@ -205,6 +229,8 @@ def write_to_array(text, array, col=0, row=0,
             logging.info(make_unicode(info))
 
             for c, char in enumerate(line):
+                if char == ' ' and transparent:
+                    continue
                 if char != ' ' or format_space:
                     char = font.add_escape(char, **kwargs)
                 info = f'"{char}" @ col:{col + c}, row:{row + r}'

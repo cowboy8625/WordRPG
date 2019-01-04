@@ -1,0 +1,6 @@
+# ignore folders
+_backup
+_refs
+
+# ignore log
+gui_error.log

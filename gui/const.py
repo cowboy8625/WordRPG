@@ -5,8 +5,15 @@ from . import main
 
 
 
-TITLE = 'WASTELANDS'
+NAME = 'WASTELANDS'
 VERSION = 1.0
+YEAR = 2018
+COMPANY = 'COWBOY GAMING'
+TITLE = f'{NAME}(ver.{VERSION}) - {COMPANY} - ©{YEAR}'
+HEADER = f'{NAME} - {VERSION}'
+FOOTER = f'{COMPANY} - ©{YEAR}'  # © can cause problems with encoding
+
+
 CHAR_SIZE = (8, 16)
 # size of terminal for printable characters
 FIELD_SIZE = (80,30)
@@ -16,17 +23,19 @@ SCREEN_SIZE = (FIELD_SIZE[0], FIELD_SIZE[1])
 SCREEN_RES = (SCREEN_SIZE[0] * CHAR_SIZE[0], SCREEN_SIZE[1] * CHAR_SIZE[1])
 # 1 space of padding inside of frame
 
-HEADER = f'{TITLE} - {VERSION}'
-FOOTER = 'COWBOY GAMING - 2018'  # © can cause problems with encoding
 # This constant sets color/style formatting on or off
 FORMAT_TEXT = True
 
-# build a 'SCREENS' dictionary by loading all .txt files in the 'screens'
-# subfolder, and converting them to 2D arrays of characters
+# get list of .txt filenames in the 'screens' subfolder
 DIRNAME = os.path.dirname(__file__)
 FILEPATH = os.path.join(DIRNAME, 'screens')
-FILENAMES = [os.path.join(FILEPATH, f) for f in os.listdir(FILEPATH) if f.endswith('.txt')]
+FILENAMES = []
+for f in os.listdir(FILEPATH):
+    if f.endswith('.txt'):
+        FILENAMES.append(os.path.join(FILEPATH, f))
 
+# build a 'SCREENS' dictionary by loading all .txt files in the 'screens'
+# subfolder, and converting them to 2D arrays of characters
 SCREENS = {}
 for f in FILENAMES:
     screen_name = os.path.splitext(os.path.basename(f))[0].lower()
