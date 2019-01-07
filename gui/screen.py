@@ -1,4 +1,4 @@
-""" Some test screen-building functions """
+""" Module for compositing and drawing various game screens """
 
 import os
 from random import randrange
@@ -26,13 +26,6 @@ def filled():
     main.draw(screen)
 
 
-def logo():
-    """ tests drawing a raw txt screen """
-    _splash = const.SCREENS['splash']['txt']
-
-    main.draw(_splash)
-
-
 def splash():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
@@ -51,15 +44,22 @@ def splash():
     main.draw(screen)
 
 
+def _create_background(background='frame', offset=(0, 0),
+                       fgcolor='CYAN', bgcolor='BLACK'):
+    """ creates a new screen with a given background screen """
+    screen = main.new_screen(char=' ')
+    background = const.SCREENS[background]['array']
+    main.write_to_array(background, screen, col=offset[0], row=offset[1],
+                        transparent=True, fgcolor=fgcolor, bgcolor=bgcolor)
+
+    return screen
+
+
 def title():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
 
-    screen = main.new_screen(char=' ')
-
-    frame = const.SCREENS['frame']['array']
-    main.write_to_array(frame, screen, col=0, row=0,
-                        transparent=True, fgcolor='cyan', bgcolor='blue')
+    screen = _create_background()
 
     _title = const.SCREENS['title']['array']
     main.write_to_array(_title, screen,
@@ -73,11 +73,7 @@ def menu():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
 
-    screen = main.new_screen(char=' ')
-
-    frame = const.SCREENS['frame']['array']
-    main.write_to_array(frame, screen, col=0, row=0, transparent=True,
-                        fgcolor='CYAN', bgcolor='BLACK')
+    screen = _create_background()
 
     _title = const.SCREENS['title']['array']
     main.write_to_array(_title, screen,
@@ -85,11 +81,11 @@ def menu():
 
     row_start = 12
     MAIN_MENU = [
-        '(N) - New Game',
-        '(L) - Load Game',
-        '(H) - Help',
-        '(C) - Credits',
-        '(Q) - Quit'
+        '(N) - NEW GAME',
+        '(L) - LOAD GAME',
+        '(H) - HELP',
+        '(C) - CREDITS',
+        '(Q) - QUIT'
         ]
     c = main.center_offset(max(MAIN_MENU), const.SCREEN_SIZE[0])
     for i, line in enumerate(MAIN_MENU):
@@ -102,21 +98,20 @@ def menu():
 
     # print the screen
     main.draw(screen)
+    
 
-
-def story():
+def story_test():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
 
-    screen = main.new_screen(char=' ')
+    screen = _create_background(
+                    background='scroll',
+                    fgcolor='YELLOW', bgcolor='BLACK')
 
-    scroll = const.SCREENS['scroll']['array']
-    main.write_to_array(scroll, screen, col=1, row=1, transparent=False,
-                        fgcolor='YELLOW', bgcolor='BLACK')
-
-    title = f'CHAPTER ONE'
+    title = 'CHAPTER ONE'
     c = main.center_offset(title, const.SCREEN_SIZE[0])
-    main.write_to_array(title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
+    main.write_to_array(
+            title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
 
     story = const.SCREENS['story_test']['array']
     main.write_to_array(story, screen, col=6, row=6, fgcolor='WHITE')
@@ -129,18 +124,32 @@ def credits():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
 
-    screen = main.new_screen(char=' ')
+    screen = _create_background(
+                    background='scroll', offset = (0,1),
+                    fgcolor='YELLOW', bgcolor='BLACK')
 
-    scroll = const.SCREENS['scroll']['array']
-    main.write_to_array(scroll, screen, col=1, row=1, transparent=False,
-                        fgcolor='YELLOW', bgcolor='BLACK')
-
-    title = f'PROJECT CONTRIBUTORS'
+    title = 'PROJECT CONTRIBUTORS'
     c = main.center_offset(title, const.SCREEN_SIZE[0])
     main.write_to_array(title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
 
     story = const.SCREENS['credits']['array']
-    main.write_to_array(story, screen, col=6, row=6, fgcolor='WHITE')
+    main.write_to_array(story, screen, col=14, row=5, fgcolor='WHITE')
+
+    # print the screen
+    main.draw(screen)
+
+
+def help():
+    """ tests compositing screens and adding text at a centered offset
+    using string formatters and parameters """
+
+    screen = _create_background(
+                    background='scroll', offset = (0,1),
+                    fgcolor='YELLOW', bgcolor='BLACK')
+
+    title = 'PLACEHOLDER HELP SCREEN'
+    c = main.center_offset(title, const.SCREEN_SIZE[0])
+    main.write_to_array(title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
 
     # print the screen
     main.draw(screen)
