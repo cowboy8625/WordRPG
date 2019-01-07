@@ -12,6 +12,12 @@ We have more then enough people working on the project now.  You may join the [d
 ## Version
 * Python 3.7
 
+## Dependencies
+* Python 3.6 or up due to a use of f-strings
+* Textwrap - packaged with python
+* Colorama - "pip install colorama"
+* Keyboard - This module has some issues which [Cowboy8625 (Owner)](https://github.com/cowboy8625) has patched this can be found [here]()
+
 # About This Project
 I have Lot's of plans for this game but it is a labor of love so I may get board at some point and quit, but that isn't the case as of yet. In the game you can choose to be a Mage, Warrior, Archer or an Assassin. There will be weapons specific to a playing class and also weapons that two or all classes can use. The player will be able to level up and sell/buy item from NPC.
 The map will be procedurally made so the seed will be able to share with friends so you may play the same map although it will not be Multiplayer. Multiplayer seems to be a bit far from my reach at the moment.
