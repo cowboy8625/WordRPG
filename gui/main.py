@@ -9,14 +9,7 @@ import logging
 from colorama import init as colorama_init
 
 # imports from gui module
-from . import const
-from . import font
-
-# import appropriate module for dealing with cursor
-if os.name == 'nt':
-    from . import cursor_win32 as cursor
-elif os.name == 'posix':
-    from . import cursor_linux as cursor
+from . import const, font, cursor
 
 
 
