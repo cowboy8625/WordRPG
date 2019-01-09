@@ -36,6 +36,8 @@ def format_test( cols=80, rows=30, double_space=True ):
 
     return lines
 
+
+
 lines = format_test()
 print(len(lines))
 print(lines[0])

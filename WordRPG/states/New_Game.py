@@ -1,6 +1,6 @@
 """ 'new_game' state.  Includes character creation. """
 
-import gui
+from .. import gui
 from .States import Screen
 
 

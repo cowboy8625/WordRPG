@@ -1,1 +1,0 @@
-""" Placeholder state for 'crafting' """

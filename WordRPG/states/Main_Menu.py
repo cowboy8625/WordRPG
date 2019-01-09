@@ -1,6 +1,6 @@
 """ 'main_menu' state """
 
-import gui
+from .. import gui
 from .States import Screen
 
 

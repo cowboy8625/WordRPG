@@ -1,6 +1,6 @@
 """ 'load_game' state """
 
-import gui
+from .. import gui
 from .States import Screen
 
 

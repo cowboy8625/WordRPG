@@ -1,10 +1,9 @@
 import sys
 from time import sleep, time
 
-# https://pypi.org/project/keyboard/
-import keyboard
+import keyboard     # https://pypi.org/project/keyboard/
 
-import gui
+from WordRPG import gui
 
 
 

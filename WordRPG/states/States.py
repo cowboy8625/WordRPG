@@ -10,7 +10,6 @@
    Menu - Base class for a screen that is a menu with multiple options leading
             to different screens or states on a certain keypress
    Confirm - Base class for confirmation states
-
 """
 
 from time import sleep, time
@@ -18,7 +17,7 @@ from time import sleep, time
 # https://pypi.org/project/keyboard/
 import keyboard
 
-import gui
+from .. import gui
 
 
 
@@ -226,4 +225,3 @@ class Confirm(Screen):
                 return self.prev_screen
 
         return self
-

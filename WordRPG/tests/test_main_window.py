@@ -2,7 +2,7 @@
 
 from time import sleep
 
-import gui
+from WordRGP import gui
 
 
 def tests(pause=2):

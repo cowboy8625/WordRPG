@@ -3,7 +3,7 @@ from time import sleep, time
 
 import keyboard
 
-import gui
+from .. import gui
 
 from .FSM import FSM
 from .States import Confirm

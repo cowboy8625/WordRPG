@@ -11,3 +11,6 @@ Worldmap.db
 map.csv
 csvReader.py
 checkingDB.py
+WordRPG.graphml
+Worldmap.db-journal
+.vscode/.ropeproject/config.py
