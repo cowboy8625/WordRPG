@@ -1,7 +1,10 @@
 """ Module for formatting text
 
+    This module uses colorama to generate formatters which
+    change the appeareance of text in the output window.
+
     Notes:
-        Fore/Back:
+        Fore/Back Colors:
             'BLACK', 'BLUE', 'CYAN', 'GREEN', 'LIGHTBLACK_EX', 'LIGHTBLUE_EX',
             'LIGHTCYAN_EX', 'LIGHTGREEN_EX', 'LIGHTMAGENTA_EX', 'LIGHTRED_EX',
             'LIGHTWHITE_EX', 'LIGHTYELLOW_EX', 'MAGENTA', 'RED', 'RESET',
