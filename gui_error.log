@@ -1,6 +1,0 @@
-DEBUG:root:debug logging:
-INFO:root:Writing array to screen_buffer.
-INFO:root:Writing string to screen_buffer.
-INFO:root:Writing array to screen_buffer.
-INFO:root:['\r']:write  to col:0 + 0, row:0 + 0
-INFO:root:[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '`', ' ', ' ', ',', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '\r']:write  to col:0 + 62, row:0 + 17

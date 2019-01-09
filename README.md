@@ -22,7 +22,7 @@ as a new programmer so if there is something I did that can be improved a pawn  
 me know!
 
 ## Version
-* Python 3.7
+* Python 3.7 required due to use of f-strings
 
 ## Tools
 * Visual Studio Code for editing
