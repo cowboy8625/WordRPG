@@ -170,11 +170,11 @@ class Menu(State):
 
 # class Info(Screen):
 #     """ Abstract class for an info screen """
-#     def __init__(self, screen, next_screen, timeout=None):
+#     def __init__(self, screen, next_state, timeout=None):
 #         super(Splash, self).__init__()
 
 #         self.screen = screen
-#         self.next_screen = next_screen
+#         self.next_state = next_state
 
 
 #     def update_screen(self):
@@ -191,20 +191,19 @@ class Menu(State):
 #         else:
 #             self.wait_for_keypress()
 
-#         return next_screen
+#         return next_state
 
 
 class Confirm(State):
     """ Abstract class for a confirmation screen """
-    def __init__(self, title, message, prev_screen, next_screen, accept='y', reject='n'):
+    def __init__(self, title, message, next_state, accept='y', reject='n'):
         """ Initiailize class and super class """
         super(Confirm, self).__init__()
         self.title = title
         self.message = message
         self.accept = accept
         self.reject = reject
-        self.prev_screen = prev_screen
-        self.next_screen = next_screen
+        self.next_state = next_state
 
 
     def update_screen(self):
@@ -213,15 +212,15 @@ class Confirm(State):
         print(f'{self.message}')
 
 
-    def on_event(self, event):
+    def on_event(self, event, prev_state):
         """ Handle events that are delegated to this State. """
         self.update_screen()
 
         while True:
             key = self.get_key_press()
             if key == self.accept:
-                return self.next_screen
+                return self.next_state
             elif key == self.reject or key == 'esc':
-                return self.prev_screen
+                return prev_state
 
         return self
