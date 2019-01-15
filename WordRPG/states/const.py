@@ -10,14 +10,13 @@ from .Inventory import Inventory
 from .Crafting import Crafting
 from .Shop import Shop
 from .Death import Death
-# from .Quit import Quit
 
 
 
 # Initilize states and their classes
 STATES = {
     # 'quit':Quit(prev_screen='main_menu'),
-    'quit':Confirm('Quit?', 'Are you sure you want to quit?', 'main_menu', None),
+    'quit':Confirm('Quit?', 'Are you sure you want to quit?', None),
     'main_menu':Main_Menu(),
     'new_game':New_Game(),
     'character_name':Character_Name(),
