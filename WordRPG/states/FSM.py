@@ -34,8 +34,13 @@ class FSM:
         delegated to the given states which then handle the event. The result is
         then assigned as the new state.
         """
+   
+        # Passing the current self.prev_state as an arg so that we can always
+        # return back to the previous screen in the various state event handlers
+        new_state = self.states[self.cur_state].on_event(event, self.prev_state)
+
         self.prev_state = self.cur_state
-        self.cur_state = self.states[self.cur_state].on_event(event)
+        self.cur_state = new_state
 
 
     def get_state(self):

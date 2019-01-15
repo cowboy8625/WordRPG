@@ -1,11 +1,11 @@
 """ 'new_game' state.  Includes character creation. """
 
 from .. import gui
-from .States import Screen
+from .States import State
 
 
 
-class New_Game(Screen):
+class New_Game(State):
     def __init__(self):
         """ Initiailize class and super class """
         super(New_Game, self).__init__()
@@ -14,15 +14,10 @@ class New_Game(Screen):
     def update_screen(self):
         """ Draws the screen """
         gui.main.clear()
-        print('PLACEHOLDER CREATE CHARACTER SCREEN')
-        print('(N) - CHARACTER NAME')
-        print('(C) - CHARACTER CLASS')
-        print('(G) - CHARACTER GENDER')
-        print('(A) - ACCEPT')
-        print('(ESC) - MAIN MENU')
+        gui.screen.new_game()
 
 
-    def on_event(self, event):
+    def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """
         self.update_screen()
 
@@ -34,8 +29,8 @@ class New_Game(Screen):
                 return 'character_class'
             if key == 'g':
                 return 'character_gender'
-            if key == 'a':
-                return 'accept'
+            if key == 's':
+                return 'game'
             if key == 'esc':
                 return 'main_menu'
 
@@ -43,7 +38,7 @@ class New_Game(Screen):
 
 
 
-class Character_Name(Screen):
+class Character_Name(State):
     def __init__(self):
         """ Initiailize class and super class """
         super(Character_Name, self).__init__()
@@ -56,7 +51,7 @@ class Character_Name(Screen):
         print('PRESS ANY KEY TO RETURN TO NEW CHARACTER SCREEN.')
 
 
-    def on_event(self, event):
+    def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """
         self.update_screen()
         self.wait_for_keypress()
@@ -64,7 +59,7 @@ class Character_Name(Screen):
 
 
 
-class Character_Gender(Screen):
+class Character_Gender(State):
     def __init__(self):
         """ Initiailize class and super class """
         super(Character_Gender, self).__init__()
@@ -77,15 +72,15 @@ class Character_Gender(Screen):
         print('PRESS ANY KEY TO RETURN TO NEW CHARACTER SCREEN.')
 
 
-    def on_event(self, event):
+    def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """
         self.update_screen()
         self.wait_for_keypress()
-        return 'New_Game'
+        return 'new_game'
 
 
 
-class Character_Class(Screen):
+class Character_Class(State):
     def __init__(self):
         """ Initiailize class and super class """
         super(Character_Class, self).__init__()
@@ -98,8 +93,8 @@ class Character_Class(Screen):
         print('PRESS ANY KEY TO RETURN TO NEW CHARACTER SCREEN.')
 
 
-    def on_event(self, event):
+    def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """
         self.update_screen()
         self.wait_for_keypress()
-        return 'New_Game'
+        return 'new_game'

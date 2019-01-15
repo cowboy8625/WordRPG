@@ -79,6 +79,16 @@ def new_screen(char = '#'):
     return string_to_char_array(text)
 
 
+def create_menu(options):
+    """
+    main_menu = {
+        'NEW GAME' : { 'key' : 'n', fgcolor, bgcolor, }
+    """
+    pass
+
+
+
+
 def load_txt(filename, codec = 'utf-8'):
     """ Load .txt file
 
@@ -168,7 +178,12 @@ def center_offset(text, width):
     Returns:
         int -- column offset as an int
     """
+
+    if isinstance(text,int):
+        return int((width - text) / 2)
+
     return int((width - len(text)) / 2)
+    
 
 
 def write_character(char,array,col=0,row=0):
