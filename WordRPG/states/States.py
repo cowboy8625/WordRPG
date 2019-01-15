@@ -21,11 +21,10 @@ from .. import gui
 
 
 
-class State:
+class AbstractState:
     """ Abstract base class for 'states' """
 
     def __init__(self):
-        ##print(f'Initializing state:{self}')
         pass
 
 
@@ -45,11 +44,11 @@ class State:
 
 
 
-class Screen(State):
+class State(AbstractState):
     """ Abstract class for states that involve drawing/updating the screen """
 
     def __init__(self):
-        super(Screen, self).__init__()
+        super(State, self).__init__()
 
 
     @staticmethod
@@ -99,7 +98,9 @@ class Screen(State):
             ## only capture key events when key is released.  This prevents 
             ## a second key name event from being captured
             if key_event.event_type == 'up':
-                return key_event.name
+                # need to convert key_event.name to lowercase to avoid the event
+                # handler being non-responsive if caps-lock is on
+                return str(key_event.name).lower()
 
 
     @staticmethod
@@ -128,7 +129,7 @@ class Screen(State):
 
 
 
-class Menu(Screen):
+class Menu(State):
     """[summary]
     
     Arguments:
@@ -193,7 +194,7 @@ class Menu(Screen):
 #         return next_screen
 
 
-class Confirm(Screen):
+class Confirm(State):
     """ Abstract class for a confirmation screen """
     def __init__(self, title, message, prev_screen, next_screen, accept='y', reject='n'):
         """ Initiailize class and super class """
@@ -209,7 +210,6 @@ class Confirm(Screen):
     def update_screen(self):
         """ Draws the screen """
         gui.main.clear()
-        print(f'{self.accept}')
         print(f'{self.message}')
 
 

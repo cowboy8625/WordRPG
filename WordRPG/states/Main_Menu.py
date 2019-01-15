@@ -1,11 +1,11 @@
 """ 'main_menu' state """
 
 from .. import gui
-from .States import Screen
+from .States import State
 
 
 
-class Main_Menu(Screen):
+class Main_Menu(State):
     def __init__(self):
         """ Initiailize class and super class """
         super(Main_Menu, self).__init__()
@@ -15,14 +15,14 @@ class Main_Menu(Screen):
     def update_screen(self):
         """ Draws the screen """
         gui.main.clear()
-        gui.screen.menu()
+        gui.screen.main_menu()
 
 
     def splash(self):
         """ Draws the screen """
         gui.main.clear()
         gui.screen.splash()
-        self.pause(pause_time=3)
+        self.pause(pause_time=1)
 
 
     def credits(self):
@@ -37,9 +37,9 @@ class Main_Menu(Screen):
         gui.main.clear()
         gui.screen.help()
         self.wait_for_keypress()
-        
 
-    def on_event(self, event):
+
+    def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """
         if event == 'start' or self.first_time:
             self.splash()
@@ -57,9 +57,9 @@ class Main_Menu(Screen):
                 return 'load_game'
             if key == 'c':
                 self.credits()
-                self.update_screen()              
+                self.update_screen()
             if key == 'h':
                 self.help()
-                self.update_screen()              
+                self.update_screen()
 
         return self

@@ -3,7 +3,7 @@
 import os
 from random import randrange
 
-from . import const, main
+from . import const, main, menu
 
 
 
@@ -69,36 +69,48 @@ def title():
     main.draw(screen)
 
 
-def menu():
-    """ tests compositing screens and adding text at a centered offset
-    using string formatters and parameters """
+def main_menu():
+    """ Creates and draws the Main Menu screen """
 
     screen = _create_background()
 
     _title = const.SCREENS['title']['array']
-    main.write_to_array(_title, screen,
-                        transparent=True, col=12, row=6, fgcolor='RED', bgcolor='BLACK')
+    main.write_to_array(_title, screen, transparent=True, col=12, row=6,
+                        fgcolor='RED', bgcolor='BLACK')
 
-    row_start = 12
-    MAIN_MENU = [
-        '(N) - NEW GAME',
-        '(L) - LOAD GAME',
-        '(H) - HELP',
-        '(C) - CREDITS',
-        '(Q) - QUIT'
-        ]
-    c = main.center_offset(max(MAIN_MENU), const.SCREEN_SIZE[0])
-    for i, line in enumerate(MAIN_MENU):
-        r = row_start + i
-        main.write_to_array(line, screen, col=c, row=r, fgcolor='YELLOW', style='BRIGHT')
+    menu_txt = menu.create_menu_array(menu.main_menu)
+    width = menu.get_max_width(menu.main_menu)
+    col = main.center_offset(width, const.SCREEN_SIZE[0])
+    main.write_to_array(menu_txt, screen, col=col, row=12)
 
     footer = f' {const.FOOTER} '
-    start = main.center_offset(footer, const.SCREEN_SIZE[0])
-    main.write_to_array(footer, screen, col=start, row=29, fgcolor='RED')
+    col = main.center_offset(footer, const.SCREEN_SIZE[0])
+    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
 
     # print the screen
     main.draw(screen)
-    
+
+
+def new_game():
+    """ Creates and draws the New Game screen """
+
+    # create blank screen
+    screen = _create_background()
+
+    # creates the menu text
+    menu_txt = menu.create_menu_array(menu.new_game)
+    width = menu.get_max_width(menu.new_game)
+    col = main.center_offset(width, const.SCREEN_SIZE[0])
+    main.write_to_array(menu_txt, screen, col=col, row=12)
+
+    # add footer to screen
+    footer = f' {const.FOOTER} '
+    col = main.center_offset(footer, const.SCREEN_SIZE[0])
+    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
+
+    # print the screen
+    main.draw(screen)
+
 
 def story_test():
     """ tests compositing screens and adding text at a centered offset
