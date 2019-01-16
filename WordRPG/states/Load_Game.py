@@ -14,8 +14,9 @@ class Load_Game(State):
     def update_screen(self):
         """ Draws the screen """
         gui.main.clear()
-        print('PLACEHOLDER SCREEN FOR LOAD GAME')
-        print('PRESS ANY KEY TO RETURN TO MAIN MENU')
+        gui.screen.files(files_info=[{},{},{}], mode='load')
+        # print('PLACEHOLDER SCREEN FOR LOAD GAME')
+        # print('PRESS ANY KEY TO RETURN TO MAIN MENU')
 
 
     def on_event(self, event, prev_state):
