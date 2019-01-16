@@ -14,8 +14,7 @@ class Save_Game(State):
     def update_screen(self):
         """ Draws the screen """
         gui.main.clear()
-        print('PLACEHOLDER SCREEN FOR SAVE GAME')
-        print('PRESS ANY KEY TO RETURN TO GAME')
+        gui.screen.files(files_info=[{},{},{}], mode='save')
 
 
     def on_event(self, event, prev_state):

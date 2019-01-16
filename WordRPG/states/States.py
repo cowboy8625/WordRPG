@@ -7,8 +7,6 @@
                 get_key_press()
                 wait_for_keypress()
                 get_entry()
-   Menu - Base class for a screen that is a menu with multiple options leading
-            to different screens or states on a certain keypress
    Confirm - Base class for confirmation states
 """
 
@@ -45,7 +43,12 @@ class AbstractState:
 
 
 class State(AbstractState):
-    """ Abstract class for states that involve drawing/updating the screen """
+    """ Base class for games states
+    
+    Includes various methods for handling keyboard input as well as placeholder
+    methods for drawing/updating the screen.
+
+    """
 
     def __init__(self):
         super(State, self).__init__()
@@ -128,74 +131,19 @@ class State(AbstractState):
         pass
 
 
-
-class Menu(State):
-    """[summary]
-    
-    Arguments:
-        Screen {function} -- Function that draws/updates the screen
-
-    Keywords:
-        options {dict} -- dictionary of hotkeys and state events to trigger
-
-    Returns:
-        string -- String name of next state event to proceed to
-    """
-
-    def __init__(self, screen, options={}):
-        """ Initiailize class and super class """
-        super(Menu, self).__init__()
-        self.screen = screen
-        self.options = options
-
-
-    def update_screen(self):
-        """ Draws the screen """
-        gui.main.clear()
-        self.screen()
-
-
-    def on_event(self, event):
-        """ Handles events that are delegated to this State. """
-        self.update_screen()
-
-        while True:
-            key = self.get_key_press()
-            if key in self.options.keys():
-                self.options[key]()
-
-        return self
-
-
-
-# class Info(Screen):
-#     """ Abstract class for an info screen """
-#     def __init__(self, screen, next_state, timeout=None):
-#         super(Splash, self).__init__()
-
-#         self.screen = screen
-#         self.next_state = next_state
-
-
-#     def update_screen(self):
-#         """ Draws the screen """
-#         gui.main.clear()
-#         gui.screen.splash()
-
-
-#     def on_event(self, event):
-#         """ Handle events that are delegated to this State. """
-#         self.update_screen()
-#         if timeout is not None:
-#             self.pause(pause_time=3)
-#         else:
-#             self.wait_for_keypress()
-
-#         return next_state
-
-
 class Confirm(State):
-    """ Abstract class for a confirmation screen """
+    """ Base class for a confirmation state
+
+    This sets up a simple confirmation event for the player. Mainly used for
+    when the player tries to quit the game or selects any option that could
+    detrimentally affect their current game state.
+
+    TODO:
+        Right now, this creates a new screen, but we could adapt it to draw a
+        dialogue box on top of the current screen
+    
+    """
+    
     def __init__(self, title, message, next_state, accept='y', reject='n'):
         """ Initiailize class and super class """
         super(Confirm, self).__init__()
@@ -224,3 +172,68 @@ class Confirm(State):
                 return prev_state
 
         return self
+
+
+# class Menu(State):
+#     """ Base class for a menu state
+    
+#     Arguments:
+#         Screen {function} -- Function that draws/updates the screen
+
+#     Keywords:
+#         options {dict} -- dictionary of hotkeys and state events to trigger
+
+#     Returns:
+#         string -- String name of next state event to proceed to
+#     """
+
+#     def __init__(self, screen, options={}):
+#         """ Initiailize class and super class """
+#         super(Menu, self).__init__()
+#         self.screen = screen
+#         self.options = options
+
+
+#     def update_screen(self):
+#         """ Draws the screen """
+#         gui.main.clear()
+#         self.screen()
+
+
+#     def on_event(self, event):
+#         """ Handles events that are delegated to this State. """
+#         self.update_screen()
+
+#         while True:
+#             key = self.get_key_press()
+#             if key in self.options.keys():
+#                 self.options[key]()
+
+#         return self
+
+
+
+# class Info(Screen):
+#     """ Abstract class for an info screen """
+#     def __init__(self, screen, next_state, timeout=None):
+#         super(Splash, self).__init__()
+
+#         self.screen = screen
+#         self.next_state = next_state
+
+
+#     def update_screen(self):
+#         """ Draws the screen """
+#         gui.main.clear()
+#         gui.screen.splash()
+
+
+#     def on_event(self, event):
+#         """ Handle events that are delegated to this State. """
+#         self.update_screen()
+#         if timeout is not None:
+#             self.pause(pause_time=3)
+#         else:
+#             self.wait_for_keypress()
+
+#         return next_state
