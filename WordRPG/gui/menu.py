@@ -31,6 +31,21 @@ main_menu = {
     ]
 }
 
+game_menu = {
+    'text_format' : {'fgcolor':'CYAN','bgcolor':'BLACK','style':'NORMAL'},
+    'hotkey_format' : {'fgcolor':'YELLOW','bgcolor':'BLACK','style':'BRIGHT'},
+    'encap' : '()',
+    'sep' : ' - ',
+    'options' : [
+        ('save_game', 's'), 
+        ('load_game', 'l'),
+        ('help', 'h'),
+        ('main menu', 'm'),
+        ('quit', 'q'),
+        ('back to game', 'esc'),
+    ]
+}
+
 new_game = {
     'text_format' : {'fgcolor':'CYAN','bgcolor':'BLACK','style':'NORMAL'},
     'hotkey_format' : {'fgcolor':'YELLOW','bgcolor':'BLACK','style':'BRIGHT'},
