@@ -45,3 +45,18 @@ for f in FILENAMES:
         'txt' : txt,
         'array' : main.string_to_char_array(txt),
         }
+
+# characters used to build frames
+FRAME = {
+    'tl'    : ['┌','╔'],
+    'tr'    : ['┐','╗'],
+    'bl'    : ['└','╚'],
+    'br'    : ['┘','╝'],
+    'v'     : ['│','║'],
+    'h'     : ['─','═'],
+    'vl'    : ['├','╠'],
+    'vr'    : ['┤','╣'],
+    'hb'    : ['┴','╩'],
+    'ht'    : ['┬','╦'],
+    'c'     : ['┼','╬'],
+}
