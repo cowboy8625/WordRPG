@@ -17,7 +17,7 @@ from . import const, font, cursor
 logging.basicConfig(
         filename=os.path.join( os.path.dirname(__file__), 'gui_error.log' ),
         format='%(levelname)s - %(message)s',
-        level=logging.INFO,
+        level=logging.ERROR,
         )
 logging.debug('debug logging:')
 
@@ -77,6 +77,41 @@ def new_screen(char = '#'):
     text = f'{line}\n' * rows
 
     return string_to_char_array(text)
+
+
+def create_frame(cols, rows, style=1, as_array=True):
+    """[summary]
+
+    Arguments:
+        cols {[type]} -- [description]
+        rows {[type]} -- [description]
+
+    Keyword Arguments:
+        style {int} -- [description] (default: {1})
+
+    Returns:
+        string -- [description]
+    """
+
+    # get frame characters based on style
+    tl = const.FRAME['tl'][style]
+    tr = const.FRAME['tr'][style]
+    bl = const.FRAME['bl'][style]
+    br = const.FRAME['br'][style]
+    v = const.FRAME['v'][style]
+    h = const.FRAME['h'][style]
+
+    # assemble the final frame string
+    frame_string = str()
+    frame_string += f'{tl}{h * (cols - 2)}{tr}\n'
+    for i in range(0, (rows - 2)):
+        frame_string += f'{v}{" " * (cols - 2)}{v}\n'
+    frame_string += f'{bl}{h * (cols - 2)}{br}'
+
+    if as_array is not True:
+        return frame_string
+    else:
+        return string_to_char_array(frame_string)
 
 
 def create_menu(options):

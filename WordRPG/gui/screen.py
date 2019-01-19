@@ -49,9 +49,16 @@ def _create_background(background='frame', offset=(0, 0),
     """ creates a new screen with a given background screen """
     screen = main.new_screen(char=' ')
     background = const.SCREENS[background]['array']
-    main.write_to_array(background, screen, col=offset[0], row=offset[1],
+    main.write_to_array(background, screen, col=offset[0], row=offset[0],
                         transparent=True, fgcolor=fgcolor, bgcolor=bgcolor)
+    return screen
 
+
+def _create_frame(screen, cols= 80, rows=40, style=1, offset=(0, 0),
+                  fgcolor='CYAN', bgcolor='BLACK'):
+    frame = main.create_frame(80, 30, style=style, as_array=True)
+    main.write_to_array(frame, screen, col=offset[0], row=offset[0],
+                        transparent=True, fgcolor=fgcolor, bgcolor=bgcolor)
     return screen
 
 
@@ -59,8 +66,11 @@ def title():
     """ tests compositing screens and adding text at a centered offset
     using string formatters and parameters """
 
-    # draw the background and frame
-    screen = _create_background()
+    # makes a new empty screen
+    screen = main.new_screen(char=' ')
+
+    # creates standard double line frame around whole screen
+    _create_frame(screen)
 
     # draw the game title
     _title = const.SCREENS['title']['array']
@@ -74,8 +84,11 @@ def title():
 def main_menu():
     """ Creates and draws the Main Menu screen """
 
-    # draw the background and frame
-    screen = _create_background()
+    # makes a new empty screen
+    screen = main.new_screen(char=' ')
+
+    # creates standard double line frame around whole screen
+    _create_frame(screen)
 
     # draw the game title
     _title = const.SCREENS['title']['array']
@@ -100,8 +113,11 @@ def main_menu():
 def game_menu():
     """ Creates and draws the in-game menu screen """
 
-    # draw the background and frame
-    screen = _create_background()
+    # makes a new empty screen
+    screen = main.new_screen(char=' ')
+
+    # creates standard double line frame around whole screen
+    _create_frame(screen)
 
     # draw the game title
     _title = const.SCREENS['title']['array']
@@ -126,8 +142,11 @@ def game_menu():
 def new_game():
     """ Creates and draws the New Game screen """
 
-    # draw the background and frame
-    screen = _create_background()
+    # makes a new empty screen
+    screen = main.new_screen(char=' ')
+
+    # creates standard double line frame around whole screen
+    _create_frame(screen)
 
     # creates the menu text
     menu_txt = menu.create_menu_array(menu.new_game)
@@ -251,15 +270,19 @@ def _file_data_block(index, file_info, screen):
                         )
 
 
-def files(files_info=['one', 'two', 'three'], mode='load'):
+def files(files_info=[{},{},{}], mode='load'):
     """ Create file screen
-    
+
     File screen is used for loading and saving files in the main menu or in
     game menu
     """
 
     # draw the background and frame
-    screen = _create_background()
+    # makes a new empty screen
+    screen = main.new_screen(char=' ')
+
+    # creates standard double line frame around whole screen
+    _create_frame(screen)
 
     # draw the header
     header = f' {mode.upper()} GAME '
@@ -267,14 +290,43 @@ def files(files_info=['one', 'two', 'three'], mode='load'):
     main.write_to_array(header, screen, col=col, row=0, fgcolor='RED')
 
     # create each file data block and draw them to screen
-    files_info = ['one', 'two', 'three']
     for i, f in enumerate(files_info):
         _file_data_block(i, f, screen)
 
     # add screen prompt
-    text = f'SELECT FILE SLOT TO {mode.upper()}'        
+    text = f'SELECT FILE SLOT TO {mode.upper()}'
     col = main.center_offset(text, const.SCREEN_SIZE[0])
     main.write_to_array(text, screen, col=col, row=27, fgcolor='RED')
 
     # print the screen
     main.draw(screen)
+
+
+def game():
+    """ Creates and draws the main game screen """
+
+    # draw the background and frame
+    screen = _create_background()
+
+    # draw the game title
+    _game = const.SCREENS['game']['array']
+    main.write_to_array(_game, screen, transparent=True, col=0, row=0,
+                        fgcolor='WHITE', bgcolor='BLACK')
+
+    # draw the header
+    header = f' {const.HEADER} '
+    col = main.center_offset(header, const.SCREEN_SIZE[0])
+    main.write_to_array(header, screen, col=col, row=0, fgcolor='RED')
+
+    # draw the menu
+    # menu_txt = menu.create_menu_array(menu.game_menu)
+    # width = menu.get_max_width(menu.main_menu)
+    # col = main.center_offset(width, const.SCREEN_SIZE[0])
+    # main.write_to_array(menu_txt, screen, col=col, row=12)
+
+    # draw the footer
+    footer = f' {const.FOOTER} '
+    col = main.center_offset(footer, const.SCREEN_SIZE[0])
+    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
+
+    return screen

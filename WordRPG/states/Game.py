@@ -1,70 +1,101 @@
 """ Placeholder state for main 'game' loop """
-
+from collections import deque
 from .. import gui
 from .States import State
 
 
 
 class Game(State):
-    def __init__(self):
+    def __init__(self, buffer_size=4):
         """ Initiailize class and super class """
         super(Game, self).__init__()
         self.first_time = True
 
+        self._init_screen()
+
+        # creates initial command buffer
+        self.BUFFER_SIZE = buffer_size
+        self.buffer = deque(['' for i in range(self.BUFFER_SIZE)])
+        self.add_to_buffer("WELCOME TO THE WASTELANDS")
+
+    
+    def _init_screen(self):
+        """ Create the main game screen """
+        self.screen = gui.screen.game()
+
 
     def update_screen(self):
-        """ Draws the screen """
-        gui.main.clear()
-        print('THIS IS PLACEHOLDER GAME STATE')
-        print('CREATE A NEW SCREEN IN GUI.SCREEN')
-        print('(W) - NORTH')
-        print('(A) - WEST')
-        print('(S) - SOUTH')
-        print('(D) - EAST')
-        print()
-        print('(C) - CRAFTING')
-        print('(G) - GATHER RESOURCES')
-        print('(I) - INVENTORY')
-        print()
-        print('(X) - TEST COMBAT')
-        print('(K) - TEST DEATH')
-        print()
-        print('(ESC) - MENU')
+        """ Updates and redraws the screen """
+        gui.main.draw(self.screen)
+
+
+    def add_to_buffer(self, text, width=76):
+        """ Adds output to command buffer
+
+        Command buffer displays the last 4-5 actions that the player took and
+        their results if relevant
+        
+        Arguments:
+            text {str} -- String to add and display in the command buffer
+        
+        Keyword Arguments:
+            width {int} -- Width of line in command buffer so that we can fully
+                           overwrite the previous screen line. (default: {76})
+        """
+
+        self.buffer.rotate(-1)
+        self.buffer[-1]=text
+
+        for i, text in enumerate(self.buffer):
+            text = f'> {text}'
+            text = f'{text}{" " * (width - len(text))}'
+            gui.main.write_to_array(text, self.screen, col=3, row=24 + i,
+                    transparent=False, fgcolor='WHITE', bgcolor='BLACK')
 
 
     def start(self):
-        """ Subloop """
+        """ Even handler for transitioning into this state the first time """
         gui.main.clear()
-        print('SARTING NEW GAME')
+        print('STARTING NEW GAME')
         print('ENTERING MAIN GAME STATE IN A MOMENT...')
-        self.pause(pause_time=2)
+        self.update_screen()
+        self.pause(pause_time=1)
 
 
     def gather(self):
-        """ Subloop """
-        print('GATHERING RESOURCES...')
-        self.pause(pause_time=1)
+        """ Even handler for gathering resources """
+        self.add_to_buffer(f'GATHERING RESOURCES...')
+        self.update_screen()
 
 
-    def move(self,dir='north'):
-        print(f'MOVING {dir.upper()}...')
-        self.pause(pause_time=1)
+    def move(self, dir='north'):
+        """ Even handler for moving in the game world """
+        self.add_to_buffer(f'MOVING {dir.upper()}...')
+        self.update_screen()
+
+
+    def rest(self,):
+        """ Even handler for resting """
+        self.add_to_buffer(f'YOU REST FOR 4 HOURS.')
+        self.update_screen()
 
 
     def combat(self):
-        """ Subloop """
+        """ Even handler for transitioning into 'combat' state """
         # This is where any pre-combat functions would be handled before
         # transitioning into the combat state
-        print('ENTERING COMBAT...')
+        self.add_to_buffer('ENTERING COMBAT...')
+        self.update_screen()
         self.pause(pause_time=1)
         return 'combat'
 
 
     def death(self):
-        """ Subloop """
+        """ Even handler for transitioning into 'death' state """
         # This is where any pre-death functions would be handled before
         # transitioning into the 'death' state
-        print('PLAYER IS DEAD...')
+        self.add_to_buffer('YOU SLUMP LIFELESSLY TO THE GROUND...')
+        self.update_screen()
         self.pause(pause_time=1)
         return 'death'
 
@@ -75,25 +106,20 @@ class Game(State):
             self.start()
             self.first_time = False
 
-        self.update_screen()
-
         while True:
             key = self.get_key_press()
             if key == 'g':
                 self.gather()
-                self.update_screen()
             if key == 'w' or key == 'up':
                 self.move(dir='north')
-                self.update_screen()
             if key == 'a' or key == 'left':
                 self.move(dir='west')
-                self.update_screen()
             if key == 's' or key == 'down':
                 self.move(dir='south')
-                self.update_screen()
             if key == 'd' or key == 'right':
                 self.move(dir='east')
-                self.update_screen()
+            if key == 'r':
+                self.rest()
             if key == 'c':
                 return 'crafting'
             if key == 'i':
