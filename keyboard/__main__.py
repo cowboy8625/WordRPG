@@ -3,7 +3,7 @@ import fileinput
 import json
 import sys
 
-from .. import keyboard
+import keyboard
 
 
 
