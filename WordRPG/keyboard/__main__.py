@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-import keyboard
 import fileinput
 import json
 import sys
+
+from .. import keyboard
+
+
 
 def print_event_json(event):
     print(event.to_json(ensure_ascii=sys.stdout.encoding != 'utf-8'))

@@ -14,7 +14,7 @@ from time import sleep, time
 from copy import deepcopy
 
 # https://pypi.org/project/keyboard/
-import keyboard
+from .. import keyboard
 
 from ..gui.Screen import const, Screen, setup_terminal
 
