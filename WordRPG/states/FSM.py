@@ -7,7 +7,8 @@
 import sys
 from time import sleep, time
 
-import keyboard     # https://pypi.org/project/keyboard/
+# import keyboard     # https://pypi.org/project/keyboard/
+from .. import keyboard
 
 from .. import gui
 from .States import Confirm
