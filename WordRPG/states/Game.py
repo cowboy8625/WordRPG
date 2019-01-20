@@ -1,6 +1,6 @@
 """ Placeholder state for main 'game' loop """
 from collections import deque
-from .. import gui
+from ..gui.Screen import const, Screen, setup_terminal
 from .States import State
 
 
@@ -11,7 +11,7 @@ class Game(State):
         super(Game, self).__init__()
         self.first_time = True
 
-        self._init_screen()
+        self.screen = self._init_screen()
 
         # creates initial command buffer
         self.BUFFER_SIZE = buffer_size
@@ -21,12 +21,36 @@ class Game(State):
     
     def _init_screen(self):
         """ Create the main game screen """
-        self.screen = gui.screen.game()
+        screen = Screen()
+        screen.load_screen('game', offset=(0,0), fgcolor='WHITE')
+
+        screen.add_header()
+
+        # command menu
+        menu = {
+            'text_format' : {'fgcolor':'CYAN','bgcolor':'BLACK','style':'NORMAL'},
+            'hotkey_format' : {'fgcolor':'YELLOW','bgcolor':'BLACK','style':'BRIGHT'},
+            'encap' : '()',
+            'sep' : ' - ',
+            'options' : [
+                ('menu', 'esc'), 
+                ('gather resources', 'g'),
+                ('inventory', 'i'),
+                ('crafting', 'c'),
+                ('test combat', 'x'),
+                ('test death', 'k'),
+            ]
+        }
+        screen.add_menu(menu, offset=(51,16))
+
+        screen.add_footer()
+
+        return screen
 
 
     def update_screen(self):
         """ Updates and redraws the screen """
-        gui.main.draw(self.screen)
+        self.screen.draw()
 
 
     def add_to_buffer(self, text, width=76):
@@ -49,16 +73,15 @@ class Game(State):
         for i, text in enumerate(self.buffer):
             text = f'> {text}'
             text = f'{text}{" " * (width - len(text))}'
-            gui.main.write_to_array(text, self.screen, col=3, row=24 + i,
+            self.screen.add_string_to_screen(text, offset=(3, 24 + i),
                     transparent=False, fgcolor='WHITE', bgcolor='BLACK')
 
 
     def start(self):
         """ Even handler for transitioning into this state the first time """
-        gui.main.clear()
+        Screen.clear()
         print('STARTING NEW GAME')
         print('ENTERING MAIN GAME STATE IN A MOMENT...')
-        self.update_screen()
         self.pause(pause_time=1)
 
 
@@ -106,6 +129,7 @@ class Game(State):
             self.start()
             self.first_time = False
 
+        self.update_screen()
         while True:
             key = self.get_key_press()
             if key == 'g':
