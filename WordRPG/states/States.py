@@ -11,11 +11,12 @@
 """
 
 from time import sleep, time
+from copy import deepcopy
 
 # https://pypi.org/project/keyboard/
 import keyboard
 
-from .. import gui
+from ..gui.Screen import const, Screen, setup_terminal
 
 
 
@@ -154,15 +155,46 @@ class Confirm(State):
         self.next_state = next_state
 
 
-    def update_screen(self):
-        """ Draws the screen """
-        gui.main.clear()
-        print(f'{self.message}')
+    def _create_window(self, prev_state=None):
+        screen = Screen()
+
+        if prev_state is not None:
+            prev_screen = prev_state.screen
+            screen._write_array_to_screen(prev_screen.copy(),
+                        format_char=False, format_space=False)
+
+        # creates a frame
+        screen.add_frame(size=(40, 10), offset=('center', 10),
+                    fgcolor='YELLOW', bgcolor='BLACK', transparent=False)
+
+        # add title
+        screen.add_string_to_screen(f' {self.title} ', offset=('center', 10),
+                    transparent=False, fgcolor='YELLOW', bgcolor='BLACK')
+
+        # add message
+        screen.add_string_to_screen(f'{self.message}', offset=('center', 13),
+                    transparent=False, fgcolor='WHITE', bgcolor='BLACK')
+
+        # add menu
+        menu = {
+            'text_format' : {'fgcolor':'CYAN','bgcolor':'BLACK','style':'NORMAL'},
+            'hotkey_format' : {'fgcolor':'YELLOW','bgcolor':'BLACK','style':'BRIGHT'},
+            'encap' : '()',
+            'sep' : ' - ',
+            'options' : [
+                ('quit', self.accept), 
+                ('return', self.reject),
+            ]
+        }
+        screen.add_menu(menu, offset=('center',15))
+        
+        self.screen = screen
+        self.screen.draw()
 
 
     def on_event(self, event, prev_state):
         """ Handle events that are delegated to this State. """
-        self.update_screen()
+        self._create_window(prev_state)
 
         while True:
             key = self.get_key_press()

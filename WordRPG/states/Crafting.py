@@ -1,6 +1,6 @@
 """ Placeholder state for 'crafting' """
 
-from .. import gui
+from ..gui.Screen import const, Screen, setup_terminal
 from .States import State
 
 
@@ -14,7 +14,7 @@ class Crafting(State):
 
     def update_screen(self):
         """ Draws the screen """
-        gui.main.clear()
+        Screen.clear()
         print('THIS IS A PLACEHOLDER SCREEN FOR CRAFTING STATE')
         print('PRESS KEY TO RETURN TO MAIN LOOP')
 
