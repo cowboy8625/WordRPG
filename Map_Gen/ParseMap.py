@@ -31,4 +31,5 @@ class Map:
         return len(self.mapList)
 
 
-WorldMap = Map("Map_Gen/World.map")
+# TODO: Find a name for the starting island
+CurrentMap = Map("Map_Gen/Startng_Island.map")
