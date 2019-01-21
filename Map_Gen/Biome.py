@@ -98,6 +98,9 @@ class World:
                 rarity="Rare", info="Deep, dark, unexplored. Last great frontier", crossable=False)
     rod = Biome(prefix="rod", name="Road", resources=[], spawns=[], enterable=True, rarity="Common",
                 info="A safe, protected, pathway for travels and trading", crossable=True)
+    # TODO: Add spawns\resources to this biome
+    bch = Biome(prefix="Bch", name="Beach", resources=[], spawns=[], enterable=True, rarity="Common",
+                info="A nice, relaxing place to spend the summer. Just watch your toes for crabs", crossable=True)
 
     def __init__(self):
         # This is so I can write the next function
@@ -135,12 +138,10 @@ class World:
             # Ocean
             '#': self.ocn,
             # Road
-            'R': self.rod
+            'R': self.rod,
+            # Beach
+            'B': self.bch
         }
-
-    # returns Biome object
-    def get_random_biome(self):
-        return random.choice(self.biomes)
 
 
 Wld = World()
