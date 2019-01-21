@@ -26,7 +26,6 @@ North  if biome is -x is not its own biome and +x -y +y is same biome as its sel
 """
 # Import Modules
 import random
-from Map_Gen import SubBiome
 
 
 class Biome:
@@ -97,6 +96,8 @@ class World:
                 info="Spawnpy water to your knees. This is an unruly landscape")
     ocn = Biome(prefix="ocn", name="Ocean", resources=['Salt Water'], spawns=['Sea Monster'], enterable=False,
                 rarity="Rare", info="Deep, dark, unexplored. Last great frontier", crossable=False)
+    rod = Biome(prefix="rod", name="Road", resources=[], spawns=[], enterable=True, rarity="Common",
+                info="A safe, protected, pathway for travels and trading", crossable=True)
 
     def __init__(self):
         # This is so I can write the next function
@@ -132,7 +133,9 @@ class World:
             # Marsh
             'H': self.msh,
             # Ocean
-            '#': self.ocn
+            '#': self.ocn,
+            # Road
+            'R': self.rod
         }
 
     # returns Biome object
