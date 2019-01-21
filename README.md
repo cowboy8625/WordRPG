@@ -1,49 +1,39 @@
 # WordRPG
 
-  A text based RPG game with a story, shopping, NPC's, and fighing
+  A text based RPG game with a story, shopping, NPC's, crafting, fighting and a ever grouping map to explore!
 
 ## Find Me Here
-If you are playing the game feel free to message me on discord https://discord.gg/8bkzqfm about bugs or ideas!
-or for any thing else.
-Also if you want to help out on the project and have ideas hit me up and show me some code!
+If you are playing the game feel free to message me on [discord](https://discord.gg/8bkzqfm) about bugs or ideas
+or for any thing else!
 
-## To Play The Game
-WARNING: Before Playing the game you must run the setup.sh or setup-windows.bat depending 
-on your OS Mac and Linux Users run setup.sh and Windows Users run setup-windows.bat
-(You only need to do this once)
-
-To play the game double click on Main file and make sure you have downloaded the
-"WordRPG Folder not just one file.
-
-### Remember
-I am constantly changing the code and add new code so check back to get more content.
-Also I'm super new and really just doing this project to learn more and sharpen my skills
-as a new programmer so if there is something I did that can be improved a pawn  please let
-me know!
+### WE ARE FULL
+We have more then enough people working on the project now.  You may join the [discord](https://discord.gg/8bkzqfm) and be apart of are awesome community.
 
 ## Version
-* Python 3.7 required due to use of f-strings
-
-## Tools
-* Visual Studio Code for editing
+* Python 3.7
 
 # About This Project
 I have Lot's of plans for this game but it is a labor of love so I may get board at some point and quit, but that isn't the case as of yet. In the game you can choose to be a Mage, Warrior, Archer or an Assassin. There will be weapons specific to a playing class and also weapons that two or all classes can use. The player will be able to level up and sell/buy item from NPC.
 The map will be procedurally made so the seed will be able to share with friends so you may play the same map although it will not be Multiplayer. Multiplayer seems to be a bit far from my reach at the moment.
 
-# In the Future
-I think I would like to port this project over to pygame once its well established so it may be a 2d game at some point.
-Also depends if I'm doing it alone or with some one. If I'm working on this project still and I'm by my self I'll try and make it in C# and Unity. I've never made a full program with C# nor have I made anything in unity so who knows. Maybe just make this game Multiplayer but thats for another time I suppose.
-
 # Team
 <a name="team-members"></a>Team Members
-* BJTMastermind
-* CBruce
-* Cowboy8625 (Owner)
-* Cyy
-* Giioke
+* [BJTMastermind](https://github.com/bjtmastermind)
+* [Byteme8bit](https://github.com/Byteme8bit)
+* [CBruce](https://github.com/ChristopherLBruce)
+* [Cowboy8625 (Owner)](https://github.com/cowboy8625)
+* [Cyy](https://github.com/JamesCourcelle)
+* [Djsurry](https://github.com/Djsurry)
+* [Giioke](https://github.com/Giioke)
+* [HexTree](https://github.com/HexTree)
+* [PinkChicken](https://github.com/PinkChicken)
+* [tmded](https://github.com/tmded)
 
-# Screen Shots
+# Big Thanks!
+To everyone that has helped on the project!  I have learned a lot about OOP, this project was a great idea and a massive help in my coding journey.
+
+# Old Screen Shots
+This part of the game is being reworked thanks to CBruce!
 
 This is the Main Menu
 ![wordrpg_main_menu](https://user-images.githubusercontent.com/43012445/48389982-80e16100-e6c5-11e8-99e1-56bf323d52f7.PNG)
