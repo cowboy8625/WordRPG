@@ -10,14 +10,21 @@ class Map:
 
     A map is a 2D array (list of lists) that contain pointers to tile/biome
     data.
-    
+
     Maps can be parsed from an image where each pixel uses a pre-defined
     RGB value to represent a specific tile or biome
-    
-    Returns:
-        [type] -- [description]
-    """
 
+    **Arguments:**
+
+        :``filename``:  `str`   Name of the map image to load and parse
+
+    **Keword Arguments:**
+
+        :``tileset``:   `dict`  Dictionary of keys and 'Tile' objects
+
+    """
+    
+    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map']
 
     def __init__(self, filename, tileset=BIOMES):
         self.tileset = tileset
@@ -28,28 +35,28 @@ class Map:
 
     def get_map_key(self, tileset=BIOMES):
         """ Builds color : tile map key
-        
+
         Keyword Arguments:
             tileset {[type]} -- [description] (default: {BIOMES})
         """
 
-        return{ v['img_color'] : k for k, v in tileset.items() }
+        return{ tile.color : key for key, tile in tileset.items() }
 
 
     def _load_map(self, filename):
         """ Loads an image file and parses it into a map
-        
+
         Arguments:
             filename {[type]} -- [description]
-        
+
         Keyword Arguments:
             mirror {bool} -- [description] (default: {True})
             rotate {int} -- [description] (default: {90})
-        
+
         Returns:
             [type] -- [description]
         """
-        
+
         image = Image.open(filename)
 
         # update map size based on loaded image
@@ -68,7 +75,9 @@ class Map:
                 tiles.append(None)
             else:
                 tile_key = self.map_key[rgb]
-                tiles.append(self.tileset[tile_key])            
+                # TODO: this might be creating a pointer to the 'tileset' dict
+                # we might need to instantiate a new 'Tile' object here instead
+                tiles.append(self.tileset[tile_key])
 
         # tiles = [self.tileset[self.map_key[rgb]] for rgb in pixels]
 
@@ -102,20 +111,39 @@ class Map:
 
     def show(self):
         """ Prints the map array """
+        map_str = ''
+
         for row in range(self.rows):
-            line = ''
+            line = []
             for col in range(self.cols):
                 try:
                     tile = self.map[col][row]
                     if tile is not None:
-                        char = tile['symbol']
-                        char = font.add_escape(char, **tile['format'])
+                        char = tile.symbol
+                        char = font.add_escape(char, **tile.format)
                         # print(char)
-                        line = line + char
+                        line.append(char)
                     else:
-                        line = line + ' '                    
+                        line.append(' ')
                 except IndexError:
-                    pass
-                    # print(f'tile = self.map[{col}][{row}]')
+                    line.append('?')
 
-            print(line)
+            map_str = map_str + ''.join(line) + '\n'
+            
+        print(map_str)
+
+
+    def __repr__(self):
+        """ returns explicite representation of self.map data """
+        return self.map
+
+
+    def __str__(self):
+        """ returns printable string version of self.map data """
+        _str = ''
+
+        for row in range(self.rows):
+            line = [ self.map[col][row]['symbol'] if self.map[col][row] is not None else " " for col in range(self.cols) ]
+            _str = _str + ''.join(line) + '\n'
+
+        return _str
