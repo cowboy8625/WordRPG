@@ -1,14 +1,18 @@
+from colorama import init as colorama_init
+
+from WordRPG import gui
 from WordRPG.Map import Map
 from WordRPG.Map.tiles import BIOMES
 
-test_map = Map(r"E:\Python\WordRPG\WordRPG\Map\images\test_island1.png")
-# print(test_map.map_key)
-# print(test_map.map[0][0])
-test_map.show()
 
 
-# color_map = { v['img_color'] : k  for k, v in BIOMES.items() }
-# print(color_map)
+if __name__ == '__main__':
+    # doing this in a while True loop so that the terminal window stays open
+    while True:
+        # sets up terminal window to expected size
+        gui.Screen.setup_terminal(title='MAP TEST', size=(100,50))
 
-while True:
-    pass
+        # create a 'Map' object using the given image filename and then print
+        # it to the terminal
+        test_map = Map(r"E:\Python\WordRPG\WordRPG\Map\images\test_island2.png")
+        test_map.show()
