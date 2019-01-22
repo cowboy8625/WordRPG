@@ -1,13 +1,27 @@
 from PIL import ImageColor
 
+""" Module for formatting text
+
+    Notes:
+        Fore/Back:
+            'BLACK', 'BLUE', 'CYAN', 'GREEN', 'LIGHTBLACK_EX', 'LIGHTBLUE_EX',
+            'LIGHTCYAN_EX', 'LIGHTGREEN_EX', 'LIGHTMAGENTA_EX', 'LIGHTRED_EX',
+            'LIGHTWHITE_EX', 'LIGHTYELLOW_EX', 'MAGENTA', 'RED', 'RESET',
+            'WHITE', 'YELLOW'
+        Style:
+            'BRIGHT', 'DIM', 'NORMAL', 'RESET_ALL'
+
+"""
+
 
 
 """ Diciontaries for various tilesets are defined here
 
     '[tile_name]': {[dict]}
 
-    'resource': list - list of resources that can be found in this tile
-    'movement': int - movement cost to move into tile. -1 means tile is
+    'resource': {list} - list of resources that can be found in this tile
+    'movement': {int} - movement cost to move into tile.
+                    -1 means tile is
                     impassable
     'description': 'YOU ARE ON THE ROAD',
     'img_color' : (R, G, B) color used in source image
@@ -17,20 +31,6 @@ from PIL import ImageColor
         'bgcolor':'YELLOW'
         'style':'NORMAL'
 """
-
-    # COLOR_MAP = {
-    #     ImageColor.getrgb("Cyan")   : "?",  #river
-    #     ImageColor.getrgb("Yellow") : "░",  #sand
-    #     ImageColor.getrgb("White")  : "╬",  #road
-    #     ImageColor.getrgb("Black")  : "▄",  #cave
-    #     ImageColor.getrgb("Red")    : "X",  #village
-    #     ImageColor.getrgb("Magenta"): "≡",  #farmland
-    #     ImageColor.getrgb("Blue")   : "~",  #ocean
-    #     (168, 168, 168)             : "^",  #mountain
-    #     (0, 255, 0)                 : ".",  #grassland
-    #     (0, 127, 0)                 : "¥",  #forest
-    # }
-
 
 BIOMES = {
     'village': {
@@ -58,7 +58,7 @@ BIOMES = {
         'description': 'YOU ARE ON THE ROAD',
         'img_color' : ImageColor.getrgb('white'),
         'symbol' : '┼',
-        'format' : {'fgcolor':'BLACK','bgcolor':'YELLOW','style':'NORMAL'},
+        'format' : {'fgcolor':'LIGHTBLACK_EX','bgcolor':'YELLOW','style':'NORMAL'},
         },
     'farmland': {
         'resource' : ['herb'], 
@@ -74,7 +74,7 @@ BIOMES = {
         'description' : 'YOU ARE ON THE BEACH',
         'img_color' : ImageColor.getrgb('khaki'),
         'symbol' : '░',
-        'format' : {'fgcolor':'BLACK','bgcolor':'YELLOW','style':'NORMAL'},   
+        'format' : {'fgcolor':'WHITE','bgcolor':'YELLOW','style':'NORMAL'},   
         },
     'desert': {
         'resource' : ['grass'], 
@@ -82,30 +82,30 @@ BIOMES = {
         'description' : 'YOU ARE IN THE DESERT',
         'img_color' : (205, 133, 63),   #ImageColor.getrgb('peru'),
         'symbol' : '░',
-        'format' : {'fgcolor':'BLACK','bgcolor':'YELLOW','style':'NORMAL'},   
+        'format' : {'fgcolor':'RED','bgcolor':'YELLOW','style':'NORMAL'},   
         },
     'grassland': {
         'resource' : ['grass'], 
         'movement' : 2 ,
         'description' : 'YOU ARE IN GRASSLANDS',
         'img_color' : ImageColor.getrgb('lawngreen'),
-        'symbol' : ',',
-        'format' : {'fgcolor':'BLACK','bgcolor':'GREEN','style':'NORMAL'},   
+        'symbol' : '░',
+        'format' : {'fgcolor':'LIGHTGREEN_EX','bgcolor':'GREEN','style':'NORMAL'},   
         },
     'forest': {
         'resource': ['wood'], 
         'movement': 3 ,
         'description': 'YOU ARE IN THE FOREST',
         'img_color' : ImageColor.getrgb('olivedrab'),
-        'symbol' : '§',
-        'format' : {'fgcolor':'LIGHTGREEN_EX','bgcolor':'GREEN','style':'NORMAL'},
+        'symbol' : '▒',
+        'format' : {'fgcolor':'LIGHTBLACK_EX','bgcolor':'GREEN','style':'NORMAL'},
         },
     'deep_forest': {
         'resource': ['wood', 'magic_wood'], 
         'movement': 4 ,
         'description': 'YOU ARE IN THE DEEP, DARK FOREST',
         'img_color' : ImageColor.getrgb('darkgreen'),
-        'symbol' : '§',
+        'symbol' : '▒',
         'format' : {'fgcolor':'GREEN','bgcolor':'BLACK','style':'NORMAL'},
         },
     'river': {
@@ -113,7 +113,7 @@ BIOMES = {
         'movement' : 3 ,
         'description' : 'YOU ARE IN A RIVER',
         'img_color' : ImageColor.getrgb('cyan'),
-        'symbol' : '▒',
+        'symbol' : '~',
         'format' : {'fgcolor':'BLUE','bgcolor':'CYAN','style':'NORMAL'},
         },
     'lake': {
@@ -145,8 +145,8 @@ BIOMES = {
         'movement': 2 ,
         'description': 'YOU ARE IN THE ALPINE GRASSLAND',
         'img_color' : ImageColor.getrgb('lightgreen'),
-        'symbol' : ',',
-        'format' : {'fgcolor':'LIGHTGREEN_EX','bgcolor':'GREEN','style':'NORMAL'},
+        'symbol' : '▒',
+        'format' : {'fgcolor':'WHITE','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
         },
     ## -------------------------------------------------------------------------
     ## impassable boundary biomes
