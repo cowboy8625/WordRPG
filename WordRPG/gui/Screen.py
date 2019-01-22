@@ -11,13 +11,16 @@ from . import const, cursor, font, menus
 
 
 
-def setup_terminal():
+def setup_terminal(title=const.TITLE, convert_escape=True,
+                    size=const.SCREEN_SIZE, hide_cursor=True):
     """ sets the size of the terminal window and clears it before printing"""
-    colorama_init( convert = True )
-    cols, lines = const.SCREEN_SIZE
+    colorama_init(convert=convert_escape)
+    cols, lines = size
     os.system(f"mode con cols={cols} lines={lines}")
-    os.system("title " + const.TITLE)
-    cursor.hide()
+    os.system("title " + title)
+
+    if hide_cursor:
+        cursor.hide()
 
 
 
