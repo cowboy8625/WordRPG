@@ -41,6 +41,8 @@ class Tile:
     __slots__ = ['name', 'resources', 'movement', 'color', 'symbol', 'char',
                  'description', 'format', 'discovered']
 
+
+
     def __init__(self, name='TILE', resources=None, movement=1,
                  color='blue', symbol=' ', discovered=False,
                  description='[TILE DESCRIPTION]',

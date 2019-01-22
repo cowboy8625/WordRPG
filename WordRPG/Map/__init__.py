@@ -1,2 +1,2 @@
-from .Map import Map
-from .tiles import BIOMES
+from .map import Map
+from .tiles import Tile, BIOMES

@@ -2,8 +2,8 @@ import os
 from colorama import init as colorama_init
 
 from WordRPG import gui
-from WordRPG.Map import Map
-from WordRPG.Map.tiles import BIOMES
+from WordRPG.map import Map
+from WordRPG.map.tiles import BIOMES
 
 
 
