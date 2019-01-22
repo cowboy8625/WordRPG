@@ -2,6 +2,7 @@
 
 from PIL import ImageColor
 
+from ..gui import font
 from ..gui.const import DEF_FORMAT
 
 
@@ -37,11 +38,11 @@ class Tile:
 
     # define class slots to improve memory effeciency
     # http://book.pythontips.com/en/latest/__slots__magic.html
-    __slots__ = ['name', 'resources', 'movement', 'color', 'symbol',
+    __slots__ = ['name', 'resources', 'movement', 'color', 'symbol', 'char',
                  'description', 'format', 'discovered']
 
     def __init__(self, name='TILE', resources=None, movement=1,
-                 color='blue', symbol=' ',
+                 color='blue', symbol=' ', discovered=False,
                  description='[TILE DESCRIPTION]',
                  _format=DEF_FORMAT
                  ):
@@ -52,7 +53,14 @@ class Tile:
         self.description = description
         self.symbol = symbol
         self.format = _format
-        self.discovered = False
+        self.discovered = discovered
+
+        self.char = self._get_formatted_char()
+
+
+    def _get_formatted_char(self):
+        """ gets tile symbol and escape characters as a string """
+        return font.add_escape(self.symbol, **self.format)
 
 
     def _get_rgb_color(self, color):
@@ -89,6 +97,7 @@ BIOMES = {
         description='YOU ARE IN A PEACEFUL VILLAGE',
         resources=None,
         _format={'fgcolor':'BLACK','bgcolor':'WHITE','style':'NORMAL'},
+        discovered = True
         ),
     'cave' : Tile('cave', movement=1, color='black', symbol='▄',
         description='YOU ARE STANDING AT THE ENTRANCE TO A DEEP, DARK CAVE',
@@ -99,6 +108,7 @@ BIOMES = {
         description='YOU ARE IN A VILLAGE',
         resources=None,
         _format={'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
+        discovered = True
         ),
     'farmland' : Tile('farmland', movement=2, color='magenta', symbol='≡',
         description='YOU ARE IN A VILLAGE',
@@ -164,6 +174,7 @@ BIOMES = {
         description='YOU ARE IN THE OCEAN',
         resources=None,
         _format={'fgcolor':'BLACK','bgcolor':'BLUE','style':'NORMAL'},
+        discovered = True
         ),
 
 }
