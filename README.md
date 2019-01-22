@@ -1,6 +1,5 @@
 # WordRPG
-
-  A text based RPG game with a story, shopping, NPC's, and fighing
+A text based RPG game with a story, shopping, NPC's, and fighing
 
 ## Find Me Here
 If you are playing the game feel free to message me on discord https://discord.gg/8bkzqfm about bugs or ideas!
@@ -44,9 +43,9 @@ Also depends if I'm doing it alone or with some one. If I'm working on this proj
 * Giioke
 
 # Screen Shots
-
-This is the Main Menu
-![wordrpg_main_menu](https://user-images.githubusercontent.com/43012445/48389982-80e16100-e6c5-11e8-99e1-56bf323d52f7.PNG)
+![wordrpg_splash_screen](https://github.com/cowboy8625/WordRPG/blob/CBruce/docs/images/Splash_Screen_2019_1_22.PNG)
+![wordrpg_main_menu](https://github.com/cowboy8625/WordRPG/blob/CBruce/docs/images/Main_Menu_2019_1_22.PNG)
+![wordrpg_game](https://github.com/cowboy8625/WordRPG/blob/CBruce/docs/images/Game_2019_1_22.png)
 
 
 
