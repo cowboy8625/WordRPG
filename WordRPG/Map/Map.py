@@ -1,5 +1,6 @@
 from PIL import ImageColor, Image, ImageOps
 
+from ..gui import font
 from ..gui.const import DEF_MAP_SIZE
 from .tiles import BIOMES
 
@@ -35,7 +36,7 @@ class Map:
         return{ v['img_color'] : k for k, v in tileset.items() }
 
 
-    def _load_map(self, filename, mirror=True, rotate=90):
+    def _load_map(self, filename):
         """ Loads an image file and parses it into a map
         
         Arguments:
@@ -50,28 +51,33 @@ class Map:
         """
         
         image = Image.open(filename)
-        if mirror:
-            image = ImageOps.mirror(image)
-        if rotate != 0:
-            image = image.rotate(rotate)
 
+        # update map size based on loaded image
         self.cols, self.rows = self.size = image.size
 
+        # generate color key used to parse map image into a 2D array of tile dicts
         map_key = self.get_map_key()
 
-        pixels = [x for x in image.getdata()]
+        # image data is collected row by row, so pixels end up being stored in
+        pixels = [x for x in list(image.getdata())]
 
         tiles = []
         for rgb in pixels:
             if rgb not in self.map_key:
-                print(f'{rgb} not in map_keys!')
+                print(f'{rgb} not in map key!')
                 tiles.append(None)
             else:
                 tile_key = self.map_key[rgb]
                 tiles.append(self.tileset[tile_key])            
 
         # tiles = [self.tileset[self.map_key[rgb]] for rgb in pixels]
+
+        # converts long list of tiles into 2D array (list of lists)
         _map = [tiles[i:(i + self.cols)] for i in range(0, len(tiles), self.cols)]
+        # mirrors array
+        _map = _map[::-1]
+        # rotates array by 90 degrees CCW
+        _map = list(zip(*_map[::-1]))
 
         return _map
 
@@ -97,6 +103,19 @@ class Map:
     def show(self):
         """ Prints the map array """
         for row in range(self.rows):
-            line = ''.join([self.map[col][row]['symbol'] if self.map[col][row] is not None \
-                    else " " for col in range(self.cols)])
+            line = ''
+            for col in range(self.cols):
+                try:
+                    tile = self.map[col][row]
+                    if tile is not None:
+                        char = tile['symbol']
+                        char = font.add_escape(char, **tile['format'])
+                        # print(char)
+                        line = line + char
+                    else:
+                        line = line + ' '                    
+                except IndexError:
+                    pass
+                    # print(f'tile = self.map[{col}][{row}]')
+
             print(line)
