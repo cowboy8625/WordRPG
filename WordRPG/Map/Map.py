@@ -134,7 +134,7 @@ class Map:
 
 
     def __repr__(self):
-        """ returns explicite representation of self.map data """
+        """ returns explicit representation of self.map data """
         return self.map
 
 
