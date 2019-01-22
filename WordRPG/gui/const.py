@@ -17,6 +17,8 @@ CHAR_SIZE = (8, 16)
 SCREEN_SIZE = (80,30)
 # screen resolution in pixels
 SCREEN_RES = (SCREEN_SIZE[0] * CHAR_SIZE[0], SCREEN_SIZE[1] * CHAR_SIZE[1])
+# default size of map window in main game screen
+DEF_MAP_SIZE = (41, 21)
 
 
 # This constant sets color/style formatting on or off
