@@ -1,6 +1,7 @@
+from sys import stdout
+
 from PIL import ImageColor, Image, ImageOps
 
-from ..gui import font
 from ..gui.const import DEF_MAP_SIZE
 from .tiles import BIOMES
 
@@ -24,13 +25,14 @@ class Map:
 
     """
     
-    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map']
+    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map', 'display_map']
 
     def __init__(self, filename, tileset=BIOMES):
         self.tileset = tileset
         self.map_key = self.get_map_key(tileset=self.tileset)
         self.cols, self.rows = self.size = (0, 0)
         self.map = self._load_map(filename)
+        self.display_map = self._update_display_map()
 
 
     def get_map_key(self, tileset=BIOMES):
@@ -83,10 +85,6 @@ class Map:
 
         # converts long list of tiles into 2D array (list of lists)
         _map = [tiles[i:(i + self.cols)] for i in range(0, len(tiles), self.cols)]
-        # mirrors array
-        _map = _map[::-1]
-        # rotates array by 90 degrees CCW
-        _map = list(zip(*_map[::-1]))
 
         return _map
 
@@ -105,32 +103,27 @@ class Map:
             Need to account for the window being positioned in a way that attempts
             to get out of range data
         """
-
+        
         pass
 
 
-    def show(self):
+    def _update_display_map(self, discovered=False):
+        """ Creates the formatted map for display """
+        rows = [''.join(\
+                        [tile.char if tile is not None and \
+                        ( not discovered or tile.discovered) \
+                        else ' ' for tile in row] ) \
+                        for row in self.map]
+        return '\n'.join(rows)
+
+
+    def show(self, discovered=False):
         """ Prints the map array """
-        map_str = ''
 
-        for row in range(self.rows):
-            line = []
-            for col in range(self.cols):
-                try:
-                    tile = self.map[col][row]
-                    if tile is not None:
-                        char = tile.symbol
-                        char = font.add_escape(char, **tile.format)
-                        # print(char)
-                        line.append(char)
-                    else:
-                        line.append(' ')
-                except IndexError:
-                    line.append('?')
+        if discovered:
+            self._update_display_map(discovered=True)
 
-            map_str = map_str + ''.join(line) + '\n'
-            
-        print(map_str)
+        return stdout.write(self.display_map)
 
 
     def __repr__(self):
@@ -140,10 +133,5 @@ class Map:
 
     def __str__(self):
         """ returns printable string version of self.map data """
-        _str = ''
-
-        for row in range(self.rows):
-            line = [ self.map[col][row]['symbol'] if self.map[col][row] is not None else " " for col in range(self.cols) ]
-            _str = _str + ''.join(line) + '\n'
-
-        return _str
+        rows = [''.join([tile.symbol for tile in row]) for row in self.map]
+        return '\n'.join(rows)
