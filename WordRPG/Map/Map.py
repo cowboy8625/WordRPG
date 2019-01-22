@@ -24,8 +24,12 @@ class Map:
         :``tileset``:   `dict`  Dictionary of keys and 'Tile' objects
 
     """
-    
+
+    # define class slots to improve memory effeciency
+    # http://book.pythontips.com/en/latest/__slots__magic.html
     __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map', 'display_map']
+
+
 
     def __init__(self, filename, tileset=BIOMES):
         self.tileset = tileset
@@ -103,12 +107,26 @@ class Map:
             Need to account for the window being positioned in a way that attempts
             to get out of range data
         """
-        
+
         pass
 
 
     def _update_display_map(self, discovered=False):
-        """ Creates the formatted map for display """
+        """ Creates the formatted map for display
+
+        Keywords:
+            discovered {bool} -- If True, only show formatted character for
+                                 tiles that have been 'discovered'.
+                                 Default is False.
+
+        """
+
+        # Go through each row in self.map array and get all of the Tile.char
+        # properties (formatted symbol). If the tile has a value of None or the
+        # Tile.discovered property is False then the tile is written as an
+        # empty space.
+        # Then join all of the rows into a single string which can be written
+        # to the terminal output
         rows = [''.join(\
                         [tile.char if tile is not None and \
                         ( not discovered or tile.discovered) \
@@ -133,5 +151,9 @@ class Map:
 
     def __str__(self):
         """ returns printable string version of self.map data """
+
+        # Go through each row in self.map array and get all of the Tile.symbol
+        # characters.
+        # Then join all of the rows into a single string which can be printed
         rows = [''.join([tile.symbol for tile in row]) for row in self.map]
         return '\n'.join(rows)
