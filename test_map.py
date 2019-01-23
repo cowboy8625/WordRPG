@@ -24,7 +24,7 @@ if __name__ == '__main__':
     test_world = Map(TEST_MAP)
 
     # sets up terminal window to expected size
-    gui.Screen.setup_terminal(title='MAP TEST', size=(100,50))
+    gui.screen.setup_terminal(title='MAP TEST', size=(100,50))
 
     # # prints 2D array of tile symbls
     # print(test_world)
