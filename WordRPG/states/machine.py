@@ -11,18 +11,18 @@ from time import sleep, time
 import keyboard
 
 from .. import gui
-from .States import Confirm
-from .Main_Menu import Main_Menu
-from .Load_Game import Load_Game
-from .Save_Game import Save_Game
-from .New_Game import New_Game  #, Character_Class, Character_Gender, Character_Name
-from .Game import Game
-from .Game_Menu import Game_Menu
-from .Combat import Combat
-from .Inventory import Inventory
-from .Crafting import Crafting
-from .Shop import Shop
-from .Death import Death
+from .states import Confirm
+from .main_menu import Main_Menu
+from .load import Load_Game
+from .save import Save_Game
+from .new_game import New_Game  #, Character_Class, Character_Gender, Character_Name
+from .game import Game
+from .game_menu import Game_Menu
+from .combat import Combat
+from .inventory import Inventory
+from .crafting import Crafting
+from .shop import Shop
+from .death import Death
 
 
 
