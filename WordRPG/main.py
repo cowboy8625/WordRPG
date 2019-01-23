@@ -1,8 +1,8 @@
 import sys
 
-from .states.FSM import FSM, STATES
+from .states.machine import FSM, STATES
 from . import gui
-from .gui.Screen import setup_terminal
+from .gui.screen import setup_terminal
 
 
 

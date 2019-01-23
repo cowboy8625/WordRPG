@@ -1,7 +1,7 @@
 """ Placeholder state for 'crafting' """
 
-from ..gui.Screen import const, Screen, setup_terminal
-from .States import State
+from ..gui.screen import const, Screen, setup_terminal
+from .states import State
 
 
 

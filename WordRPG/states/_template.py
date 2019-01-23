@@ -1,7 +1,7 @@
 """ Template for making new game states with GUI and event handlers """
 
 from .. import gui
-from .States import State
+from .states import State
 
 
 

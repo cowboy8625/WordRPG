@@ -1,3 +1,3 @@
 """ gui module """
 
-from . import const, Screen
+from . import const, screen
