@@ -106,7 +106,7 @@ BIOMES = {
         resources=None,
         _format={'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
         ),
-    'road' : Tile('road', movement=1, color='white', symbol='·',
+    'path' : Tile('path', movement=1, color='white', symbol='·',
         description='YOU ARE IN A VILLAGE',
         resources=None,
         _format={'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
