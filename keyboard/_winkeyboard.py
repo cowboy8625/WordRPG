@@ -550,8 +550,10 @@ def prepare_intercept(callback):
 
     WH_KEYBOARD_LL = c_int(13)
     keyboard_callback = LowLevelKeyboardProc(low_level_keyboard_handler)
-    # keyboard_hook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_callback, GetModuleHandleW(NULL), NULL)
-    keyboard_hook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_callback, ctypes.c_ulonglong(GetModuleHandleW(None)), None)
+    try:
+        keyboard_hook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_callback, GetModuleHandleW(NULL), NULL)
+    except:
+        keyboard_hook = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_callback, ctypes.c_ulonglong(GetModuleHandleW(None)), None)
 
     # Register to remove the hook when the interpreter exits. Unfortunately a
     # try/finally block doesn't seem to work here.
