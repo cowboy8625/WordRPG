@@ -26,7 +26,7 @@ FORMAT_TEXT = True
 DEF_FORMAT = {'fgcolor':'WHITE','bgcolor':'BLACK','style':'NORMAL'}
 
 
-# get list of .txt filenames in the 'screens' subfolder
+# get filepath for 'screen' .txt files
 DIRNAME = os.path.dirname(__file__)
 FILEPATH = os.path.join(DIRNAME, 'screens')
 
