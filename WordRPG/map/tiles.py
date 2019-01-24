@@ -39,7 +39,7 @@ class Tile:
     # define class slots to improve memory effeciency
     # http://book.pythontips.com/en/latest/__slots__magic.html
     __slots__ = ['name', 'resources', 'movement', 'color', 'symbol', 'char',
-                 'description', 'format', 'discovered']
+                 'description', '_format', 'discovered']
 
 
 
@@ -51,26 +51,26 @@ class Tile:
         self.name = name
         self.resources = resources
         self.movement = movement
-        self.color = self._get_rgb_color(color)
+        self.color = Tile.get_rgb_color(color)
         self.description = description
         self.symbol = symbol
-        self.format = _format
+        self._format = _format
         self.discovered = discovered
 
         self.char = self._get_formatted_char()
 
-
-    def _get_formatted_char(self):
-        """ gets tile symbol and escape characters as a string """
-        return font.add_escape(self.symbol, **self.format)
-
-
-    def _get_rgb_color(self, color):
+    @staticmethod
+    def get_rgb_color(color):
         """ get rgb color value from color name or tuple """
         if isinstance(color, str):
             return ImageColor.getrgb(color)
 
         return color
+
+
+    def _get_formatted_char(self):
+        """ gets tile symbol and escape characters as a string """
+        return font.add_escape(self.symbol, **self._format)
 
 
     def __repr__(self):
@@ -95,88 +95,87 @@ format key options
 """
 
 BIOMES = {
-    'village' : Tile('village', movement=1, color='red', symbol='±',
-        description='YOU ARE IN A PEACEFUL VILLAGE',
-        resources=None,
-        _format={'fgcolor':'BLACK','bgcolor':'WHITE','style':'NORMAL'},
-        discovered = True
-        ),
-    'cave' : Tile('cave', movement=1, color='black', symbol='▄',
-        description='YOU ARE STANDING AT THE ENTRANCE TO A DEEP, DARK CAVE',
-        resources=None,
-        _format={'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
-        ),
-    'path' : Tile('path', movement=1, color='white', symbol='·',
-        description='YOU ARE IN A VILLAGE',
-        resources=None,
-        _format={'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
-        discovered = True
-        ),
-    'farmland' : Tile('farmland', movement=2, color='magenta', symbol='≡',
-        description='YOU ARE IN A VILLAGE',
-        resources=['herb'],
-        _format={'fgcolor':'LIGHTYELLOW_EX','bgcolor':'GREEN','style':'NORMAL'},
-        ),
-    'beach' : Tile('beach', movement=2, color='khaki', symbol='░',
-        description='YOU ARE IN A VILLAGE',
-        resources=None,
-        _format={'fgcolor':'WHITE','bgcolor':'YELLOW','style':'NORMAL'},
-        ),
-    'desert' : Tile('desert', movement=3, color='peru', symbol='░',
-        description='YOU ARE IN A VILLAGE',
-        resources=None,
-        _format={'fgcolor':'RED','bgcolor':'YELLOW','style':'NORMAL'},
-        ),
-    'grassland' : Tile('grassland', movement=2, color='lawngreen', symbol=' ',
-        description='YOU ARE IN A VILLAGE',
-        resources=None,
-        _format={'fgcolor':'LIGHTYELLOW_EX','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
-        ),
-    'forest' : Tile('forest', movement=3, color='olivedrab', symbol='♣',
-        description='YOU ARE IN THE FOREST',
-        resources=['wood'],
-        _format={'fgcolor':'GREEN','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
-        ),
-    'deep_forest' : Tile('deep_forest', movement=4, color='darkgreen', symbol='♣',
-        description='YOU ARE IN THE DEEP, DARK FOREST',
-        resources=None,
-        _format={'fgcolor':'LIGHTGREEN_EX','bgcolor':'BLACK','style':'NORMAL'},
-        ),
-    'river' : Tile('river', movement=2, color='cyan', symbol='~',
-        description='YOU ARE ON THE RIVER',
-        resources=['water', 'fish'],
-        _format={'fgcolor':'BLUE','bgcolor':'CYAN','style':'NORMAL'},
-        ),
-    'lake' : Tile('lake', movement=3, color='darkcyan', symbol='~',
-        description='YOU ARE ON A LAKE',
-        resources=['water', 'fish'],
-        _format={'fgcolor':'CYAN','bgcolor':'BLUE','style':'NORMAL'},
-        ),
-    'swamp' : Tile('swamp', movement=5, color='darkolivegreen', symbol='▒',
-        description='YOU ARE IN THE SWAMP',
-        resources=None,
-        _format={'fgcolor':'RED','bgcolor':'GREEN','style':'NORMAL'},
-        ),
-    'salt_marsh' : Tile('salt_marsh', movement=4, color='darkseagreen', symbol='▒',
-        description='YOU ARE IN THE SALT MARSH',
-        resources=['fish', 'salt'],
-        _format={'fgcolor':'GREEN','bgcolor':'BLUE','style':'NORMAL'},
-        ),
-    'alpine_grassland' : Tile('alpine_grassland', movement=1, color='lightgreen', symbol='░',
-        description='YOU ARE IN THE ALPINE GRASSLAND',
-        resources=['pine'],
-        _format={'fgcolor':'WHITE','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
-        ),
-    'mountain' : Tile('mountain', movement=-1, color='darkslategray', symbol='^',
-        description='YOU ARE IN THE MOUNTAINS',
-        resources=None,
-        _format={'fgcolor':'WHITE','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
-        ),
-    'ocean' : Tile('ocean', movement=-1, color='blue', symbol='~',
-        description='YOU ARE IN THE OCEAN',
-        resources=None,
-        _format={'fgcolor':'BLACK','bgcolor':'BLUE','style':'NORMAL'},
-        discovered = True
-        ),
-
-}
+    'village':{'movement':1, 'color':'red', 'symbol':'±',
+            'description':'YOU ARE IN A PEACEFUL VILLAGE',
+            'resources':None,
+            '_format':{'fgcolor':'BLACK','bgcolor':'WHITE','style':'NORMAL'},
+            'discovered':True
+            },
+    'cave':{'movement':1, 'color':'black', 'symbol':'▄',
+            'description':'YOU ARE STANDING AT THE ENTRANCE TO A DEEP, DARK CAVE',
+            'resources':None,
+            '_format':{'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
+            },
+    'path':{'movement':1, 'color':'white', 'symbol':'·',
+            'description':'YOU ARE IN A VILLAGE',
+            'resources':None,
+            '_format':{'fgcolor':'BLACK','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
+            'discovered':True
+            },
+    'farmland':{'movement':2, 'color':'magenta', 'symbol':'≡',
+            'description':'YOU ARE IN A VILLAGE',
+            'resources':['herb'],
+            '_format':{'fgcolor':'LIGHTYELLOW_EX','bgcolor':'GREEN','style':'NORMAL'},
+            },
+    'beach':{'movement':2, 'color':'khaki', 'symbol':'░',
+            'description':'YOU ARE IN A VILLAGE',
+            'resources':None,
+            '_format':{'fgcolor':'WHITE','bgcolor':'YELLOW','style':'NORMAL'},
+            },
+    'desert':{'movement':4, 'color':'peru', 'symbol':'░',
+            'description':'YOU ARE IN A VILLAGE',
+            'resources':None,
+            '_format':{'fgcolor':'RED','bgcolor':'YELLOW','style':'NORMAL'},
+            },
+    'grassland':{'movement':2, 'color':'lawngreen', 'symbol':' ',
+            'description':'YOU ARE IN A VILLAGE',
+            'resources':None,
+            '_format':{'fgcolor':'LIGHTYELLOW_EX','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
+            },
+    'forest':{'movement':3, 'color':'olivedrab', 'symbol':'♣',
+            'description':'YOU ARE IN THE FOREST',
+            'resources':['wood'],
+            '_format':{'fgcolor':'GREEN','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
+            },
+    'deep_forest':{'movement':4, 'color':'darkgreen', 'symbol':'♣',
+            'description':'YOU ARE IN THE DEEP, DARK FOREST',
+            'resources':None,
+            '_format':{'fgcolor':'LIGHTGREEN_EX','bgcolor':'BLACK','style':'NORMAL'},
+            },
+    'river':{'movement':2, 'color':'cyan', 'symbol':'~',
+            'description':'YOU ARE ON THE RIVER',
+            'resources':['water', 'fish'],
+            '_format':{'fgcolor':'BLUE','bgcolor':'CYAN','style':'NORMAL'},
+            },
+    'lake':{'movement':3, 'color':'darkcyan', 'symbol':'~',
+            'description':'YOU ARE ON A LAKE',
+            'resources':['water', 'fish'],
+            '_format':{'fgcolor':'CYAN','bgcolor':'BLUE','style':'NORMAL'},
+            },
+    'swamp':{'movement':5, 'color':'darkolivegreen', 'symbol':'▒',
+            'description':'YOU ARE IN THE SWAMP',
+            'resources':None,
+            '_format':{'fgcolor':'RED','bgcolor':'GREEN','style':'NORMAL'},
+            },
+    'salt_marsh':{'movement':4, 'color':'darkseagreen', 'symbol':'▒',
+            'description':'YOU ARE IN THE SALT MARSH',
+            'resources':['fish', 'salt'],
+            '_format':{'fgcolor':'GREEN','bgcolor':'BLUE','style':'NORMAL'},
+            },
+    'alpine_grassland':{'movement':1, 'color':'lightgreen', 'symbol':'░',
+            'description':'YOU ARE IN THE ALPINE GRASSLAND',
+            'resources':['pine'],
+            '_format':{'fgcolor':'WHITE','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
+            },
+    'mountain':{'movement':-1, 'color':'darkslategray', 'symbol':'^',
+            'description':'YOU ARE IN THE MOUNTAINS',
+            'resources':None,
+            '_format':{'fgcolor':'WHITE','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
+            },
+    'ocean':{'movement':-1, 'color':'blue', 'symbol':'~',
+            'description':'YOU ARE IN THE OCEAN',
+            'resources':None,
+            '_format':{'fgcolor':'BLACK','bgcolor':'BLUE','style':'NORMAL'},
+            'discovered':True
+            },
+    }
