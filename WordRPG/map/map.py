@@ -4,7 +4,7 @@ from copy import deepcopy
 from PIL import ImageColor, Image, ImageOps
 
 from ..gui.const import DEF_MAP_SIZE
-from .tiles import BIOMES
+from .tiles import Tile, BIOMES
 
 
 class Map:
@@ -28,7 +28,7 @@ class Map:
 
     # define class slots to improve memory effeciency
     # http://book.pythontips.com/en/latest/__slots__magic.html
-    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map', 'display_map']
+    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map', 'display_map', 'frame', 'border']
 
 
 
@@ -36,8 +36,17 @@ class Map:
         self.tileset = tileset
         self.map_key = self.get_map_key(tileset=self.tileset)
         self.cols, self.rows = self.size = (0, 0)
+
+        # create map array from image file
         self.map = self._load_map(filename)
+
+        # create display map with coloroma formatting
         self.display_map = self._get_display_map()
+
+        # create map window
+        self.border = self.get_border_tile()
+        #self.frame = self.get_map_frame(self.size)
+
 
 
     def get_map_key(self, tileset=BIOMES):
@@ -46,8 +55,9 @@ class Map:
         Keyword Arguments:
             tileset {[type]} -- [description] (default: {BIOMES})
         """
-
-        return{ tile.color : key for key, tile in tileset.items() }
+                
+        return {Tile.get_rgb_color(values['color']):key \
+                for key, values in tileset.items()}
 
 
     def _load_map(self, filename):
@@ -79,16 +89,27 @@ class Map:
                 print(f'{rgb} not in map key!')
                 tiles.append(None)
             else:
-                tile_key = self.map_key[rgb]
-                # TODO: not sure if it's better to do a deepcopy of an already
-                # instantiated class or if we should create the objects one at
-                # a time here
-                tiles.append(deepcopy(self.tileset[tile_key]))
+                key = self.map_key[rgb]
+                tiles.append(Tile(name=key, **self.tileset[key]))
         
         # converts list of tiles into 'map' array (2D list of lists)
-        _map = [tiles[i:(i + self.cols)] for i in range(0, len(tiles), self.cols)]
+        return [tiles[i:(i + self.cols)] \
+                for i in range(0, len(tiles), self.cols)]
 
-        return _map
+
+    def get_border_tile(self, tile_name='ocean'):
+        """ Create a tile to be used for the border
+        
+        Border tiles are used for out-of-range indexes when generating a new
+        map frame.
+
+        TODO:
+            This is hardcoded to use 'ocean' right now, but we might want to
+            add a keyword to a tileset dictionary to identify the 'border'
+            tile for each tileset
+        """
+
+        return Tile(name=tile_name, **self.tileset[tile_name])
 
 
     def _get_tile(self, pos):
@@ -137,9 +158,9 @@ class Map:
             [str] -- Symbol to use for the path tile at the given position
         """
 
-        # this uses a binary value as a psuedo bit-flag to determine which
-        # symbol should be used to draw a 'path' tile so that it connects to all
-        # neighboring 'path' tiles
+        # this uses pseudo binary values to determine which symbol should be
+        # used to draw a 'path' tile so that it connects to all neighboring
+        # 'path' tiles
         char = {0:'═', 1:'║', 2:'║', 3:'║', 4:'═', 5:'╝', 6:'╗' ,7:'╣', 8:'═',
                 9:'╚', 10:'╔', 11:'╠', 12:'═', 13:'╩', 14:'╦', 15:'╬'}
 
@@ -168,7 +189,7 @@ class Map:
                     tile.char = tile._get_formatted_char()
 
 
-    def get_map_slice(self, size, offset=(0,0)):
+    def get_map_frame(self, size, offset=(0,0)):
         """ Gets a portion of the map array
 
         Gets a portion of the map array so it can be displayed in the game window
@@ -177,12 +198,8 @@ class Map:
             map_array {list} -- 2D list of lists that holds tile data for map
             size {tuple} -- number of (rows, cols) of the map to return
             offset {tuple} -- starting (row,col) of the segment
-
-        ToDo:
-            Need to account for the window being positioned in a way that
-            attempts to get out of range data. Should return a default 'Tile'
-            object, such as 'water' or 'mountain'
         """
+
         start_col, start_row,  = offset
         cols, rows = size
 
@@ -191,9 +208,10 @@ class Map:
             line = []
             for col in range(start_col, start_col + cols):
                 try:
-                    line.append(self.map[row][col])
+                    tile = self.map[row][col]
                 except IndexError:
-                    line.append(None)
+                    tile = self.border
+                line.append(tile)
             map_slice.append(line)
 
         return map_slice
@@ -212,6 +230,8 @@ class Map:
 
         if _map is None:
             _map = self.map
+
+        self._connect_path_tiles()
 
         # Go through each row in self.map array and get all of the Tile.char
         # properties (formatted symbol). If the tile has a value of None or the
@@ -250,7 +270,7 @@ class Map:
         
         Note:
             This was broken out into a seperate function from __str__ so that
-            it can be used to print map slices from .get_map_slice as well as
+            it can be used to print map slices from .get_map_frame as well as
             the full self.map
 
         Returns:
