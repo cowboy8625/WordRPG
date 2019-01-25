@@ -32,9 +32,7 @@ The map will be procedurally made so the seed will be able to share with friends
 # Big Thanks!
 To everyone that has helped on the project!  I have learned a lot about OOP, this project was a great idea and a massive help in my coding journey.
 
-# Old Screen Shots
-This part of the game is being reworked thanks to CBruce!
-
+# Screen Shots
 This is the Main Menu
 ![wordrpg_main_menu](https://user-images.githubusercontent.com/43012445/48389982-80e16100-e6c5-11e8-99e1-56bf323d52f7.PNG)
 
