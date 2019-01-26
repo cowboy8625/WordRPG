@@ -1,6 +1,7 @@
+""" Module for creating and manipulating Maps """
 import os
 from sys import stdout
-from copy import deepcopy
+from time import sleep
 
 from PIL import ImageColor, Image, ImageOps
 
@@ -26,12 +27,13 @@ class Map:
     """
     # class slots: http://book.pythontips.com/en/latest/__slots__magic.html
     __slots__ = ['tileset', 'images', 'map_key', 'size', 'cols', 'rows', 'map',
-                 'display_map', 'frame_size', 'frame', 'border']
+                 'display_map', 'frame_size', 'frame', 'border',
+                 'cur_pos', 'cur_tile']
 
     IMAGES_FILEPATH = os.path.join(os.path.dirname(__file__), 'images')
 
 
-    def __init__(self, map_name, tileset=BIOMES):
+    def __init__(self, map_name, tileset=BIOMES, pos=(19,18)):
         self.tileset = tileset
         self.map_key = self.get_map_key(tileset=self.tileset)
         self.cols, self.rows = self.size = (0, 0)
@@ -43,6 +45,9 @@ class Map:
         # create map frame
         self.frame_size = DEF_MAP_SIZE
         self.set_map_frame(self.frame_size)
+
+        self.cur_pos = pos
+        self.cur_tile = self.get_tile(self.cur_pos)
 
 
     def get_map_key(self, tileset=BIOMES):
@@ -252,6 +257,42 @@ class Map:
             return [[tile.alpha for tile in row] for row in self.frame]
         else:
             return [[tile.char for tile in row] for row in self.frame]
+
+
+    @staticmethod
+    def add_pos(pos1, pos2):
+        """ adds (col,row) positions together
+        
+        Arguments:
+            pos1 {tuple} -- tuple of (col,row) position in map
+            pos2 {tuple} -- tuple of (col,row) position in map
+
+        TODO:
+            Move this over into Grid class
+            Might consider using a vetor data class to work with position values
+        """
+        
+        return tuple(sum(x) for x in zip(pos1, pos2))
+
+
+    def move(self, dir=(0,0)):
+        """ Changes current position on Map
+        
+        Keyword Arguments:
+            dir {tuple} -- (col,row) value to change current position by. (Default is (0,0))
+        
+        Returns:
+            tuple -- Current (col,row) position on Map
+        """
+        next_pos = Map.add_pos(self.cur_pos, dir)
+        next_tile = self.get_tile(next_pos)
+
+        if next_tile.movement > 0:
+            self.cur_pos = next_pos
+            # self.update_map()
+            sleep(abs(next_tile.movement) * 0.125)    # pause to give screen time to redraw
+
+        return self.cur_pos
 
 
     def show(self, clear=False, frame=False, raw=False):
