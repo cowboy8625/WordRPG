@@ -1,23 +1,44 @@
 """ Placeholder state for main 'game' loop """
+from time import sleep
 from collections import deque
 
 from ..gui.screen import const, Screen, setup_terminal
 from .states import State
-
+from ..map.map import Map
 
 
 class Game(State):
+    MOVE_KEYS = {
+        'w' : 'north', 'up' : 'north',
+        'a' : 'west', 'left' : 'west',
+        's' : 'south', 'down' : 'south',
+        'd' : 'east', 'right' : 'east',
+    }
+
     def __init__(self, buffer_size=4):
         """ Initiailize class and super class """
         super(Game, self).__init__()
         self.first_time = True
 
+        self.maps = self._init_maps()
+        self.pos = (19, 18)
+
         self.screen = self._init_screen()
+
+        self.update_map(draw=False)
 
         # creates initial command buffer
         self.BUFFER_SIZE = buffer_size
         self.buffer = deque(['' for i in range(self.BUFFER_SIZE)])
         self.add_to_buffer("WELCOME TO THE WASTELANDS")
+
+
+    def _init_maps(self):
+        """ create a 'Map' object using the given image filename and then print
+        it to the terminal """
+        world_map = Map('test_island2')
+
+        return {'world':world_map}
 
     
     def _init_screen(self):
@@ -47,6 +68,21 @@ class Game(State):
         screen.add_footer()
 
         return screen
+
+
+    def update_map(self, draw=True):
+        world_map = self.maps['world']
+        world_map.set_map_frame(offset=self.pos)
+        map_frame = world_map.get_map_frame(as_string=False)
+        
+        self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+
+        # player cursor
+        self.screen.add_string_to_screen('@', offset=(24,12),
+                                    fgcolor='WHITE', bgcolor='BLACK')
+
+        if draw:
+            self.update_screen()
 
 
     def update_screen(self):
@@ -95,7 +131,22 @@ class Game(State):
     def move(self, dir='north'):
         """ Even handler for moving in the game world """
         self.add_to_buffer(f'MOVING {dir.upper()}...')
-        self.update_screen()
+
+        col, row = self.pos
+        if dir == 'north':
+            row -= 1
+        if dir == 'south':
+            row += 1
+        if dir == 'east':
+            col += 1
+        if dir == 'west':
+            col -= 1
+        self.pos = (col, row)
+
+        self.update_map()
+        sleep(0.125)    # pause to give screen time to redraw
+
+
 
 
     def rest(self,):
@@ -133,16 +184,10 @@ class Game(State):
         self.update_screen()
         while True:
             key = self.get_key_press()
+            if key in self.MOVE_KEYS.keys():
+                self.move(dir=self.MOVE_KEYS[key])
             if key == 'g':
                 self.gather()
-            if key == 'w' or key == 'up':
-                self.move(dir='north')
-            if key == 'a' or key == 'left':
-                self.move(dir='west')
-            if key == 's' or key == 'down':
-                self.move(dir='south')
-            if key == 'd' or key == 'right':
-                self.move(dir='east')
             if key == 'r':
                 self.rest()
             if key == 'c':
