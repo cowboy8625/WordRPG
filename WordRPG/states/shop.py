@@ -1,4 +1,4 @@
-""" Placeholder state for 'combat' """
+""" Placeholder for 'shop' state """
 from ..gui.screen import const, Screen, setup_terminal
 from .states import State
 

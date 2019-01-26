@@ -15,7 +15,6 @@ class Tile:
         None
 
     **Keword Arguments:**
-
         :``name``:          `str`   name of the tile
         :``resources``:     `list`  list of resources that can be gathered from
                                     this tile. Default is None
