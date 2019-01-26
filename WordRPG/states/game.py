@@ -31,14 +31,15 @@ class Game(State):
         super(Game, self).__init__()
         self.first_time = False #True
 
+        # initialize maps and map data
         self.maps = self._init_maps(pos=(40,27))
         self.cur_map = self.maps['world']
 
+        # initialize screen and elements
         self.screen = self._init_screen()
-
         self.update_map(draw=False)
 
-        # creates initial command buffer
+        # initialize command buffer
         self.BUFFER_SIZE = buffer_size
         self.buffer = deque(['' for i in range(self.BUFFER_SIZE)])
         self.add_to_buffer("WELCOME TO THE WASTELANDS")
@@ -83,23 +84,30 @@ class Game(State):
 
 
     def update_map(self, draw=True):
+        # get map data
         world_map = self.maps['world']
         world_map.set_map_frame()
         map_frame = world_map.get_map_frame(as_string=False)
 
-
-        # write map frame to screen
-        self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+        # write map frame border
+        frame_offset = (2, 1)
+        frame_size = Map.add_pos(world_map.frame_size, (2, 2))
+        self.screen.add_frame(size=frame_size, offset=frame_offset,
+                              frame_style=0, fgcolor='WHITE', bgcolor='BLACK')
 
         # write current biome name
         pos = world_map.cur_pos
         cur_tile = world_map.get_tile(pos)
-        header = f'{cur_tile.name.upper()} - {pos}'
-        header = Screen.center_string(header, 16)
-        self.screen.add_string_to_screen(f'< {header} >', offset=(12,1),
+        header = f' {cur_tile.name.upper()} - {pos} '
+        col, row = frame_offset
+        col = Screen.center_offset(header, frame_size[0])
+        self.screen.add_string_to_screen(f'<< {header} >>', offset=(col, row),
                                     fgcolor='WHITE', bgcolor='BLACK')
 
-        # player cursor
+        # write map to screen
+        self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+
+        # write player cursor
         self.screen.add_string_to_screen('@', offset=(24,12),
                                     fgcolor='WHITE', bgcolor='BLACK')
 
