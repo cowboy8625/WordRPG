@@ -21,6 +21,7 @@ class Game(State):
         self.first_time = True
 
         self.maps = self._init_maps()
+        self.cur_map = self.maps['world']
         self.pos = (19, 18)
 
         self.screen = self._init_screen()
@@ -36,9 +37,10 @@ class Game(State):
     def _init_maps(self):
         """ create a 'Map' object using the given image filename and then print
         it to the terminal """
-        world_map = Map('test_island2')
+        # maps = {'world':('image':'test_island2', 'pos':19,18}}
+        # {name:Map(image_name) for name, image_name in maps.items()}
 
-        return {'world':world_map}
+        return {'world':Map('test_island2')}
 
     
     def _init_screen(self):
@@ -74,8 +76,15 @@ class Game(State):
         world_map = self.maps['world']
         world_map.set_map_frame(offset=self.pos)
         map_frame = world_map.get_map_frame(as_string=False)
-        
+
+
+        # write map frame to screen
         self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+
+        # biome name
+        cur_tile = world_map.get_tile(self.pos)
+        self.screen.add_string_to_screen(f'< {cur_tile.name} - {cur_tile.movement} >', offset=(16,1),
+                                    fgcolor='WHITE', bgcolor='BLACK')
 
         # player cursor
         self.screen.add_string_to_screen('@', offset=(24,12),
@@ -132,21 +141,20 @@ class Game(State):
         """ Even handler for moving in the game world """
         self.add_to_buffer(f'MOVING {dir.upper()}...')
 
-        col, row = self.pos
         if dir == 'north':
-            row -= 1
+            dir = (0, -1)
         if dir == 'south':
-            row += 1
+            dir = (0, 1)
         if dir == 'east':
-            col += 1
+            dir = (1, 0)
         if dir == 'west':
-            col -= 1
-        self.pos = (col, row)
+            dir = (-1, 0)
 
-        self.update_map()
-        sleep(0.125)    # pause to give screen time to redraw
+        new_pos = self.maps['world'].move(dir)
 
-
+        if self.pos != new_pos:
+            self.pos = new_pos
+            self.update_map()
 
 
     def rest(self,):
