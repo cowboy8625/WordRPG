@@ -267,7 +267,7 @@ class Map:
     @staticmethod
     def add_pos(pos1, pos2):
         """ adds (col,row) positions together
-        
+
         Arguments:
             pos1 {tuple} -- tuple of (col,row) position in map
             pos2 {tuple} -- tuple of (col,row) position in map
@@ -276,25 +276,30 @@ class Map:
             Move this over into Grid class
             Might consider using a vetor data class to work with position values
         """
-        
+
         return tuple(sum(x) for x in zip(pos1, pos2))
 
 
-    def move(self, dir=(0,0)):
+    def move_frame(self, vec=(0,0)):
+        new_pos = Map.add_pos(self.cur_pos, vec)
+        self.cur_pos = new_pos
+        self.set_map_frame()
+
+
+    def move(self, vec=(0,0)):
         """ Changes current position on Map
-        
+
         Keyword Arguments:
             dir {tuple} -- (col,row) value to change current position by. (Default is (0,0))
-        
+
         Returns:
             tuple -- Current (col,row) position on Map
         """
-        next_pos = Map.add_pos(self.cur_pos, dir)
+        next_pos = Map.add_pos(self.cur_pos, vec)
         next_tile = self.get_tile(next_pos)
 
         if next_tile.movement > 0:
-            self.cur_pos = next_pos
-            # self.update_map()
+            self.move_frame(vec)
             sleep(abs(next_tile.movement) * 0.0625)    # pause to give screen time to redraw
 
         return self.cur_pos
