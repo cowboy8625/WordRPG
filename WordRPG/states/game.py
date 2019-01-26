@@ -8,17 +8,28 @@ from ..map.map import Map
 
 
 class Game(State):
+    # TODO: duplicate data here, but it's easier to check if a key is in 
+    # MOVE_KEYS.keys() rather than sort through a list of aliases for now
     MOVE_KEYS = {
-        'w' : 'north', 'up' : 'north',
-        'a' : 'west', 'left' : 'west',
-        's' : 'south', 'down' : 'south',
-        'd' : 'east', 'right' : 'east',
+        'w' : {'text':'north', 'vec':(0, -1)},
+        'up' : {'text':'north', 'vec':(0, -1)},
+
+        's' : {'text':'south', 'vec':(0, 1)},
+        'down' : {'text':'south', 'vec':(0, 1)},
+
+        'a' : {'text':'west', 'vec':(-1, 0)},
+        'left' : {'text':'west', 'vec':(-1, 0)},
+
+        'd' : {'text':'east', 'vec':(1, 0)},
+        'right' : {'text':'east', 'vec':(1, 0)},
     }
+
+
 
     def __init__(self, buffer_size=4):
         """ Initiailize class and super class """
         super(Game, self).__init__()
-        self.first_time = True
+        self.first_time = False #True
 
         self.maps = self._init_maps()
         self.cur_map = self.maps['world']
@@ -74,16 +85,19 @@ class Game(State):
 
     def update_map(self, draw=True):
         world_map = self.maps['world']
-        world_map.set_map_frame(offset=self.pos)
+        world_map.set_map_frame()
         map_frame = world_map.get_map_frame(as_string=False)
 
 
         # write map frame to screen
         self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
 
-        # biome name
-        cur_tile = world_map.get_tile(self.pos)
-        self.screen.add_string_to_screen(f'< {cur_tile.name} - {cur_tile.movement} >', offset=(16,1),
+        # write current biome name
+        pos = world_map.cur_pos
+        cur_tile = world_map.get_tile(pos)
+        header = f'{cur_tile.name.upper()} - {pos}'
+        header = Screen.center_string(header, 16)
+        self.screen.add_string_to_screen(f'< {header} >', offset=(12,1),
                                     fgcolor='WHITE', bgcolor='BLACK')
 
         # player cursor
@@ -137,20 +151,13 @@ class Game(State):
         self.update_screen()
 
 
-    def move(self, dir='north'):
+    def move(self, key):
         """ Even handler for moving in the game world """
-        self.add_to_buffer(f'MOVING {dir.upper()}...')
+        text = self.MOVE_KEYS[key]['text'].upper()
+        vec = self.MOVE_KEYS[key]['vec']
+        self.add_to_buffer(f'MOVING {text}...')
 
-        if dir == 'north':
-            dir = (0, -1)
-        if dir == 'south':
-            dir = (0, 1)
-        if dir == 'east':
-            dir = (1, 0)
-        if dir == 'west':
-            dir = (-1, 0)
-
-        new_pos = self.maps['world'].move(dir)
+        new_pos = self.maps['world'].move(vec)
 
         if self.pos != new_pos:
             self.pos = new_pos
@@ -192,8 +199,6 @@ class Game(State):
         self.update_screen()
         while True:
             key = self.get_key_press()
-            if key in self.MOVE_KEYS.keys():
-                self.move(dir=self.MOVE_KEYS[key])
             if key == 'g':
                 self.gather()
             if key == 'r':
@@ -208,5 +213,7 @@ class Game(State):
                 return self.death()
             if key == 'esc':
                 return 'game_menu'
+            if key in self.MOVE_KEYS.keys():
+                self.move(key)
 
         return self
