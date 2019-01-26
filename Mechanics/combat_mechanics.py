@@ -2,7 +2,7 @@ __author__ = "byteme8bit"
 
 # File imports
 from script import Screen
-from script.Character import *
+from Mechanics.ui_mechanics import clear, pause, vs_screen, stat_screen
 
 # Module imports
 
@@ -46,20 +46,6 @@ def attack(player_in_game, mob):
 
         pause()
 
-        if mob.health <= 0:         # If mob is dead
-            win(player_in_game, mob)
-
-        else:                       # If mob is still alive
-            mob_damage = mob.melee_attack()
-            player_in_game.health -= mob_damage
-            clear()
-            print(f"{mob.charname} dealt {mob_damage} damage to you.")
-
-        pause()
-
-        if player_in_game.health <= 0:
-            print(f"{mob.name} killed you.")
-
     elif attack_type == '2':
         magic_damage = player_in_game.magic_attack()
         mob.health -= magic_damage
@@ -68,16 +54,16 @@ def attack(player_in_game, mob):
 
         pause()
 
-        if mob.health <= 0:  # If mob is dead
-            win(player_in_game, mob)
+    if mob.health <= 0:  # If mob is dead
+        win(player_in_game, mob)
 
-        else:  # If mob is still alive
-            mob_damage = mob.melee_attack()
-            player_in_game.health -= mob_damage
-            clear()
-            print(f"{mob.charname} dealt {mob_damage} damage to you.")
+    else:  # If mob is still alive
+        mob_damage = mob.melee_attack()
+        player_in_game.health -= mob_damage
+        clear()
+        print(f"{mob.charname} dealt {mob_damage} damage to you.")
 
-        pause()
+    pause()
 
 
 def combat(player_in_game, mob):

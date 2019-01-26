@@ -26,10 +26,12 @@ class Character:
         self.equipped_armor = None
 
     def melee_attack(self):
-        return random.randint(self.melee_damage // 2, self.melee_damage)
+        return 17           # TODO Formula will be used after testing
+        # return random.randint(self.melee_damage // 2, self.melee_damage)
 
     def magic_attack(self):
-        return random.randint(self.magic_damage // 2, self.magic_damage)
+        return 17           # TODO Formula will be used after testing
+        # return random.randint(self.magic_damage // 2, self.magic_damage)
 
 
 class Player(Character):
@@ -66,7 +68,7 @@ class Player(Character):
             self.agility = int(13 + (self.level * 3.5))
             self.intelligence = int(13 + (self.level * 3.5))
 
-        self.max_health = self.health_generation()
+        self.max_health = 100
         self.gender = gender
         self.gold = gold
         self.xp = xp
