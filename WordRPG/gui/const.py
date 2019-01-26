@@ -28,7 +28,7 @@ DEF_FORMAT = {'fgcolor':'WHITE','bgcolor':'BLACK','style':'NORMAL'}
 
 # get filepath for 'screen' .txt files
 DIRNAME = os.path.dirname(__file__)
-FILEPATH = os.path.join(DIRNAME, 'screens')
+FILEPATH = os.path.join(DIRNAME, 'text_screens')
 
 
 # characters used to build frames
