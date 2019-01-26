@@ -6,8 +6,8 @@ from .gui.screen import Screen
 
 
 
-def run():
-    game = FSM(states=STATES,start_state='main_menu')
+def run(start='main_menu'):
+    game = FSM(states=STATES,start=start)
 
     Screen.setup_terminal()
 
