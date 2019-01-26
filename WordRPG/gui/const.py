@@ -1,12 +1,10 @@
 """ CONSTANTS for gui module """
 import os
 
+from ..const import NAME, VERSION, COMPANY, YEAR
 
 
-NAME = 'WASTELANDS'
-VERSION = 1.0
-YEAR = 2018
-COMPANY = 'COWBOY GAMING'
+
 TITLE = f'{NAME}(ver.{VERSION}) - {COMPANY} - ©{YEAR}'
 HEADER = f'{NAME} - {VERSION}'
 FOOTER = f'{COMPANY} - ©{YEAR}'  # © can cause problems with encoding
