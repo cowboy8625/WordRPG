@@ -2,6 +2,7 @@
 import os
 from sys import stdout
 from time import sleep
+from math import ceil, floor
 
 from PIL import ImageColor, Image, ImageOps
 
@@ -42,12 +43,13 @@ class Map:
         self.load_map(map_name)
         self.border = self.get_border_tile()
 
-        # create map frame
-        self.frame_size = DEF_MAP_SIZE
-        self.set_map_frame(self.frame_size)
-
+        # set current position and Tile
         self.cur_pos = pos
         self.cur_tile = self.get_tile(self.cur_pos)
+
+        # create initial map frame
+        self.frame_size = DEF_MAP_SIZE
+        self.set_map_frame(self.frame_size)
 
 
     def get_map_key(self, tileset=BIOMES):
@@ -203,7 +205,7 @@ class Map:
                     tile.set_symbol(symbol)
 
 
-    def set_map_frame(self, size=None, offset=(0,0), raw=False):
+    def set_map_frame(self, size=None):
         """ Gets a framed portion of the map array
 
         Gets a framed portion of the whole map array so it can be displayed in
@@ -220,7 +222,10 @@ class Map:
             size = self.frame_size
 
         cols, rows = self.frame_size = size
-        start_col, start_row = offset
+        col, row = self.cur_pos
+        # get offset for top-left corner of frame by subtracting half of the
+        # frame size from the current position
+        start_col, start_row = col - int(ceil(cols / 2)), row - int(floor(rows / 2))
 
         self.frame = [[self.get_tile((col,row)) for col in range(start_col, (start_col + cols))] for row in range(start_row, (start_row + rows))]
 
@@ -290,7 +295,7 @@ class Map:
         if next_tile.movement > 0:
             self.cur_pos = next_pos
             # self.update_map()
-            sleep(abs(next_tile.movement) * 0.125)    # pause to give screen time to redraw
+            sleep(abs(next_tile.movement) * 0.0625)    # pause to give screen time to redraw
 
         return self.cur_pos
 
