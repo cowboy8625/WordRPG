@@ -1,0 +1,199 @@
+{
+	"village": {
+		"movement": 1,
+		"color": "red",
+		"symbol": "\u00b1",
+		"description": "YOU ARE IN A PEACEFUL VILLAGE",
+		"resources": null,
+		"font": {
+			"fgcolor": "BLACK",
+			"bgcolor": "WHITE",
+			"style": "NORMAL"
+		},
+		"discovered": true
+	},
+	"cave": {
+		"movement": 1,
+		"color": "black",
+		"symbol": "\u2584",
+		"description": "YOU ARE STANDING AT THE ENTRANCE TO A DEEP, DARK CAVE",
+		"resources": null,
+		"font": {
+			"fgcolor": "BLACK",
+			"bgcolor": "LIGHTBLACK_EX",
+			"style": "NORMAL"
+		}
+	},
+	"path": {
+		"movement": 1,
+		"color": "white",
+		"symbol": "\u00b7",
+		"description": "YOU ARE IN A VILLAGE",
+		"resources": null,
+		"font": {
+			"fgcolor": "BLACK",
+			"bgcolor": "LIGHTBLACK_EX",
+			"style": "NORMAL"
+		},
+		"discovered": true
+	},
+	"farmland": {
+		"movement": 2,
+		"color": "magenta",
+		"symbol": "\u2261",
+		"description": "YOU ARE IN A VILLAGE",
+		"resources": ["herb"],
+		"font": {
+			"fgcolor": "LIGHTYELLOW_EX",
+			"bgcolor": "GREEN",
+			"style": "NORMAL"
+		}
+	},
+	"beach": {
+		"movement": 2,
+		"color": "khaki",
+		"symbol": "\u2591",
+		"description": "YOU ARE IN A VILLAGE",
+		"resources": null,
+		"font": {
+			"fgcolor": "WHITE",
+			"bgcolor": "YELLOW",
+			"style": "NORMAL"
+		}
+	},
+	"desert": {
+		"movement": 4,
+		"color": "peru",
+		"symbol": "\u2591",
+		"description": "YOU ARE IN A VILLAGE",
+		"resources": null,
+		"font": {
+			"fgcolor": "RED",
+			"bgcolor": "YELLOW",
+			"style": "NORMAL"
+		}
+	},
+	"grassland": {
+		"movement": 2,
+		"color": "lawngreen",
+		"symbol": " ",
+		"description": "YOU ARE IN A VILLAGE",
+		"resources": null,
+		"font": {
+			"fgcolor": "LIGHTYELLOW_EX",
+			"bgcolor": "LIGHTGREEN_EX",
+			"style": "NORMAL"
+		}
+	},
+	"forest": {
+		"movement": 3,
+		"color": "olivedrab",
+		"symbol": "\u2663",
+		"description": "YOU ARE IN THE FOREST",
+		"resources": ["wood"],
+		"font": {
+			"fgcolor": "GREEN",
+			"bgcolor": "LIGHTGREEN_EX",
+			"style": "NORMAL"
+		}
+	},
+	"deep_forest": {
+		"movement": 4,
+		"color": "darkgreen",
+		"symbol": "\u2663",
+		"description": "YOU ARE IN THE DEEP, DARK FOREST",
+		"resources": null,
+		"font": {
+			"fgcolor": "LIGHTGREEN_EX",
+			"bgcolor": "BLACK",
+			"style": "NORMAL"
+		}
+	},
+	"river": {
+		"movement": 2,
+		"color": "cyan",
+		"symbol": "~",
+		"description": "YOU ARE ON THE RIVER",
+		"resources": ["water", "fish"],
+		"font": {
+			"fgcolor": "BLUE",
+			"bgcolor": "CYAN",
+			"style": "NORMAL"
+		}
+	},
+	"lake": {
+		"movement": 3,
+		"color": "darkcyan",
+		"symbol": "~",
+		"description": "YOU ARE ON A LAKE",
+		"resources": ["water", "fish"],
+		"font": {
+			"fgcolor": "CYAN",
+			"bgcolor": "BLUE",
+			"style": "NORMAL"
+		}
+	},
+	"swamp": {
+		"movement": 5,
+		"color": "darkolivegreen",
+		"symbol": "\u2592",
+		"description": "YOU ARE IN THE SWAMP",
+		"resources": null,
+		"font": {
+			"fgcolor": "RED",
+			"bgcolor": "GREEN",
+			"style": "NORMAL"
+		}
+	},
+	"salt_marsh": {
+		"movement": 4,
+		"color": "darkseagreen",
+		"symbol": "\u2592",
+		"description": "YOU ARE IN THE SALT MARSH",
+		"resources": ["fish",
+			"salt"
+		],
+		"font": {
+			"fgcolor": "GREEN",
+			"bgcolor": "BLUE",
+			"style": "NORMAL"
+		}
+	},
+	"alpine_grassland": {
+		"movement": 1,
+		"color": "lightgreen",
+		"symbol": "\u2591",
+		"description": "YOU ARE IN THE ALPINE GRASSLAND",
+		"resources": ["pine"],
+		"font": {
+			"fgcolor": "WHITE",
+			"bgcolor": "LIGHTGREEN_EX",
+			"style": "NORMAL"
+		}
+	},
+	"mountain": {
+		"movement": -1,
+		"color": "darkslategray",
+		"symbol": "^",
+		"description": "YOU ARE IN THE MOUNTAINS",
+		"resources": null,
+		"font": {
+			"fgcolor": "WHITE",
+			"bgcolor": "LIGHTBLACK_EX",
+			"style": "NORMAL"
+		}
+	},
+	"ocean": {
+		"movement": -1,
+		"color": "blue",
+		"symbol": "~",
+		"description": "YOU ARE IN THE OCEAN",
+		"resources": null,
+		"font": {
+			"fgcolor": "BLACK",
+			"bgcolor": "BLUE",
+			"style": "NORMAL"
+		},
+		"discovered": true
+	}
+}
