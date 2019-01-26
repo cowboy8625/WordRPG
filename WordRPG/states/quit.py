@@ -1,3 +1,5 @@
+""" 'quit' state """
+
 from .states import Confirm
 
 
