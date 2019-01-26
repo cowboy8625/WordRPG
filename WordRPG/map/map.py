@@ -34,7 +34,7 @@ class Map:
     IMAGES_FILEPATH = os.path.join(os.path.dirname(__file__), 'images')
 
 
-    def __init__(self, map_name, tileset=BIOMES, pos=(19,18)):
+    def __init__(self, map_name, tileset=BIOMES, pos=(0,0)):
         self.tileset = tileset
         self.map_key = self.get_map_key(tileset=self.tileset)
         self.cols, self.rows = self.size = (0, 0)
