@@ -7,12 +7,12 @@ from random import randrange
 
 from colorama import init as colorama_init
 
-from . import const, cursor, font, menus
+from . import const, cursor, font
 
 
 
 def setup_terminal(title=const.TITLE, convert_escape=True,
-                    size=const.SCREEN_SIZE, hide_cursor=True):
+                   size=const.SCREEN_SIZE, hide_cursor=True):
     """ sets the size of the terminal window and clears it before printing"""
     colorama_init(convert=convert_escape)
     cols, lines = size
@@ -116,8 +116,8 @@ class Screen:
     def center_offset(text, width):
         """ Get offset to center text
 
-        Gets the offset needed to center the given 'text' string within the given
-        'width' of the field. Unlike '.center_string()' this does not modify the
+        Gets the offset needed to center the given 'text' string within the
+        given 'width' of the field. Unlike '.center_string()' this does not
         'text string.
 
         Arguments:
@@ -127,7 +127,6 @@ class Screen:
         Returns:
             int -- column offset as an int
         """
-
         if isinstance(text,int):
             return int((width - text) / 2)
 
@@ -148,7 +147,6 @@ class Screen:
         Returns:
             string -- [description]
         """
-
         cols, rows = size
 
         # get frame characters based on style
@@ -196,7 +194,6 @@ class Screen:
         Keyword Arguments:
             offset {tuple} -- Offset for the .txt file (default: {(0,0)})
         """
-
         filename = os.path.join(const.FILEPATH, f'{screen_name}.txt')
         text = self._load_txt(filename)
         array = self._string_to_array(text)
@@ -210,7 +207,8 @@ class Screen:
         self._write_array_to_screen(array, offset, **format)
 
 
-    def add_frame(self, size=const.SCREEN_SIZE, offset=(0,0), frame_style=1, **format):
+    def add_frame(self, size=const.SCREEN_SIZE, offset=(0,0),
+                  frame_style=1, **format):
         """ Adds a frame to the screen
 
         Creates a frame of the given size, style, and format keywords and then
@@ -223,7 +221,6 @@ class Screen:
         Keyword Arguments:
             style {int} -- [description] (default: {1})
         """
-
         frame = self._create_frame(size, frame_style=frame_style)
         self._write_array_to_screen(frame, offset=offset, **format)
 
@@ -235,7 +232,6 @@ class Screen:
             header {[type]} -- [description] (default: {const.HEADER})
             format {[type]} -- [description] (default: {const.DEF_FORMAT})
         """
-
         header = f' {header} '
         self.add_string_to_screen(header, offset=('center', 0), **format)
 
@@ -247,7 +243,6 @@ class Screen:
             footer {[type]} -- [description] (default: {const.FOOTER})
             format {[type]} -- [description] (default: {const.DEF_FORMAT})
         """
-
         footer = f' {footer} '
         self.add_string_to_screen(footer, offset=('center', 29), **format)
 
@@ -266,7 +261,6 @@ class Screen:
             col {int} -- [description] (default: {0})
             row {int} -- [description] (default: {0})
         """
-
         try:
             self.screen[row][col] = char
         except IndexError:
@@ -276,20 +270,21 @@ class Screen:
             print(err)
 
 
-    def add_string_to_screen(self, string, offset=(0,0),
-                        format_space=False, transparent=False, **format ):
+    def add_string_to_screen(self, string, offset=(0,0), format_char=True,
+                             format_space=False, transparent=False, **format ):
         """ Writes a string to the screen
 
         Arguments:
             string {[type]} -- [description]
 
         Keyword Arguments:
-            col {int} -- [description] (default: {0})
-            row {int} -- [description] (default: {0})
+            col {int}           -- [description] (default: {0})
+            row {int}           -- [description] (default: {0})
+            format_char {bool}  -- If True, add escape characters to all
+                                   characters. (default: {False})
             format_space {bool} -- [description] (default: {False})
-            transparent {bool} -- [description] (default: {False})
+            transparent {bool}  -- [description] (default: {False})
         """
-
         if offset[0] == 'center':
             center = Screen.center_offset(string, self.SCREEN_SIZE[0])
             offset = (center,offset[1])
@@ -299,7 +294,7 @@ class Screen:
                 continue
             if char == ' ' and transparent:
                 continue
-            if char != ' ' or format_space:
+            if (char != ' ' and format_char) or format_space:
                 char = font.add_escape(char, **format)
 
             col, row = offset
@@ -345,17 +340,11 @@ class Screen:
         This is a convenience function that can be used to center an array
 
         Arguments:
-            array {array} -- List of lists
-
-        Keyword Arguments:
-            option_only {bool} -- If True, only return width of widest option
-                                string. Otherwise, include the encapsulators
-                                and seperator characters in the total width
+            array {array} -- 2D List of lists
 
         Returns:
             int -- Length of the longest option string
         """
-
         return max([len(line) for line in array])
 
 
@@ -377,7 +366,6 @@ class Screen:
         Returns:
             int -- Length of the longest option string
         """
-
         widest = max([len(text) for text, hotkey in menu_dict['options']])
 
         if option_only:
@@ -398,7 +386,6 @@ class Screen:
         Returns:
             array -- Returns 2D array of formatted characters
         """
-
         array = []
 
         # convert text to upper case
@@ -425,12 +412,14 @@ class Screen:
         self._write_array_to_screen(array, offset=offset, format_char=False)
 
 
-    def draw(self, clear_first=True):
+    def draw(self, clear_first=False):
         """ Prints current screen to the output window """
         if clear_first:
             self.clear()
 
-        return stdout.write(self.array_to_string(self.screen))
+        stdout.write(f"\x1b7\x1b[0;0f{self.array_to_string(self.screen)}\x1b8")
+        # stdout.write(f'\r\r\r\r\r{self.array_to_string(self.screen)}')
+        stdout.flush()
 
 
     def copy(self):
@@ -442,59 +431,6 @@ class Screen:
 ##------------------------------------------------------------------------------
 ## Screens created here
 ##------------------------------------------------------------------------------
-
-def game_menu():
-    """ Creates and draws the in-game menu screen """
-
-    # makes a new empty screen
-    screen = main.new_screen(char=' ')
-
-    # creates standard double line frame around whole screen
-    _create_frame(screen)
-
-    # draw the game title
-    _title = const.SCREENS['title']['array']
-    main.write_to_array(_title, screen, transparent=True, col=12, row=6,
-                        fgcolor='RED', bgcolor='BLACK')
-
-    # draw the menu
-    menu_txt = menu.create_menu_array(menus.game_menu)
-    width = menu.get_max_width(menus.main_menu)
-    col = main.center_offset(width, const.SCREEN_SIZE[0])
-    main.write_to_array(menu_txt, screen, col=col, row=12)
-
-    # draw the footer
-    footer = f' {const.FOOTER} '
-    col = main.center_offset(footer, const.SCREEN_SIZE[0])
-    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
-
-    # print the screen
-    main.draw(screen)
-
-
-def new_game():
-    """ Creates and draws the New Game screen """
-
-    # makes a new empty screen
-    screen = main.new_screen(char=' ')
-
-    # creates standard double line frame around whole screen
-    _create_frame(screen)
-
-    # creates the menu text
-    menu_txt = menu.create_menu_array(menus.new_game)
-    width = menu.get_max_width(menus.new_game)
-    col = main.center_offset(width, const.SCREEN_SIZE[0])
-    main.write_to_array(menu_txt, screen, col=col, row=12)
-
-    # add footer to screen
-    footer = f' {const.FOOTER} '
-    col = main.center_offset(footer, const.SCREEN_SIZE[0])
-    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
-
-    # print the screen
-    main.draw(screen)
-
 
 def story_test():
     """ tests compositing screens and adding text at a centered offset
@@ -593,33 +529,3 @@ def files(files_info=[{},{},{}], mode='load'):
 
     # print the screen
     main.draw(screen)
-
-
-def game():
-    """ Creates and draws the main game screen """
-
-    # draw the background and frame
-    screen = _create_background()
-
-    # draw the game title
-    _game = const.SCREENS['game']['array']
-    main.write_to_array(_game, screen, transparent=True, col=0, row=0,
-                        fgcolor='WHITE', bgcolor='BLACK')
-
-    # draw the header
-    header = f' {const.HEADER} '
-    col = main.center_offset(header, const.SCREEN_SIZE[0])
-    main.write_to_array(header, screen, col=col, row=0, fgcolor='RED')
-
-    # draw the menu
-    # menu_txt = menu.create_menu_array(menu.game_menu)
-    # width = menu.get_max_width(menu.main_menu)
-    # col = main.center_offset(width, const.SCREEN_SIZE[0])
-    # main.write_to_array(menu_txt, screen, col=col, row=12)
-
-    # draw the footer
-    footer = f' {const.FOOTER} '
-    col = main.center_offset(footer, const.SCREEN_SIZE[0])
-    main.write_to_array(footer, screen, col=col, row=29, fgcolor='RED')
-
-    return screen
