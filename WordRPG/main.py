@@ -2,14 +2,14 @@ import sys
 
 from .states.machine import FSM, STATES
 from . import gui
-from .gui.screen import setup_terminal
+from .gui.screen import Screen
 
 
 
 def run():
     game = FSM(states=STATES,start_state='main_menu')
 
-    setup_terminal()
+    Screen.setup_terminal()
 
     while True:
         if game.cur_state is None:

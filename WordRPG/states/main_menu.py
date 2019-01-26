@@ -1,6 +1,6 @@
 """ 'main_menu' state """
 
-from ..gui.screen import const, Screen, setup_terminal
+from ..gui.screen import const, Screen
 from .states import State
 
 
@@ -27,7 +27,7 @@ class Main_Menu(State):
 
         # draw the game title
         screen.load_screen('title', offset=('center',8),
-                    fgcolor='RED', bgcolor='BLACK')
+                    fgcolor='RED', bgcolor='LIGHTRED_EX')
 
         # draw the menu
         menu = {

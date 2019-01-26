@@ -1,6 +1,6 @@
 """ 'load_game' state """
 
-from ..gui.screen import const, Screen, setup_terminal
+from ..gui.screen import const, Screen
 from .states import State
 
 

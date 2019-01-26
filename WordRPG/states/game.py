@@ -2,7 +2,7 @@
 from time import sleep
 from collections import deque
 
-from ..gui.screen import const, Screen, setup_terminal
+from ..gui.screen import const, Screen
 from .states import State
 from ..map.map import Map
 
