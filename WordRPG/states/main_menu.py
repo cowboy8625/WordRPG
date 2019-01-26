@@ -27,7 +27,7 @@ class Main_Menu(State):
 
         # draw the game title
         screen.load_screen('title', offset=('center',8),
-                    fgcolor='RED', bgcolor='LIGHTRED_EX')
+                    fgcolor='RED', bgcolor='BLACK')
 
         # draw the menu
         menu = {
