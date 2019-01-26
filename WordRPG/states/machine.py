@@ -59,13 +59,13 @@ class FSM:
     Very Simple Finite State Machine.
     """
 
-    def __init__(self, states=[], start_state=None):
+    def __init__(self, states=[], start=None):
         """ Initialize the state machine """
         self.states = states
 
-        if start_state is not None:
-            self.cur_state = self.states[start_state]
-            self.prev_state = self.states[start_state]
+        if start is not None:
+            self.cur_state = self.states[start]
+            self.prev_state = self.states[start]
         else:
             self.cur_state = states[0]
             self.prev_state = states[0]
