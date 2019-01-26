@@ -86,7 +86,6 @@ class Game(State):
     def update_map(self, draw=True):
         # get map data
         world_map = self.maps['world']
-        world_map.set_map_frame()
         map_frame = world_map.get_map_frame(as_string=False)
 
         # write map frame border
