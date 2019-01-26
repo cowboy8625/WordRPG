@@ -20,7 +20,7 @@ class Tile:
                                     this tile. Default is None
         :``movement``:      `int`   value that represents how difficult it is
                                     to move into this tile. Higher numbers are
-                                    more hazardous tiles. Value of -1 means the
+                                    more hazardous tiles. Value of 0 means the
                                     tile is impassable. Default value is 1
         :``color``:         `str`   name of a pre-defeind HTML color. color is
                                     used to build a color map key for loading
@@ -171,12 +171,12 @@ BIOMES = {
             'resources':['pine'],
             'font':{'fgcolor':'WHITE','bgcolor':'LIGHTGREEN_EX','style':'NORMAL'},
             },
-    'mountain':{'movement':-1, 'color':'darkslategray', 'alpha':'M', 'symbol':'^',
+    'mountain':{'movement':0, 'color':'darkslategray', 'alpha':'M', 'symbol':'^',
             'description':'YOU ARE IN THE MOUNTAINS',
             'resources':None,
             'font':{'fgcolor':'WHITE','bgcolor':'LIGHTBLACK_EX','style':'NORMAL'},
             },
-    'ocean':{'movement':-1, 'color':'blue', 'alpha':'O', 'symbol':'~',
+    'ocean':{'movement':0, 'color':'blue', 'alpha':'O', 'symbol':'~',
             'description':'YOU ARE IN THE OCEAN',
             'resources':None,
             'font':{'fgcolor':'BLACK','bgcolor':'BLUE','style':'NORMAL'},

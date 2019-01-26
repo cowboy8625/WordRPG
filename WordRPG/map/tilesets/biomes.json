@@ -172,7 +172,7 @@
 		}
 	},
 	"mountain": {
-		"movement": -1,
+		"movement": 0,
 		"color": "darkslategray",
 		"symbol": "^",
 		"description": "YOU ARE IN THE MOUNTAINS",
@@ -184,7 +184,7 @@
 		}
 	},
 	"ocean": {
-		"movement": -1,
+		"movement": 0,
 		"color": "blue",
 		"symbol": "~",
 		"description": "YOU ARE IN THE OCEAN",
