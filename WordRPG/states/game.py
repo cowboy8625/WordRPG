@@ -31,9 +31,8 @@ class Game(State):
         super(Game, self).__init__()
         self.first_time = False #True
 
-        self.maps = self._init_maps()
+        self.maps = self._init_maps(pos=(40,27))
         self.cur_map = self.maps['world']
-        self.pos = (19, 18)
 
         self.screen = self._init_screen()
 
@@ -45,13 +44,13 @@ class Game(State):
         self.add_to_buffer("WELCOME TO THE WASTELANDS")
 
 
-    def _init_maps(self):
+    def _init_maps(self, pos=(0.0)):
         """ create a 'Map' object using the given image filename and then print
         it to the terminal """
         # maps = {'world':('image':'test_island2', 'pos':19,18}}
         # {name:Map(image_name) for name, image_name in maps.items()}
 
-        return {'world':Map('test_island2')}
+        return {'world':Map('test_island2', pos=pos)}
 
     
     def _init_screen(self):
@@ -155,12 +154,12 @@ class Game(State):
         """ Even handler for moving in the game world """
         text = self.MOVE_KEYS[key]['text'].upper()
         vec = self.MOVE_KEYS[key]['vec']
-        self.add_to_buffer(f'MOVING {text}...')
 
+        cur_pos = self.maps['world'].cur_pos
         new_pos = self.maps['world'].move(vec)
 
-        if self.pos != new_pos:
-            self.pos = new_pos
+        if cur_pos != new_pos:
+            self.add_to_buffer(f'MOVING {text}...')
             self.update_map()
 
 
