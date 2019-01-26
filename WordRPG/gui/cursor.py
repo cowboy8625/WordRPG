@@ -2,6 +2,8 @@
 
 import os
 
+
+
 # import appropriate modules and create functions for dealing with cursor
 if os.name == 'nt':
     """ Windows sub-module for dealing with the console window cursor """
