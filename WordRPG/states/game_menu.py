@@ -1,6 +1,6 @@
 """ In game menu state """
 
-from ..gui.screen import const, Screen, setup_terminal
+from ..gui.screen import const, Screen
 from .states import State
 
 

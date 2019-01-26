@@ -1,10 +1,11 @@
+import os
 from sys import stdout
 from copy import deepcopy
 
 from PIL import ImageColor, Image, ImageOps
 
 from ..gui.const import DEF_MAP_SIZE
-from ..gui.screen import Screen
+from ..grid import Grid
 from .tiles import Tile, BIOMES
 
 
@@ -18,27 +19,25 @@ class Map:
     RGB value to represent a specific tile or biome
 
     **Arguments:**
-
         :``filename``:  `str`   Name of the map image to load and parse
 
     **Keword Arguments:**
-
         :``tileset``:   `dict`  Dictionary of keys and 'Tile' objects
-
     """
     # class slots: http://book.pythontips.com/en/latest/__slots__magic.html
-    __slots__ = ['tileset', 'map_key', 'size', 'cols', 'rows', 'map',
+    __slots__ = ['tileset', 'images', 'map_key', 'size', 'cols', 'rows', 'map',
                  'display_map', 'frame_size', 'frame', 'border']
 
+    IMAGES_FILEPATH = os.path.join(os.path.dirname(__file__), 'images')
 
 
-    def __init__(self, filename, tileset=BIOMES):
+    def __init__(self, map_name, tileset=BIOMES):
         self.tileset = tileset
         self.map_key = self.get_map_key(tileset=self.tileset)
         self.cols, self.rows = self.size = (0, 0)
 
         # create map array from image file
-        self.load_map(filename)
+        self.load_map(map_name)
         self.border = self.get_border_tile()
 
         # create map frame
@@ -46,19 +45,17 @@ class Map:
         self.set_map_frame(self.frame_size)
 
 
-
     def get_map_key(self, tileset=BIOMES):
         """ Builds color : tile map key
 
         Keyword Arguments:
-            tileset {[type]} -- [description] (default: {BIOMES})
+            tileset {dict} -- dictionary of info about tiles (default: {BIOMES})
         """
-
         return {Tile.get_rgb_color(values['color']):key \
                 for key, values in tileset.items()}
 
 
-    def load_map(self, filename):
+    def load_map(self, map_name):
         """ Loads an image file and parses it into a map
 
         Arguments:
@@ -67,7 +64,7 @@ class Map:
         Returns:
             [list] -- 'map' array, list of lists containing 'Tile' objects
         """
-
+        filename = os.path.join(self.IMAGES_FILEPATH, f'{map_name}.png')
         image = Image.open(filename)
 
         # update map size based on loaded image
@@ -89,7 +86,7 @@ class Map:
             else:
                 key = self.map_key[rgb]
                 tiles.append(Tile(name=key, **self.tileset[key]))
-        
+
         # converts list of tiles into 'map' array (2D list of lists)
         self.map = [tiles[i:(i + self.cols)] \
                 for i in range(0, len(tiles), self.cols)]
@@ -100,16 +97,18 @@ class Map:
 
     def get_border_tile(self, tile_name='ocean'):
         """ Create a tile to be used for the border
-        
+
         Border tiles are used for out-of-range indexes when generating a new
         map frame.
+
+        Keyword Arguments:
+            tile_name {str} -- key name of the border Tile to use
 
         TODO:
             This is hardcoded to use 'ocean' right now, but we might want to
             add a keyword to a tileset dictionary to identify the 'border'
             tile for each tileset
         """
-
         return Tile(name=tile_name, **self.tileset[tile_name])
 
 
@@ -122,7 +121,6 @@ class Map:
         Returns:
             [type] -- [description]
         """
-
         col, row = pos
         try:
             return self.map[row][col]
@@ -139,7 +137,6 @@ class Map:
         Returns:
             tuple -- tiles above, right, below, and left of the given pos
         """
-
         col, row = pos
         t = self.get_tile((col, row - 1))
         r = self.get_tile((col + 1, row))
@@ -151,10 +148,10 @@ class Map:
 
     def get_path_symbol(self, pos):
         """[summary]
-        
+
         Arguments:
             pos {tuple} -- (col,row) position in the map array
-        
+
         Notes:
             This method uses binary values to determine which symbol should be
             used to draw a path tile so that it connects to all of it's
@@ -167,7 +164,6 @@ class Map:
         Returns:
             [str] -- symbol to use for the path tile at the given position
         """
-
         char_map = {0:'═', 1:'║', 2:'║', 3:'║', 4:'═', 5:'╝', 6:'╗' ,7:'╣', 8:'═',
                 9:'╚', 10:'╔', 11:'╠', 12:'═', 13:'╩', 14:'╦', 15:'╬'}
 
@@ -181,7 +177,7 @@ class Map:
             key += 4
         if r is not None and r.name == 'path':
             key += 8
-        
+
         return char_map[key]
 
 
@@ -193,7 +189,6 @@ class Map:
         for that tile at that position that connects it to neighboring path
         tiles
         """
-
         for row in range(len(self.map)):
             for col in range(len(self.map[row])):
                 tile = self.map[row][col]
@@ -203,7 +198,7 @@ class Map:
                     tile.set_symbol(symbol)
 
 
-    def set_map_frame(self, size, offset=(0,0), raw=False):
+    def set_map_frame(self, size=None, offset=(0,0), raw=False):
         """ Gets a framed portion of the map array
 
         Gets a framed portion of the whole map array so it can be displayed in
@@ -216,38 +211,69 @@ class Map:
             size {tuple} -- number of (cols, rows) of the map to return
             offset {tuple} -- starting (cols, rows) of the segment
         """
+        if size is None:
+            size = self.frame_size
 
         cols, rows = self.frame_size = size
         start_col, start_row = offset
 
-        # map_frame = []
-        # for row in range(start_row, (start_row + rows)):
-        #     line = [self.get_tile((col,row)) \
-        #             for col in range(start_col, (start_col + cols))]
-
-        #     map_frame.append(line)
-        # self.frame = map_frame
-
         self.frame = [[self.get_tile((col,row)) for col in range(start_col, (start_col + cols))] for row in range(start_row, (start_row + rows))]
 
-        # if raw:
-        #     rows = [''.join([self.get_tile((col,row))
-        #             for col in range(start_col, (start_col + cols))]) for row in range(start_row, (start_row + rows))]
-        # else:
-        #     rows = [''.join([tile.char for tile in range(start_col, (start_col + cols))]) for row in range(start_row, (start_row + rows))]
-        # map_frame = '\n'.join(rows)
 
+    def get_map(self, as_string=True, raw=False):
+        """ Gets the map as a string
 
-
-    def show(self, frame=False, clear_first=False, raw=False):
-        """ Prints the map array to terminal """
-
-        if clear_first:
-            Screen.clear()
-        if frame:
-            return stdout.write(self.array_to_string(self.frame, raw=raw))
+        Keyword Arguments:
+            as_string {bool}    -- If True, output unformatted map Tile symbols
+                                   instead of formatted char (default: {False})
+            raw {bool}          -- If True, output unformatted map Tile symbols
+                                   instead of formatted char (default: {False})
+        """
+        if as_string:
+            return self.array_to_string(self.map, raw=raw)
+        elif raw:
+            return [[tile.alpha for tile in row] for row in self.map]
         else:
-            return stdout.write(self.array_to_string(self.map, raw=raw))
+            return [[tile.char for tile in row] for row in self.map]
+
+
+    def get_map_frame(self, as_string=True, raw=False):
+        """ Gets the framed map window as a string
+
+        Keyword Arguments:
+            as_string {bool}    -- If True, output unformatted map Tile symbols
+                                   instead of formatted char (default: {False})
+            raw {bool}          -- If True, output unformatted map Tile symbols
+                                   instead of formatted char (default: {False})
+        """
+        if as_string:
+            return self.array_to_string(self.frame, raw=raw)
+        elif raw:
+            return [[tile.alpha for tile in row] for row in self.frame]
+        else:
+            return [[tile.char for tile in row] for row in self.frame]
+
+
+    def show(self, clear=False, frame=False, raw=False):
+        """ Prints the map array to terminal
+
+        Keyword Arguments:
+            clear {bool}  -- If True, clear the terminal window before
+                                   writing to it. (default: {False})
+            frame {bool}        -- If True, output the framed portion of the
+                                   map to the terminal (default: {False})
+            raw {bool}          -- If True, output unformatted map Tile symbols
+                                   instead of formatted char (default: {False})
+
+        Returns:
+            [type] -- [description]
+        """
+
+        if frame:
+            stdout.write(self.get_map_frame(raw=raw))
+        else:
+            stdout.write(self.get_map(raw=raw))
+        stdout.flush()
 
 
     def __repr__(self):
@@ -257,10 +283,10 @@ class Map:
 
     def array_to_string(self, array, raw=False):
         """ Converts 'map' array to string of tile symbols
-        
+
         Arguments:
             _map {list} -- 'map' array
-        
+
         Note:
             This was broken out into a seperate function from __str__ so that
             it can be used to print map frame as well as the full map
@@ -272,7 +298,6 @@ class Map:
         Returns:
             [str] -- string of tile symbol symbols
         """
-
         if raw:
             rows = [''.join([tile.alpha for tile in row]) for row in array]
         else:
@@ -283,5 +308,4 @@ class Map:
 
     def __str__(self):
         """ returns printable string version of self.map data """
-
         return self.array_to_string(self.map, raw=True)

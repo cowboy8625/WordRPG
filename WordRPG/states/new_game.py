@@ -1,6 +1,6 @@
 """ 'new_game' state.  Includes character creation. """
 
-from ..gui.screen import const, Screen, setup_terminal
+from ..gui.screen import const, Screen
 from .states import State
 
 
