@@ -1,4 +1,4 @@
-""" 'load_game' state """
+""" Placeholder for 'save game' state """
 
 from ..gui.screen import const, Screen, setup_terminal
 from .states import State
