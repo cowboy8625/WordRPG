@@ -18,16 +18,18 @@ The map will be procedurally made so the seed will be able to share with friends
 
 # Team
 <a name="team-members"></a>Team Members
+Active members:
+* [Cowboy8625 (Owner)](https://github.com/cowboy8625)
 * [BJTMastermind](https://github.com/bjtmastermind)
 * [Byteme8bit](https://github.com/Byteme8bit)
 * [CBruce](https://github.com/ChristopherLBruce)
-* [Cowboy8625 (Owner)](https://github.com/cowboy8625)
+* [PinkChicken](https://github.com/PinkChicken)
+* [tmded](https://github.com/tmded)
+Previous Contibutors:
 * [Cyy](https://github.com/JamesCourcelle)
 * [Djsurry](https://github.com/Djsurry)
 * [Giioke](https://github.com/Giioke)
 * [HexTree](https://github.com/HexTree)
-* [PinkChicken](https://github.com/PinkChicken)
-* [tmded](https://github.com/tmded)
 
 # Big Thanks!
 To everyone that has helped on the project!  I have learned a lot about OOP, this project was a great idea and a massive help in my coding journey.
@@ -35,7 +37,3 @@ To everyone that has helped on the project!  I have learned a lot about OOP, thi
 # Screen Shots
 This is the Main Menu
 ![wordrpg_main_menu](https://user-images.githubusercontent.com/43012445/48389982-80e16100-e6c5-11e8-99e1-56bf323d52f7.PNG)
-
-
-
-
