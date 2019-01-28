@@ -1,14 +1,17 @@
 """ Placeholder state for main 'game' loop """
-from time import sleep
 from collections import deque
 
-from ..gui.screen import const, Screen
+from ..const import SETTINGS
+from ..common import Point, Table
+from ..gui.screen import Screen
 from .states import State
 from ..map.map import Map
 
 
+
 class Game(State):
-    # TODO: duplicate data here, but it's easier to check if a key is in 
+    """ 'Game' state and associated data/methods """
+    # ToDo: duplicate data here, but it's easier to check if a key is in
     # MOVE_KEYS.keys() rather than sort through a list of aliases for now
     MOVE_KEYS = {
         'w' : {'text':'north', 'vec':(0, -1)},
@@ -26,10 +29,12 @@ class Game(State):
 
 
 
-    def __init__(self, buffer_size=4):
+    def __init__(self, buffer_size=5):
         """ Initiailize class and super class """
         super(Game, self).__init__()
-        self.first_time = False #True
+        #TODO: This should be True, but disabling it to speed up game launch
+        # for development
+        self.first_time = False
 
         # initialize maps and map data
         self.maps = self._init_maps(pos=(40,27))
@@ -53,7 +58,7 @@ class Game(State):
 
         return {'world':Map('test_island2', pos=pos)}
 
-    
+
     def _init_screen(self):
         """ Create the main game screen """
         screen = Screen()
@@ -68,7 +73,7 @@ class Game(State):
             'encap' : '()',
             'sep' : ' - ',
             'options' : [
-                ('menu', 'esc'), 
+                ('menu', 'esc'),
                 ('gather resources', 'g'),
                 ('inventory', 'i'),
                 ('crafting', 'c'),
@@ -86,29 +91,29 @@ class Game(State):
     def update_map(self, draw=True):
         # get map data
         world_map = self.maps['world']
-        map_frame = world_map.get_map_frame(as_string=False)
+        map_frame = world_map.get_map_frame(as_string=False, color=SETTINGS['color'])
 
         # write map frame border
-        frame_offset = (2, 1)
-        frame_size = Map.add_pos(world_map.frame_size, (2, 2))
+        frame_offset = Point(2, 1)
+        frame_size = Point(*world_map.frame_size) + Point(2, 2)
         self.screen.add_frame(size=frame_size, offset=frame_offset,
                               frame_style=0, fgcolor='WHITE', bgcolor='BLACK')
 
         # write current biome name
         pos = world_map.cur_pos
         cur_tile = world_map.get_tile(pos)
-        header = f' {cur_tile.name.upper()} - {pos} '
-        col, row = frame_offset
-        col = Screen.center_offset(header, frame_size[0])
-        self.screen.add_string_to_screen(f'<< {header} >>', offset=(col, row),
-                                    fgcolor='WHITE', bgcolor='BLACK')
+        cur_tile_name = f' {cur_tile.name.upper()} - {pos} '
+        col = Screen.center_offset(cur_tile_name, frame_size[0])
+        row = frame_offset.row + frame_size.row - 1
+        self.screen.add_string_to_screen(f'<< {cur_tile_name} >>', offset=(col, row),
+                                         fgcolor='WHITE', bgcolor='BLACK')
 
         # write map to screen
-        self.screen._write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+        self.screen.write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
 
         # write player cursor
         self.screen.add_string_to_screen('@', offset=(24,12),
-                                    fgcolor='WHITE', bgcolor='BLACK')
+                                         fgcolor='WHITE', bgcolor='BLACK')
 
         if draw:
             self.update_screen()
@@ -124,10 +129,10 @@ class Game(State):
 
         Command buffer displays the last 4-5 actions that the player took and
         their results if relevant
-        
+
         Arguments:
             text {str} -- String to add and display in the command buffer
-        
+
         Keyword Arguments:
             width {int} -- Width of line in command buffer so that we can fully
                            overwrite the previous screen line. (default: {76})
@@ -140,7 +145,8 @@ class Game(State):
             text = f'> {text}'
             text = f'{text}{" " * (width - len(text))}'
             self.screen.add_string_to_screen(text, offset=(3, 24 + i),
-                    transparent=False, fgcolor='WHITE', bgcolor='BLACK')
+                                             transparent=False, fgcolor='WHITE',
+                                             bgcolor='BLACK')
 
 
     def start(self):
