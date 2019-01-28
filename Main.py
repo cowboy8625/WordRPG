@@ -6,7 +6,7 @@ import WordRPG
 
 if __name__ == "__main__":
     try:
-        WordRPG.main.run(start='game')
+        WordRPG.main.run(start=WordRPG.const.SETTINGS['start_state'])
     except Exception as err:
         print(f'Exception Error:{err}')
         print('Stack at time of error:')
