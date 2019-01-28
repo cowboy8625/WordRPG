@@ -18,7 +18,7 @@ class Game_Menu(State):
 
         if prev_state is not None:
             prev_screen = prev_state.screen
-            screen._write_array_to_screen(prev_screen.copy(),
+            screen.write_array_to_screen(prev_screen.copy(),
                         format_char=False, format_space=False)
 
         # creates a frame
