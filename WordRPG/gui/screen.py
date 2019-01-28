@@ -2,8 +2,6 @@
 import os
 from sys import stdout
 import codecs
-from collections import deque
-from random import randrange
 
 from colorama import init as colorama_init
 
@@ -47,12 +45,13 @@ class Screen:
         # line = f'{char}' * cols
         text = '\n'.join([f'{char * cols}' for row in range(rows)])
 
+        # TODO: Implement Table class here
         self.screen = self._string_to_array(text)
 
 
     @staticmethod
     def setup_terminal(title=const.TITLE, convert_escape=True,
-                    size=const.SCREEN_SIZE, hide_cursor=True):
+                       size=const.SCREEN_SIZE, hide_cursor=True):
         """ sets the size of the terminal window and clears it before printing"""
         colorama_init(convert=convert_escape)
         cols, lines = size
@@ -198,6 +197,7 @@ class Screen:
             return f.read()
 
 
+    # TODO: Utilize Table.from_string() class method here
     def load_screen(self, screen_name, offset=(0,0), **format):
         """ Loads a text file into the screen
 
@@ -217,7 +217,7 @@ class Screen:
             center = Screen.center_offset(widest, self.SCREEN_SIZE[0])
             offset = (center, offset[1])
 
-        self._write_array_to_screen(array, offset, **format)
+        self.write_array_to_screen(array, offset, **format)
 
 
     def add_frame(self, size=const.SCREEN_SIZE, offset=(0,0),
@@ -235,7 +235,7 @@ class Screen:
             style {int} -- [description] (default: {1})
         """
         frame = self._create_frame(size, frame_style=frame_style)
-        self._write_array_to_screen(frame, offset=offset, **format)
+        self.write_array_to_screen(frame, offset=offset, **format)
 
 
     def add_header(self, header=const.HEADER, **format):
@@ -260,7 +260,8 @@ class Screen:
         self.add_string_to_screen(footer, offset=('center', 29), **format)
 
 
-    def _write_char_to_screen(self, char, col=0, row=0):
+    # TODO: Utilize Table.set() class method here
+    def write_char_to_screen(self, char, col=0, row=0):
         """ Writes single character to screen
 
         Writes a single character and escape codes to a specific [row][col] in
@@ -277,7 +278,7 @@ class Screen:
         try:
             self.screen[row][col] = char
         except IndexError:
-            err = f"._write_char_to_screen( ) - IndexError \
+            err = f".write_char_to_screen( ) - IndexError \
                     Tried to assign {char} to [{col}][{row}] in a \
                     {len(self.screen)}x{len(self.screen[0])} array."
             print(err)
@@ -300,7 +301,7 @@ class Screen:
         """
         if offset[0] == 'center':
             center = Screen.center_offset(string, self.SCREEN_SIZE[0])
-            offset = (center,offset[1])
+            offset = (center, offset[1])
 
         for c, char in enumerate(string):
             if char == '\t':
@@ -311,11 +312,11 @@ class Screen:
                 char = font.add_escape(char, **format)
 
             col, row = offset
-            self._write_char_to_screen(char, col=col + c, row=row)
+            self.write_char_to_screen(char, col=col + c, row=row)
 
 
-    def _write_array_to_screen(self, array, offset=(0,0), transparent=False,
-                        format_char=True, format_space=False, **format ):
+    def write_array_to_screen(self, array, offset=(0,0), transparent=False,
+                              format_char=True, format_space=False, **format ):
         """ Writes an array to the screen
 
         Arguments:
@@ -329,8 +330,7 @@ class Screen:
             format_space {bool} -- [description] (default: {False})
             transparent {bool} -- [description] (default: {False})
         """
-
-        # if 'center' is passed in as col offset, then figure out what the 
+        # if 'center' is passed in as col offset, then figure out what the
         # correct offset value is based on widest line in the given array
         if offset[0] == 'center':
             width = Screen._get_array_width(array)
@@ -343,7 +343,7 @@ class Screen:
                     continue
                 if (char != ' ' and format_char) or format_space:
                     char = font.add_escape(char, **format)
-                self._write_char_to_screen(char, col=col + c, row=row + r)
+                self.write_char_to_screen(char, col=col + c, row=row + r)
 
 
     @staticmethod
@@ -361,6 +361,7 @@ class Screen:
         return max([len(line) for line in array])
 
 
+    #TODO: Utlize Table.get_width() method here
     @staticmethod
     def _get_menu_width(menu_dict, option_only=False):
         """ Returns the width of the widest option in given menu dictionary
@@ -422,7 +423,7 @@ class Screen:
 
             array.append(line)
 
-        self._write_array_to_screen(array, offset=offset, format_char=False)
+        self.write_array_to_screen(array, offset=offset, format_char=False)
 
 
     def draw(self, clear_first=False):
@@ -445,100 +446,26 @@ class Screen:
 ## Screens created here
 ##------------------------------------------------------------------------------
 
-def story_test():
-    """ tests compositing screens and adding text at a centered offset
-    using string formatters and parameters """
+# def story_test():
+#     """ tests compositing screens and adding text at a centered offset
+#     using string formatters and parameters """
 
-    # draw the background and frame
-    screen = _create_background(
-                    background='scroll',
-                    fgcolor='YELLOW', bgcolor='BLACK')
+#     # draw the background and frame
+#     screen = _create_background(
+#                     background='scroll',
+#                     fgcolor='YELLOW', bgcolor='BLACK')
 
-    # draw screen title
-    title = 'CHAPTER ONE'
-    c = main.center_offset(title, const.SCREEN_SIZE[0])
-    main.write_to_array(
-            title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
+#     # draw screen title
+#     title = 'CHAPTER ONE'
+#     c = main.center_offset(title, const.SCREEN_SIZE[0])
+#     main.write_to_array(
+#             title, screen, col=c, row=2, fgcolor='CYAN', style="BRIGHT")
 
-    # draw story text
-    story = const.SCREENS['story_test']['array']
-    main.write_to_array(story, screen, col=6, row=6, fgcolor='WHITE')
+#     # draw story text
+#     story = const.SCREENS['story_test']['array']
+#     main.write_to_array(story, screen, col=6, row=6, fgcolor='WHITE')
 
-    # print the screen
-    main.draw(screen)
-
-
-def _file_data_block(index, file_info, screen):
-    """ creates file data block
-
-    File screen currently supports 3 file data blocks
-    """
-    # each frame needs 8 characters of space, starting at row 2
-    row = index * 8 + 2
-
-    # draw file frame
-    file_frame = const.SCREENS['file_frame']['array']
-
-    # add text from file_info
-    filename = f'< SAVE GAME {index + 1} >'
-    main.string_to_char_array(filename)
-    main.write_to_array(filename, file_frame, col=2, row=0)
-
-    # add character name, class, level
-    # TODO: This data should be gotten from file_info arg
-    n = f'[NAME]'
-    c = f'[CLASS]'
-    l = f'[LEVEL]'
-    char_text = main.string_to_char_array(f'{n} | {c} | {l}')
-    main.write_to_array(char_text, file_frame, col=2, row=1)
-
-    # add timestamp
-    # TODO: This data should be gotten from file_info arg
-    # TODO: Need to right-justify timestamp to frame border width - 1
-    timestamp = f'12:24 - 12/12/2019'
-    main.string_to_char_array(filename)
-    main.write_to_array(timestamp, file_frame, col=52, row=1)
-
-    # add file details
-    # TODO: This data should be gotten from file_info arg
-    details_txt = 'OTHER RELEVANT DETAILS IN THE FILE THAT NEED TO BE SHOWN'
-    details_txt = main.string_to_char_array(details_txt)
-    main.write_to_array(details_txt, file_frame, col=2, row=3)
-
-    # draw the file block to the screen
-    main.write_to_array(file_frame, screen,
-                        transparent=True, col=3, row=row,
-                        fgcolor='WHITE', bgcolor='BLACK'
-                        )
+#     # print the screen
+#     main.draw(screen)
 
 
-def files(files_info=[{},{},{}], mode='load'):
-    """ Create file screen
-
-    File screen is used for loading and saving files in the main menu or in
-    game menu
-    """
-
-    # draw the background and frame
-    # makes a new empty screen
-    screen = main.new_screen(char=' ')
-
-    # creates standard double line frame around whole screen
-    _create_frame(screen)
-
-    # draw the header
-    header = f' {mode.upper()} GAME '
-    col = main.center_offset(header, const.SCREEN_SIZE[0])
-    main.write_to_array(header, screen, col=col, row=0, fgcolor='RED')
-
-    # create each file data block and draw them to screen
-    for i, f in enumerate(files_info):
-        _file_data_block(i, f, screen)
-
-    # add screen prompt
-    text = f'SELECT FILE SLOT TO {mode.upper()}'
-    col = main.center_offset(text, const.SCREEN_SIZE[0])
-    main.write_to_array(text, screen, col=col, row=27, fgcolor='RED')
-
-    # print the screen
-    main.draw(screen)
