@@ -18,4 +18,5 @@ def run(start='main_menu'):
         game.on_event('enter_state')
 
     # If we're out of the main loop, then we're quitting the game
+    Screen.clear()
     sys.exit()
