@@ -70,9 +70,10 @@ SETTINGS = {
     'start_state':'game',
     'symbol':True,
     'color':True,
-    'log_filename':os.path.join(PATH_ROOT, 'map.log'),
-    'logging':logging.ERROR
-}
+    'logging':logging.ERROR,
+    'log_map':os.path.join(PATH_ROOT, 'map.log'),
+    'log_game':os.path.join(PATH_ROOT, 'game.log'),    
+    }
 
 # ToDo: duplicate data here, but it's easier to check if a key is in
 # MOVE_KEYS.keys() rather than sort through a list of aliases for now
