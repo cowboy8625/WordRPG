@@ -5,20 +5,9 @@ import codecs
 
 from colorama import init as colorama_init
 
-from . import const, cursor, font
-
-
-
-# def setup_terminal(title=const.TITLE, convert_escape=True,
-#                    size=const.SCREEN_SIZE, hide_cursor=True):
-#     """ sets the size of the terminal window and clears it before printing"""
-#     colorama_init(convert=convert_escape)
-#     cols, lines = size
-#     os.system(f"mode con cols={cols} lines={lines}")
-#     os.system("title " + title)
-
-#     if hide_cursor:
-#         cursor.hide()
+from .. import const
+from . import cursor, font
+from ..common import Point
 
 
 
@@ -29,6 +18,22 @@ class Screen:
     characters for screen formatting
 
     """
+
+    # characters used to build frames
+    FRAME = {
+        'tl'    : ['┌','╔'],
+        'tr'    : ['┐','╗'],
+        'bl'    : ['└','╚'],
+        'br'    : ['┘','╝'],
+        'v'     : ['│','║'],
+        'h'     : ['─','═'],
+        'vl'    : ['├','╠'],
+        'vr'    : ['┤','╣'],
+        'hb'    : ['┴','╩'],
+        'ht'    : ['┬','╦'],
+        'c'     : ['┼','╬'],
+    }
+
     def __init__(self, size=const.SCREEN_SIZE):
         self.SCREEN_SIZE = size
 
@@ -162,12 +167,12 @@ class Screen:
         cols, rows = size
 
         # get frame characters based on style
-        tl = const.FRAME['tl'][frame_style]
-        tr = const.FRAME['tr'][frame_style]
-        bl = const.FRAME['bl'][frame_style]
-        br = const.FRAME['br'][frame_style]
-        v = const.FRAME['v'][frame_style]
-        h = const.FRAME['h'][frame_style]
+        tl = Screen.FRAME['tl'][frame_style]
+        tr = Screen.FRAME['tr'][frame_style]
+        bl = Screen.FRAME['bl'][frame_style]
+        br = Screen.FRAME['br'][frame_style]
+        v = Screen.FRAME['v'][frame_style]
+        h = Screen.FRAME['h'][frame_style]
 
         # assemble the final frame string
         frame_string = f'{tl}{h * (cols - 2)}{tr}\n'
@@ -207,7 +212,7 @@ class Screen:
         Keyword Arguments:
             offset {tuple} -- Offset for the .txt file (default: {(0,0)})
         """
-        filename = os.path.join(const.FILEPATH, f'{screen_name}.txt')
+        filename = os.path.join(const.PATH_SCREENS, f'{screen_name}.txt')
         text = self._load_txt(filename)
         array = self._string_to_array(text)
 
@@ -243,7 +248,7 @@ class Screen:
 
         Keyword Arguments:
             header {[type]} -- [description] (default: {const.HEADER})
-            format {[type]} -- [description] (default: {const.DEF_FORMAT})
+            format {[type]} -- [description] (default: {const.DEF_FONT})
         """
         header = f' {header} '
         self.add_string_to_screen(header, offset=('center', 0), **format)
@@ -254,7 +259,7 @@ class Screen:
 
         Keyword Arguments:
             footer {[type]} -- [description] (default: {const.FOOTER})
-            format {[type]} -- [description] (default: {const.DEF_FORMAT})
+            format {[type]} -- [description] (default: {const.DEF_FONT})
         """
         footer = f' {footer} '
         self.add_string_to_screen(footer, offset=('center', 29), **format)
@@ -425,14 +430,20 @@ class Screen:
 
         self.write_array_to_screen(array, offset=offset, format_char=False)
 
+    @staticmethod
+    def write(string, pos=Point(0,0)):
+        """ writes a string to the terminal at given pos """
+        for i, line in enumerate(string.splitlines()):
+            stdout.write(f"\u001b[{pos.row + i};{pos.col}H{line}")
+            stdout.flush()
 
-    def draw(self, clear_first=False):
+
+    def draw(self, as_string=False , clear_first=False):
         """ Prints current screen to the output window """
         if clear_first:
             self.clear()
 
-        stdout.write(f"\x1b7\x1b[0;0f{self.array_to_string(self.screen)}\x1b8")
-        # stdout.write(f'\r\r\r\r\r{self.array_to_string(self.screen)}')
+        stdout.write(f"\u001b[0;0H{self.array_to_string(self.screen)}")
         stdout.flush()
 
 
