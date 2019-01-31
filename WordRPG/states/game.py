@@ -2,7 +2,7 @@
 from collections import deque
 import logging
 
-from ..const import SETTINGS, MOVE_KEYS, MAPS_DATA
+from .. import const
 from ..common import Point, Table
 from ..gui.screen import Screen
 from .states import State
@@ -10,7 +10,8 @@ from ..map.map import Map
 
 
 
-logging.basicConfig(filename=r'E:\Python\WordRPG\WordRPG\game.log', level=logging.DEBUG, filemode='w')
+logging.basicConfig(filename=const.SETTINGS['log_game'], filemode='w',
+                    level=const.SETTINGS['logging'])
 
 
 # TODO: This should be loaded in from a .json at a higher level in the project
@@ -44,8 +45,8 @@ class Game(State):
     def _init_maps(self):
         """ create a 'Map' object using the given image filename and then print
         it to the terminal """
-        logging.info('MAPS_DATA:{}'.format(MAPS_DATA))
-        maps = {k:Map(**v) for k, v in MAPS_DATA.items()}
+        logging.info('MAPS_DATA:{}'.format(const.MAPS_DATA))
+        maps = {k:Map(**v) for k, v in const.MAPS_DATA.items()}
 
         return maps
 
@@ -97,7 +98,7 @@ class Game(State):
                                          fgcolor='WHITE', bgcolor='BLACK')
 
         # write map to screen
-        map_frame = self.cur_map.get_map_frame(as_string=False, color=SETTINGS['color'])
+        map_frame = self.cur_map.get_map_frame(as_string=False, color=const.SETTINGS['color'])
         self.screen.write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
 
         # write player cursor
@@ -108,7 +109,7 @@ class Game(State):
             self.update_screen()
 
         # # write map to screen
-        # map_frame = self.cur_map.get_map_frame(as_string=True, color=SETTINGS['color'])
+        # map_frame = self.cur_map.get_map_frame(as_string=True, color=const.SETTINGS['color'])
         # Screen.write(map_frame, pos=Point(4, 3))
 
 
@@ -170,8 +171,8 @@ class Game(State):
 
     def move(self, key):
         """ Even handler for moving in the game world """
-        text = MOVE_KEYS[key]['text'].upper()
-        vec = MOVE_KEYS[key]['vec']
+        text = const.MOVE_KEYS[key]['text'].upper()
+        vec = const.MOVE_KEYS[key]['vec']
 
         cur_pos = self.cur_map.cur_pos
         new_pos = self.cur_map.move(vec)
@@ -235,7 +236,7 @@ class Game(State):
                 return self.death()
             if key == 'esc':
                 return 'game_menu'
-            if key in MOVE_KEYS.keys():
+            if key in const.MOVE_KEYS.keys():
                 self.move(key)
 
         return self
