@@ -16,7 +16,7 @@ from .tile import Tile
 
 
 
-logging.basicConfig(filename=const.SETTINGS['log_filename'], filemode='w',
+logging.basicConfig(filename=const.SETTINGS['log_map'], filemode='w',
                     level=const.SETTINGS['logging'])
 
 
