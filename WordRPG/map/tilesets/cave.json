@@ -1,0 +1,28 @@
+{
+"rock_wall":{"movement":0, "color":"black", "alpha":"R", "symbol":"░",
+		"description":"YOU ARE IN THE MOUNTAINS",
+		"resources":null,
+		"font":{"fgcolor":"LIGHTBLACK_EX","bgcolor":"BLACK","style":"DIM"},
+		"default":true
+		},
+"underground_lake":{"movement":0, "color":"blue", "alpha":"L", "symbol":"~",
+		"description":"YOU ARE IN AN UNDERGROUND LAKE",
+		"resources":null,
+		"font":{"fgcolor":"BLACK","bgcolor":"BLUE","style":"NORMAL"}
+		},
+"old_path":{"movement":1, "color":"magenta","alpha":"P", "symbol":"·",
+		"description":"YOU ARE IN A PATH", "connect":true,
+		"resources":null,
+		"font":{"fgcolor":"BLACK","bgcolor":"LIGHTBLACK_EX","style":"DIM"}
+		},
+"cave_floor":{"movement":2, "color":"white", "alpha":"D", "symbol":" ",
+		"description":"YOU ARE ON DIRT",
+		"resources":null,
+		"font":{"fgcolor":"LIGHTBLACK_EX","bgcolor":"LIGHTBLACK_EX","style":"DIM"}
+		},
+"cave_puddle":{"movement":2, "color":"cyan", "alpha":"W", "symbol":"~",
+		"description":"YOU ARE IN WATER",
+		"resources":["water", "fish"],
+		"font":{"fgcolor":"BLACK","bgcolor":"LIGHTBLUE_EX","style":"NORMAL"}
+		}
+	}

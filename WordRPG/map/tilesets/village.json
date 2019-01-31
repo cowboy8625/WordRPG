@@ -1,0 +1,48 @@
+{
+"grass":{"movement":0, "color":"lawngreen", "alpha":"G", "symbol":" ",
+    "description":"YOU ARE IN THE MOUNTAINS",
+    "resources":null,
+    "font":{"fgcolor":"LIGHTYELLOW_EX","bgcolor":"LIGHTGREEN_EX","style":"NORMAL"},
+    "default":true
+    },
+"dirt":{"movement":2, "color":"khaki", "alpha":"D", "symbol":"░",
+    "description":"YOU ARE IN A VILLAGE",
+    "resources":null,
+    "font":{"fgcolor":"WHITE","bgcolor":"YELLOW","style":"NORMAL"}
+    },
+"pond":{"movement":0, "color":"darkcyan", "alpha":"L", "symbol":"~",
+    "description":"YOU ARE IN A POND",
+    "resources":null,
+    "font":{"fgcolor":"BLACK","bgcolor":"BLUE","style":"NORMAL"}
+    },
+"river":{"movement":0, "color":"blue", "alpha":"R", "symbol":"~",
+    "description":"YOU ARE IN ON A RIVER",
+    "resources":null,
+    "font":{"fgcolor":"LIGHTBLACK_EX","bgcolor":"BLUE","style":"NORMAL"}
+    },
+"path":{"movement":1, "color":"white","alpha":"P", "symbol":"+",
+    "description":"YOU ARE IN A PATH", "connect":true, "connect_style":"path",
+    "resources":null,
+    "font":{"fgcolor":"BLACK","bgcolor":"YELLOW","style":"DIM"}
+    },
+"farm":{"movement":2, "color":"magenta", "alpha":"F", "symbol":"≡",
+    "description":"YOU ARE ON A FARM",
+    "resources":["herb"],
+    "font":{"fgcolor":"LIGHTYELLOW_EX","bgcolor":"GREEN","style":"NORMAL"}
+},
+"tree":{"movement":0, "color":"olivedrab", "alpha":"T", "symbol":"O",
+    "description":"YOU ARE ON A TREE",
+    "resources":null,
+    "font":{"fgcolor":"LIGHTGREEN_EX","bgcolor":"GREEN","style":"BRIGHT"}
+},
+"fence":{"movement":0, "color":"black", "alpha":"+", "symbol":"┼",
+    "description":"YOU ARE ON A FENCE", "connect":true, "connect_style":"fence",
+    "resources":null,
+    "font":{"fgcolor":"BLACK","bgcolor":"GREEN","style":"NORMAL"}
+    },
+"building":{"movement":0, "color":"red", "alpha":"B", "symbol":"▓",
+    "description":"YOU ARE ON A FENCE",
+    "resources":null,
+    "font":{"fgcolor":"WHITE","bgcolor":"BLACK","style":"NORMAL"}
+    }      
+}
