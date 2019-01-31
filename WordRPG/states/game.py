@@ -1,7 +1,8 @@
 """ Placeholder state for main 'game' loop """
 from collections import deque
+import logging
 
-from ..const import SETTINGS
+from ..const import SETTINGS, MOVE_KEYS, MAPS_DATA
 from ..common import Point, Table
 from ..gui.screen import Screen
 from .states import State
@@ -9,26 +10,16 @@ from ..map.map import Map
 
 
 
+logging.basicConfig(filename=r'E:\Python\WordRPG\WordRPG\game.log', level=logging.DEBUG, filemode='w')
+
+
+# TODO: This should be loaded in from a .json at a higher level in the project
+# TODO: Need to set a pos from the start map on the new map instead of using
+# start position and returning to previous position
+
+
 class Game(State):
     """ 'Game' state and associated data/methods """
-    # ToDo: duplicate data here, but it's easier to check if a key is in
-    # MOVE_KEYS.keys() rather than sort through a list of aliases for now
-    MOVE_KEYS = {
-        'w' : {'text':'north', 'vec':(0, -1)},
-        'up' : {'text':'north', 'vec':(0, -1)},
-
-        's' : {'text':'south', 'vec':(0, 1)},
-        'down' : {'text':'south', 'vec':(0, 1)},
-
-        'a' : {'text':'west', 'vec':(-1, 0)},
-        'left' : {'text':'west', 'vec':(-1, 0)},
-
-        'd' : {'text':'east', 'vec':(1, 0)},
-        'right' : {'text':'east', 'vec':(1, 0)},
-    }
-
-
-
     def __init__(self, buffer_size=5):
         """ Initiailize class and super class """
         super(Game, self).__init__()
@@ -37,7 +28,7 @@ class Game(State):
         self.first_time = False
 
         # initialize maps and map data
-        self.maps = self._init_maps(pos=(40,27))
+        self.maps = self._init_maps()
         self.cur_map = self.maps['world']
 
         # initialize screen and elements
@@ -50,13 +41,13 @@ class Game(State):
         self.add_to_buffer("WELCOME TO THE WASTELANDS")
 
 
-    def _init_maps(self, pos=(0.0)):
+    def _init_maps(self):
         """ create a 'Map' object using the given image filename and then print
         it to the terminal """
-        # maps = {'world':('image':'test_island2', 'pos':19,18}}
-        # {name:Map(image_name) for name, image_name in maps.items()}
+        logging.info('MAPS_DATA:{}'.format(MAPS_DATA))
+        maps = {k:Map(**v) for k, v in MAPS_DATA.items()}
 
-        return {'world':Map('test_island2', pos=pos)}
+        return maps
 
 
     def _init_screen(self):
@@ -89,26 +80,24 @@ class Game(State):
 
 
     def update_map(self, draw=True):
-        # get map data
-        world_map = self.maps['world']
-        map_frame = world_map.get_map_frame(as_string=False, color=SETTINGS['color'])
-
+        """ updates map and redraws screen """
         # write map frame border
         frame_offset = Point(2, 1)
-        frame_size = Point(*world_map.frame_size) + Point(2, 2)
+        frame_size = Point(*self.cur_map.frame_size) + Point(2, 2)
         self.screen.add_frame(size=frame_size, offset=frame_offset,
                               frame_style=0, fgcolor='WHITE', bgcolor='BLACK')
 
         # write current biome name
-        pos = world_map.cur_pos
-        cur_tile = world_map.get_tile(pos)
-        cur_tile_name = f' {cur_tile.name.upper()} - {pos} '
+        point = self.cur_map.cur_pos
+        cur_tile = self.cur_map.get(point)
+        cur_tile_name = f' {cur_tile.name.upper()} - {point} '
         col = Screen.center_offset(cur_tile_name, frame_size[0])
         row = frame_offset.row + frame_size.row - 1
         self.screen.add_string_to_screen(f'<< {cur_tile_name} >>', offset=(col, row),
                                          fgcolor='WHITE', bgcolor='BLACK')
 
         # write map to screen
+        map_frame = self.cur_map.get_map_frame(as_string=False, color=SETTINGS['color'])
         self.screen.write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
 
         # write player cursor
@@ -117,6 +106,10 @@ class Game(State):
 
         if draw:
             self.update_screen()
+
+        # # write map to screen
+        # map_frame = self.cur_map.get_map_frame(as_string=True, color=SETTINGS['color'])
+        # Screen.write(map_frame, pos=Point(4, 3))
 
 
     def update_screen(self):
@@ -163,15 +156,32 @@ class Game(State):
         self.update_screen()
 
 
+    def map_transfer(self, map_name, pos):
+        new_map = self.maps[map_name]
+        self.add_to_buffer(f'ENTERING {map_name.upper()}...')
+        self.cur_map = new_map
+        self.cur_map.cur_pos = Point(*pos)
+        # self.cur_pos = self.cur_map.cur_pos
+        # update position on map frame
+        self.cur_map.set_map_frame()
+        # update the map
+        self.update_map()
+
+
     def move(self, key):
         """ Even handler for moving in the game world """
-        text = self.MOVE_KEYS[key]['text'].upper()
-        vec = self.MOVE_KEYS[key]['vec']
+        text = MOVE_KEYS[key]['text'].upper()
+        vec = MOVE_KEYS[key]['vec']
 
-        cur_pos = self.maps['world'].cur_pos
-        new_pos = self.maps['world'].move(vec)
+        cur_pos = self.cur_map.cur_pos
+        new_pos = self.cur_map.move(vec)
 
-        if cur_pos != new_pos:
+        if new_pos in self.cur_map.doors:
+            door = self.cur_map.doors[new_pos]
+            map_name = door['target']
+            map_pos = door['enter']
+            self.map_transfer(map_name, map_pos)
+        elif cur_pos != new_pos:
             self.add_to_buffer(f'MOVING {text}...')
             self.update_map()
 
@@ -225,7 +235,7 @@ class Game(State):
                 return self.death()
             if key == 'esc':
                 return 'game_menu'
-            if key in self.MOVE_KEYS.keys():
+            if key in MOVE_KEYS.keys():
                 self.move(key)
 
         return self
