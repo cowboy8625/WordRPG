@@ -1,5 +1,7 @@
 """ module for custom container classes """
+from math import sqrt
 from collections import namedtuple
+
 
 
 # Not sure if this setup is pythonic, but it seems to work
@@ -11,6 +13,20 @@ class Point(namedtuple('Point', ['col', 'row'])):
         col
         row
     """
+
+    def distance(self, point):
+        """ calculates distance between two Points """
+        return sqrt((point.col - self.col) ** 2 + (point.row - self.row) ** 2)
+
+    dist = distance
+
+
+    def average(self,point):
+        """ gets average point between two points """
+        return Point(((self.col + point.col) / 2), ((self.row + point.row) / 2))
+
+    avg = average
+
 
     def __add__(self, point):
         return Point(self.col + point.col, self.row + point.row)
@@ -41,12 +57,13 @@ class Table:
     """ Class for storing and working with data in a two-dimensional array
     
     Arguements:
-        arg {str} -- multi-line string where each line becomes a row and each
-                     character becomes a column in that row
+        arg {str}
+            multi-line string where each line becomes a row and each character
+            becomes a column in that row
         - or -
-        arg {list[lists]} -- 2d array (list of lists)
+        arg {list[lists]}
+            2d array (list of lists)
     """
-    __slots__ = ['cells']
 
     def __init__(self, arg):
         if isinstance(arg, str):
@@ -54,34 +71,28 @@ class Table:
         elif isinstance(arg, list):
             self.cells = arg
 
+        self.rows = len(self.cells)
+        self.cols = len(self.cells[0])
+        self.default_cell = None
+
 
     @staticmethod
     def from_string(string):
         """ Convert a mutli-line string to Table.cells
 
         Arguments:
-            string {str} -- Multi-line string block
+            string {str}
+                Multi-line string block
         """
         return [list(col) for col in string.splitlines()]
-
-
-    # @staticmethod
-    # def from_list(arg, rows):
-    #     """ Creates a new 2D list of lists """
-    #     return [[col for col in row] for row in rows]
-
-
-    # @staticmethod
-    # def from_grid(arg):
-    #     """ Creates a new Table from 2D list of lists """
-    #     return arg.cells
 
 
     def to_string(self, attr=None):
         """ Convert Table.cells to multi-line string
 
         Keyword Arguments:
-            attr {str} -- name of attribute to try and get from each element.
+            attr {str}
+                name of attribute to try and get from each element.
 
         Returns:
             str -- Table as a string
@@ -103,11 +114,11 @@ class Table:
         return max([len(line) for line in self.cells])
 
 
-    def get(self, pos, default=None):
+    def get(self, point):
         """ Gets cell from given (col, row) in Table.cells
 
         Arguments:
-            pos {tuple} -- (col,row) in Table.cells
+            point {Point} -- (col,row) in Table.cells
 
         Keyword Arguments:
             default -- default element to use in case of IndexError
@@ -115,48 +126,54 @@ class Table:
         Returns:
             return the value of the Table.cell at the given position
         """
-        col, row = pos
         try:
-            return self.cells[row][col]
+            if point.row > 0 and point.row < self.rows and \
+               point.col > 0 and point.col < self.cols:
+                    # Note: Cells are stored as columns in rows
+                    return self[point.row][point.col]
+            else:
+                    return self.default_cell
         except IndexError:
-            return default
+            return self.default_cell
 
 
-    def set(self, pos, arg ):
+    def set(self, point, arg ):
         """ Replaces cell at given (col, row) in Table.cells
 
         Arguments:
-            pos {tuple} -- (col,row) position in Table.cells
+            pos {tuple}
+                (col,row) position in Table.cells
 
         Returns:
             returns the arg if successful, None otherwise
         """
-        col, row = pos
         try:
-            self[col][row] = arg
+            self[point.col][point.row] = arg
             return arg
         except IndexError:
             return None
 
 
-    def get_sub(self, size, start, default=None):
+    def get_sub(self, size, start):
         """ Gets a sub-set of the Table.cells
 
         Arguments:
-            size {tuple} -- number of (cols, rows) to get from Table.cells
-            start {tuple} -- starting (cols, rows) of the Table
+            size {tuple}
+                number of (cols, rows) to get from Table.cells
+            start {tuple}
+                starting (cols, rows) of the Table
 
         Keyword Arguments:
             default -- default cell to use in case of IndexError
         """
         cols, rows = size
         start_col, start_row = start
-        return [[self.get((col,row), default=default)
+        return [[self.get((col,row))
                  for col in range(start_col, (start_col + cols))]
                 for row in range(start_row, (start_row + rows))]
 
 
-    def get_neighbors(self, pos, default=None):
+    def get_neighbors(self, point, default=None):
         """ Gets neighboring cells at given position in Table.cells
 
         Arguments:
@@ -168,12 +185,8 @@ class Table:
         Returns:
             tuple -- cells to the top, right, bottom, and left of pos
         """
-        col, row = pos
-        t = self.get((col, row - 1), default=default)
-        r = self.get((col + 1, row), default=default)
-        b = self.get((col, row + 1), default=default)
-        l = self.get((col - 1, row), default=default)
-        return t, r, b, l
+        vectors = [Point(0, -1), Point(1, 0), Point(0, 1), Point(-1, 0)]
+        return [self.get(point + vec) for vec in vectors]
 
 
     def __len__(self):
