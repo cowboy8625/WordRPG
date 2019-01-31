@@ -29,7 +29,7 @@ Tilesets are defined as JSON files in the following format:
 - **description**	text used to describe the tile to the player
 - **resources**	    list of resources that can be found in this tiles
 - **discovered**	whether this tile starts as 'disovered'
-- **deafult**	    if this flag is True, this Tile should be used for any out
+- **default**	    if this flag is True, this Tile should be used for any out
                     of range Tiles when the sub-map is generated
 
 ###Font:
