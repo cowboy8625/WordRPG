@@ -38,6 +38,10 @@ class Map(Table):
         :``tileset``:   `dict`  Dictionary of keys and 'Tile' objects
     """
 
+    # tile symbols used to do a soft falloff of visilbity radius
+    gradient = ['▓', '▒', '░']
+
+
     def __init__(self, map_name, pos=(0,0), doors={},
                   tileset='world', visibility=0):
         self.tileset = self.load_tileset(tileset)
@@ -253,17 +257,16 @@ class Map(Table):
         
         # if radius is 0 then all tiles are visible
         all_visible = vis_radius == 0
+        # self.default_cell.visible = all_visible
 
-        self.default_cell.visible = all_visible
+        # if all tiles are visible, make sure visible property is set on all Map
+        # Tiles and then return immediately
+        if all_visible is True:
+            self.set_attr_all('visible', True)
+            return True
 
-        # for row in self:
-        #     for tile in row:
-        #         tile.visible = all_visible
-        
-        # if all_visible is True:
-        #     return None
-
-        # make sure we're only checking in-range cells
+        # make sure we're only checking cells that are in range of current
+        # position instead of the whole Map
         col, row = self.cur_pos
         min_row = min(row - vis_radius, 0)
         max_row = max(row + vis_radius, self.rows)
@@ -272,31 +275,26 @@ class Map(Table):
         rows = list(range(min_row, max_row))
         cols = list(range(min_col, max_col))
 
-        # tile symbols used to do a soft falloff of visilbity radius
-        gradient = ['▓', '▒', '░']
-
         # loop through each tile and determine if they are within the visibility
         # radius.
-        # For tiles on the edges of the visibility radius, we change their
-        # current symbol to render a screen character
         for pos in product(cols, rows):
             point = Point(*pos)
             tile = self.get(Point(*pos))
             distance = int(point.distance(self.cur_pos))
 
-            # if a tile is outside the radius, set the .visible property to True
-            # if 'all_visible' is True (visibilty radius is 0)
+            # if a tile is outside the radius, set the .visible property
+            # to False
             if distance > vis_radius:
-                tile.visible = all_visible
+                tile.visible = False
             # if a tile's distance from current position is between the
-            # visibility radisus and 3 units from the edge, we want to change
-            # the Tile's symbol to draw a screen character
-            elif vis_radius > distance > vis_radius - 3:
+            # radius and radius-3, we want to change the Tile's symbol to draw
+            # a screen character to create a gradient/falloff effect
+            elif vis_radius >= distance > vis_radius - 3:
                 tile.visible = True
                 font = {k:v for k, v in tile.font.items()}
                 font['fgcolor'] = 'BLACK'
                 index = sorted([0, vis_radius - distance, 2])[1]
-                symbol = gradient[index]
+                symbol = self.gradient[index]
                 tile.char = tile.format_tile(symbol=symbol, _font=font)
             # TODO: This should be refactored so that we're not re-formatting
             # the Tile character every time. Could probably have a sub process
