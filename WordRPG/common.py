@@ -154,6 +154,19 @@ class Table:
             return None
 
 
+    def set_attr_all(self, name, value):
+        """ set named attribute in all Table cells to value
+        
+        Arguments:
+            name {string} -- Name of the attribute
+            value {any} -- Value to set on attributes
+        """
+        for row in self:
+            for col in row:
+                if hasattr(col, name):
+                    setattr(col, name, value)
+
+
     def get_sub(self, size, start):
         """ Gets a sub-set of the Table.cells
 
