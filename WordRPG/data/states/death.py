@@ -1,25 +1,23 @@
-""" Placeholder for 'save game' state """
+""" Placeholder state for 'crafting' """
 
-from ..gui.screen import const, Screen
-from .states import State
+from ...gui.screen import const, Screen
+from ...state_machine import State
 
 
 
-class Save_Game(State):
+class Death(State):
     def __init__(self):
         """ Initiailize class and super class """
-        super(Save_Game, self).__init__()
-
+        super(Death, self).__init__()
+        self.first_time = True
         self.screen = self._init_screen()
 
 
     def _init_screen(self):
         screen = Screen()
-        screen.load_screen('scroll', offset=('center',1), fgcolor='YELLOW')
-
-        screen.add_string_to_screen('SAVE GAME', offset=('center', 2),
-                    fgcolor='CYAN')
-
+        screen.load_screen('tombstone', offset=('center',2), fgcolor='WHITE')
+        screen.add_string_to_screen('YOU ARE DEAD', offset=('center', 27),
+                    fgcolor='RED')
         return screen
         
 
@@ -32,4 +30,4 @@ class Save_Game(State):
         """ Handles events that are delegated to this State. """
         self.update_screen()
         self.wait_for_keypress()
-        return 'game'   #prev_state
+        return 'game_menu'

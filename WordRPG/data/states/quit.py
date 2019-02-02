@@ -1,6 +1,7 @@
 """ 'quit' state """
 
-from .states import Confirm
+from ...gui.screen import const, Screen
+from ...state_machine import Confirm
 
 
 
@@ -24,11 +25,11 @@ class Quit(Confirm):
         screen = Screen()
 
         # creates standard double line frame around whole screen
-        screen.add_frame(size=(30, 20), offset=(#center, 0),
+        screen.add_frame(size=(30, 20), offset=('center', 0),
                     fgcolor='BLUE', bgcolor='BLACK')
 
         # draw the game title
-        screen.load_screen('title', offset=('center',8),
+        screen.load_screen('title', offset=('center', 8),
                     fgcolor='RED', bgcolor='BLACK')
 
         # add title and text

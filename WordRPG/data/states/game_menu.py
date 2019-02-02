@@ -1,7 +1,7 @@
 """ In game menu state """
 
-from ..gui.screen import const, Screen
-from .states import State
+from ...gui.screen import const, Screen
+from ...state_machine import State
 
 
 

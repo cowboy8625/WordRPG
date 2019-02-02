@@ -1,7 +1,7 @@
 import sys
 
-from .states.machine import FSM, STATES
-from . import gui
+from .state_machine.machine import FSM
+from .data.states import STATES
 from .gui.screen import Screen
 
 

@@ -2,11 +2,11 @@
 from collections import deque
 import logging
 
-from .. import const
-from ..common import Point, Table
-from ..gui.screen import Screen
-from .states import State
-from ..map.map import Map
+from ... import const
+from ...common import Point, Table
+from ...gui.screen import Screen
+from ...state_machine import State
+from ...map.map import Map
 
 
 

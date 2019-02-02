@@ -1,21 +1,23 @@
-""" Placeholder for 'shop' state """
-from ..gui.screen import const, Screen
-from .states import State
+""" Placeholder state for 'crafting' """
+
+from ...gui.screen import const, Screen
+from ...state_machine import State
 
 
 
-class Shop(State):
+class Crafting(State):
     def __init__(self):
         """ Initiailize class and super class """
-        super(Shop, self).__init__()
+        super(Crafting, self).__init__()
+        self.first_time = True
 
 
     def update_screen(self):
         """ Draws the screen """
         Screen.clear()
-        print('THIS IS A PLACEHOLDER SCREEN FOR SHOP STATE')
+        print('THIS IS A PLACEHOLDER SCREEN FOR CRAFTING STATE')
         print('PRESS KEY TO RETURN TO MAIN LOOP')
-   
+
 
     def on_event(self, event, prev_state):
         """ Handles events that are delegated to this State. """

@@ -21,9 +21,9 @@ FOOTER = f'{COMPANY} - ©{YEAR}'  # © can cause problems with encoding
 ##------------------------------------------------------------------------------
 
 PATH_ROOT = os.path.dirname(__file__)
-PATH_MAPS = os.path.join(PATH_ROOT, 'map', 'images')
-PATH_TILESETS = os.path.join(PATH_ROOT, 'map', 'tilesets')
-PATH_SCREENS = os.path.join(PATH_ROOT, 'gui', 'text_screens')
+PATH_MAPS = os.path.join(PATH_ROOT, 'data', 'maps')
+PATH_TILESETS = os.path.join(PATH_ROOT, 'data', 'tilesets')
+PATH_SCREENS = os.path.join(PATH_ROOT, 'data', 'screen_elements')
 
 ##------------------------------------------------------------------------------
 ## GUI related constants
