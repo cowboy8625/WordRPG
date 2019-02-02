@@ -33,6 +33,5 @@ def add_escape( char, fgcolor = None, bgcolor = None, style = None ):
 
     a, b, c = [getattr(b, a.upper()) if isinstance(a, str) else ''
                for a, b in zip([fgcolor, bgcolor, style], [Fore, Back, Style])]
-    d, e, f = (Fore.RESET, Back.RESET, Style.RESET_ALL)
 
-    return f'{a}{b}{c}{char}{d}{e}{f}'
+    return f'{a}{b}{c}{char}'

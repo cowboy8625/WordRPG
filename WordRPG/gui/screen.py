@@ -58,7 +58,7 @@ class Screen:
     def setup_terminal(title=const.TITLE, convert_escape=True,
                        size=const.SCREEN_SIZE, hide_cursor=True):
         """ sets the size of the terminal window and clears it before printing"""
-        colorama_init(convert=convert_escape)
+        colorama_init(autoreset=True)
         cols, lines = size
         os.system(f"mode con cols={cols} lines={lines}")
         os.system("title " + title)
