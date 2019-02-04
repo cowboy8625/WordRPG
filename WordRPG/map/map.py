@@ -43,7 +43,7 @@ class Map(Table):
 
 
     def __init__(self, map_name, pos=(0,0), doors={},
-                  tileset='world', visibility=0):
+                  tileset='world', visibility=0, game_time=None):
         self.tileset = self.load_tileset(tileset)
         self.map_key = self.get_map_key()
         self.cols, self.rows = self.size = (0, 0)
@@ -58,6 +58,7 @@ class Map(Table):
         self.doors = doors
 
         # default visibility radius
+        self.game_time = game_time
         self.visibility_day, self.visibility_night = self.visibility = visibility
 
         # set current position and Tile
@@ -240,20 +241,23 @@ class Map(Table):
         """
 
         if as_string:
-            return self.to_string()
+            return Map.to_string(self)
         elif symbol is not True:
-            return self.to_string(att='alpha')
+            return Map.to_string(self, att='alpha')
         elif color is not True:
-            return self.to_string(att='symbol')
+            return Map.to_string(self, att='symbol')
         else:
-            return self.to_string(att='char')
+            return Map.to_string(self, att='char')
 
 
     def set_visibility(self):
         """ sets visiblity on Map Tiles """
 
         # TODO: Get current visibilty radius based on time of day
-        vis_radius = self.visibility_day
+        if 5 < self.game_time.datetime.hour < 19:
+            vis_radius = self.visibility_day
+        else:
+            vis_radius = self.visibility_night
         
         # if radius is 0 then all tiles are visible
         all_visible = vis_radius == 0
@@ -263,6 +267,15 @@ class Map(Table):
         # Tiles and then return immediately
         if all_visible is True:
             self.set_attr_all('visible', True)
+
+            rows = list(range(0, self.rows))
+            cols = list(range(0, self.cols))
+
+            for pos in product(cols, rows):
+                point = Point(*pos)
+                tile = self.get(Point(*pos))
+                tile.char = tile.char = tile.format_tile()
+
             return True
 
         # make sure we're only checking cells that are in range of current
@@ -282,26 +295,31 @@ class Map(Table):
             tile = self.get(Point(*pos))
             distance = int(point.distance(self.cur_pos))
 
-            # if a tile is outside the radius, set the .visible property
-            # to False
-            if distance > vis_radius:
-                tile.visible = False
             # if a tile's distance from current position is between the
             # radius and radius-3, we want to change the Tile's symbol to draw
             # a screen character to create a gradient/falloff effect
-            elif vis_radius >= distance > vis_radius - 3:
+            if vis_radius >= distance > vis_radius - 3:
                 tile.visible = True
                 font = {k:v for k, v in tile.font.items()}
                 font['fgcolor'] = 'BLACK'
                 index = sorted([0, vis_radius - distance, 2])[1]
                 symbol = self.gradient[index]
                 tile.char = tile.format_tile(symbol=symbol, _font=font)
-            # TODO: This should be refactored so that we're not re-formatting
-            # the Tile character every time. Could probably have a sub process
-            # that checks to see if the visible state changed
+
+                continue
+
+            # if a tile is outside the radius, set the .visible property
+            # to False
+            if distance > vis_radius:
+                tile.visible = False
             else:
                 tile.visible = True
-                tile.char = tile.format_tile()
+
+            # TODO: This should be refactored so that we're not re-formatting
+            # the Tile character every frame. Could probably have a sub process
+            # that checks to see if the visible state changed
+            tile.char = tile.format_tile()
+            
 
 
     def move(self, vec=(0,0)):
