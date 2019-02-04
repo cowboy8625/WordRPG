@@ -7,15 +7,15 @@ from colorama import init as colorama_init
 
 from .. import const
 from . import cursor, font
-from ..common import Point
+from ..common import Point, Table
 
 
 
-class Screen:
-    """ Base class for a 'screen'
+class Screen(Table):
+    """ Screen class. Inherets from Table
 
-    A screen is a 2D array of blocks including a character and any escape
-    characters for screen formatting
+    A Screen is a 2D array of cells containing an ASCII character and any escape
+    characters for color/style formatting
 
     """
 
@@ -34,11 +34,13 @@ class Screen:
         'c'     : ['┼','╬'],
     }
 
+
+
     def __init__(self, size=const.SCREEN_SIZE):
         self.SCREEN_SIZE = size
 
-        self._init_screen()
-
+        super(Screen, self).__init__(self._init_screen())
+        self.screen = self.cells
 
     def _init_screen(self, char=' '):
         """ creates a new screen by filling it with given character
@@ -50,15 +52,14 @@ class Screen:
         # line = f'{char}' * cols
         text = '\n'.join([f'{char * cols}' for row in range(rows)])
 
-        # TODO: Implement Table class here
-        self.screen = self._string_to_array(text)
+        return Screen.from_string(text)
 
 
     @staticmethod
     def setup_terminal(title=const.TITLE, convert_escape=True,
                        size=const.SCREEN_SIZE, hide_cursor=True):
         """ sets the size of the terminal window and clears it before printing"""
-        colorama_init(autoreset=True)
+        colorama_init()     #autoreset=True
         cols, lines = size
         os.system(f"mode con cols={cols} lines={lines}")
         os.system("title " + title)
@@ -77,36 +78,6 @@ class Screen:
     def make_unicode(text):
         """ Ensures that text is encoded as unicode """
         return text.encode( encoding="utf-8")
-
-
-    @staticmethod
-    def _string_to_array(string):
-        """ Convert string to 2D array
-
-        Converts a multi-line string into a two-dimensional deque array of string
-        characters.
-
-        **Arguments:**
-            :``string``: `str` Multi-line string block
-        """
-        # split text into lines/rows
-        lines = string.splitlines()
-
-        return [list(col) for col in lines]
-
-
-    @staticmethod
-    def array_to_string(array):
-        """ Convert array to string
-
-        Converts a two-dimensional deque array of string characters into a
-        multi-line string that can be printed to the output window.
-
-        **Arguments:**
-            :``array``: `list` 2D array of characters
-        """
-        lines = [''.join(char) for char in array]
-        return '\n'.join(lines)
 
 
     @staticmethod
@@ -151,7 +122,7 @@ class Screen:
 
 
     @staticmethod
-    def _create_frame(size, frame_style=1):
+    def create_frame(size, frame_style=1):
         """ Creates a frame
 
         Arguments:
@@ -180,7 +151,7 @@ class Screen:
             frame_string += f'{v}{" " * (cols - 2)}{v}\n'
         frame_string += f'{bl}{h * (cols - 2)}{br}'
 
-        return Screen._string_to_array(frame_string)
+        return Screen.from_string(frame_string)
 
 
     @staticmethod
@@ -214,7 +185,7 @@ class Screen:
         """
         filename = os.path.join(const.PATH_SCREENS, f'{screen_name}.txt')
         text = self._load_txt(filename)
-        array = self._string_to_array(text)
+        array = Screen.from_string(text)
 
         if offset[0] == 'center':
             # get offset for center of screen for longest line in screen
@@ -222,7 +193,7 @@ class Screen:
             center = Screen.center_offset(widest, self.SCREEN_SIZE[0])
             offset = (center, offset[1])
 
-        self.write_array_to_screen(array, offset, **format)
+        self.write_array(array, offset, **format)
 
 
     def add_frame(self, size=const.SCREEN_SIZE, offset=(0,0),
@@ -239,8 +210,8 @@ class Screen:
         Keyword Arguments:
             style {int} -- [description] (default: {1})
         """
-        frame = self._create_frame(size, frame_style=frame_style)
-        self.write_array_to_screen(frame, offset=offset, **format)
+        frame = self.create_frame(size, frame_style=frame_style)
+        self.write_array(frame, offset=offset, **format)
 
 
     def add_header(self, header=const.HEADER, **format):
@@ -251,7 +222,7 @@ class Screen:
             format {[type]} -- [description] (default: {const.DEF_FONT})
         """
         header = f' {header} '
-        self.add_string_to_screen(header, offset=('center', 0), **format)
+        self.write_string(header, offset=('center', 0), **format)
 
 
     def add_footer(self, footer=const.FOOTER, **format):
@@ -262,34 +233,10 @@ class Screen:
             format {[type]} -- [description] (default: {const.DEF_FONT})
         """
         footer = f' {footer} '
-        self.add_string_to_screen(footer, offset=('center', 29), **format)
+        self.write_string(footer, offset=('center', 29), **format)
 
 
-    # TODO: Utilize Table.set() class method here
-    def write_char_to_screen(self, char, col=0, row=0):
-        """ Writes single character to screen
-
-        Writes a single character and escape codes to a specific [row][col] in
-        the screen array
-
-        Arguments:
-            char {[type]} -- [description]
-            array {[type]} -- [description]
-
-        Keyword Arguments:
-            col {int} -- [description] (default: {0})
-            row {int} -- [description] (default: {0})
-        """
-        try:
-            self.screen[row][col] = char
-        except IndexError:
-            err = f".write_char_to_screen( ) - IndexError \
-                    Tried to assign {char} to [{col}][{row}] in a \
-                    {len(self.screen)}x{len(self.screen[0])} array."
-            print(err)
-
-
-    def add_string_to_screen(self, string, offset=(0,0), format_char=True,
+    def write_string(self, string, offset=(0,0), format_char=True,
                              format_space=False, transparent=False, **format ):
         """ Writes a string to the screen
 
@@ -317,10 +264,13 @@ class Screen:
                 char = font.add_escape(char, **format)
 
             col, row = offset
-            self.write_char_to_screen(char, col=col + c, row=row)
+            # self.write_char_to_screen(char, col=col + c, row=row)
+
+            # TODO: col, row backwards in offset
+            self.set(Point(row, col + c), char)
 
 
-    def write_array_to_screen(self, array, offset=(0,0), transparent=False,
+    def write_array(self, array, offset=(0,0), transparent=False,
                               format_char=True, format_space=False, **format ):
         """ Writes an array to the screen
 
@@ -338,8 +288,9 @@ class Screen:
         # if 'center' is passed in as col offset, then figure out what the
         # correct offset value is based on widest line in the given array
         if offset[0] == 'center':
-            width = Screen._get_array_width(array)
-            offset = (Screen.center_offset(width, self.SCREEN_SIZE[0]), offset[1])
+            width = Screen.get_array_width(array)
+            offset = (Screen.center_offset(width, self.SCREEN_SIZE[0]),
+                                           offset[1])
 
         col, row = offset
         for r, line in enumerate(array):
@@ -348,11 +299,12 @@ class Screen:
                     continue
                 if (char != ' ' and format_char) or format_space:
                     char = font.add_escape(char, **format)
-                self.write_char_to_screen(char, col=col + c, row=row + r)
+
+                self.set(Point(row + r, col + c), char)
 
 
     @staticmethod
-    def _get_array_width(array):
+    def get_array_width(array):
         """ Returns the width of the widest line in the given array
 
         This is a convenience function that can be used to center an array
@@ -368,7 +320,7 @@ class Screen:
 
     #TODO: Utlize Table.get_width() method here
     @staticmethod
-    def _get_menu_width(menu_dict, option_only=False):
+    def get_menu_width(menu_dict, option_only=False):
         """ Returns the width of the widest option in given menu dictionary
 
         This is a convenience function that can be used to center a block of
@@ -428,7 +380,8 @@ class Screen:
 
             array.append(line)
 
-        self.write_array_to_screen(array, offset=offset, format_char=False)
+        self.write_array(array, offset=offset, format_char=False)
+
 
     @staticmethod
     def write(string, pos=Point(0,0)):
@@ -443,7 +396,7 @@ class Screen:
         if clear_first:
             self.clear()
 
-        stdout.write(f"\u001b[0;0H{self.array_to_string(self.screen)}")
+        stdout.write(f"\u001b[0;0H{self.to_string()}")
         stdout.flush()
 
 
