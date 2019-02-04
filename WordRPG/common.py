@@ -87,7 +87,8 @@ class Table:
         return [list(col) for col in string.splitlines()]
 
 
-    def to_string(self, attr=None):
+    @staticmethod
+    def array_to_string(array, attr=None):
         """ Convert Table.cells to multi-line string
 
         Keyword Arguments:
@@ -99,10 +100,23 @@ class Table:
         """
         if isinstance(attr, str):
             rows = [''.join([getattr(col, attr, col) for col in row])
-                    for row in self.cells]
+                    for row in array]
         else:
-            rows = [''.join([str(col) for col in row]) for row in self.cells]
+            rows = [''.join([str(col) for col in row]) for row in array]
         return '\n'.join(rows)
+
+
+    def to_string(self, attr=None):
+        """ Convert Table.cells to multi-line string
+
+        Keyword Arguments:
+            attr {str}
+                name of attribute to try and get from each element.
+
+        Returns:
+            str -- Table as a string
+        """
+        return Table.array_to_string(self.cells, attr=attr)
 
 
     def get_width(self):
@@ -217,7 +231,7 @@ class Table:
 
     def __str__(self):
         """ returns printable string version of Table """
-        return self.to_string()
+        return Table.to_string(self)
 
 
     def __getitem__(self, index):
