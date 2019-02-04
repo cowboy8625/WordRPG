@@ -72,37 +72,39 @@ SETTINGS = {
     'color':True,
     'logging':logging.ERROR,
     'log_map':os.path.join(PATH_ROOT, 'map.log'),
-    'log_game':os.path.join(PATH_ROOT, 'game.log'),    
+    'log_game':os.path.join(PATH_ROOT, 'game.log'),
+    'keymap': {
+        'up':['w', 'up'],
+        'down':['s', 'down'],
+        'left':['a', 'left'],
+        'right':['d', 'right']
+       }
     }
-
-# ToDo: duplicate data here, but it's easier to check if a key is in
-# MOVE_KEYS.keys() rather than sort through a list of aliases for now
-MOVE_KEYS = {
-    'w' : {'text':'north', 'vec':(0, -1)},
-    'up' : {'text':'north', 'vec':(0, -1)},
-
-    's' : {'text':'south', 'vec':(0, 1)},
-    'down' : {'text':'south', 'vec':(0, 1)},
-
-    'a' : {'text':'west', 'vec':(-1, 0)},
-    'left' : {'text':'west', 'vec':(-1, 0)},
-
-    'd' : {'text':'east', 'vec':(1, 0)},
-    'right' : {'text':'east', 'vec':(1, 0)},
-}
 
 ##------------------------------------------------------------------------------
 ## Map data
 ##------------------------------------------------------------------------------
 
+# TODO: This should be moved into \data as a .json
+"""
+'[map_name]':'[map_image_name]',
+'tileset':'[tileset_name]',
+'visibility':([daytime_radiuus], [nighttime_radius]),
+'pos':(col, row) default start position,
+'doors':
+    (col, row) - position of this door on the map
+        'target':'[map_name]' this door connects to
+        'enter':(col, row) - position to enter new map from this door
+"""
+
 MAPS_DATA = {
     'world':{
-        'map_name':'test_island2', 'tileset':'world', 'visibility':(0,12),
-        'pos':(40,27),
+        'map_name':'test_island2', 'tileset':'world', 'visibility':(0, 12),
+        'pos':(40, 27),
         'doors':{
-            (54,25):{'target':'cave_river', 'enter':(2,13)},
-            (42,28):{'target':'village_port', 'enter':(20,11)},
-            (44,32):{'target':'ship', 'enter':(42,21)},
+            (54, 25):{'target':'cave_river', 'enter':(2, 13)},
+            (42, 28):{'target':'village_port', 'enter':(20, 11)},
+            (44, 32):{'target':'ship', 'enter':(42, 21)},
             # (25,35):'cave_desert',
             # (57,12):'cave_swamp',
             # (74,9):'cave_forest',
@@ -114,27 +116,27 @@ MAPS_DATA = {
         }
     },
     'cave_river':{
-        'map_name':'test_cave2', 'tileset':'cave', 'visibility':(6,6),
-        'pos':(54,47),
+        'map_name':'test_cave2', 'tileset':'cave', 'visibility':(6, 6),
+        'pos':(54, 47),
         'doors':{
-            (1,13):{'target':'world', 'enter':(53,25)},
+            (1, 13):{'target':'world', 'enter':(53, 25)},
         }
     },
     'village_port':{
-        'map_name':'test_village1', 'tileset':'village', 'visibility':(0,12),
-        'pos':(20,11),
+        'map_name':'test_village1', 'tileset':'village', 'visibility':(0, 12),
+        'pos':(20, 11),
         'doors':{
-            (20,1):{'target':'world', 'enter':(42,27)},
-            (20,20):{'target':'world', 'enter':(42,29)},
-            (1,11):{'target':'world', 'enter':(41,28)},
+            (20 ,1):{'target':'world', 'enter':(42, 27)},
+            (20, 20):{'target':'world', 'enter':(42, 29)},
+            (1, 11):{'target':'world', 'enter':(41 ,28)},
         }
     },
     'ship':{
-        'map_name':'test_ship1', 'tileset':'world', 'visibility':(0,12),
-        'pos':(42,19),
+        'map_name':'test_ship1', 'tileset':'world', 'visibility':(0, 12),
+        'pos':(42, 19),
         'doors':{
-            (42,19):{'target':'world', 'enter':(44,31)},
-            (42,19):{'target':'world', 'enter':(44,31)},
+            (42, 19):{'target':'world', 'enter':(44, 31)},
+            (42, 19):{'target':'world', 'enter':(44, 31)},
         }
     }
 }
