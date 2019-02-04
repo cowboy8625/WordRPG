@@ -34,4 +34,4 @@ def add_escape( char, fgcolor = None, bgcolor = None, style = None ):
     a, b, c = [getattr(b, a.upper()) if isinstance(a, str) else ''
                for a, b in zip([fgcolor, bgcolor, style], [Fore, Back, Style])]
 
-    return f'{a}{b}{c}{char}'
+    return f'{a}{b}{c}{char}{Style.RESET_ALL}'
