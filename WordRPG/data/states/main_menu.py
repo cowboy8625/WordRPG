@@ -57,7 +57,7 @@ class Main_Menu(State):
         screen.load_screen('splash', offset=('center',2),fgcolor='WHITE')
 
         text = f'{const.COMPANY}'
-        screen.add_string_to_screen(const.COMPANY, offset=('center', 25), fgcolor='RED')
+        screen.write_string(const.COMPANY, offset=('center', 25), fgcolor='RED')
 
         return screen
 
@@ -67,7 +67,7 @@ class Main_Menu(State):
         screen = Screen()
         screen.load_screen('scroll', offset=('center',1), fgcolor='YELLOW')
 
-        screen.add_string_to_screen('MAIN MENU HELP', offset=('center', 2),
+        screen.write_string('MAIN MENU HELP', offset=('center', 2),
                     fgcolor='CYAN')
 
         return screen
@@ -78,7 +78,7 @@ class Main_Menu(State):
         screen = Screen()
         screen.load_screen('scroll', offset=(0,1), fgcolor='YELLOW')
 
-        screen.add_string_to_screen('PROJECT CONTRIBUTORS', offset=('center', 2),
+        screen.write_string('PROJECT CONTRIBUTORS', offset=('center', 2),
                     fgcolor='CYAN')
 
         screen.load_screen('credits', offset=('center',6), fgcolor='CYAN')

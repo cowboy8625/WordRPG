@@ -16,7 +16,7 @@ class Death(State):
     def _init_screen(self):
         screen = Screen()
         screen.load_screen('tombstone', offset=('center',2), fgcolor='WHITE')
-        screen.add_string_to_screen('YOU ARE DEAD', offset=('center', 27),
+        screen.write_string('YOU ARE DEAD', offset=('center', 27),
                     fgcolor='RED')
         return screen
         

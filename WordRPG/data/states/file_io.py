@@ -32,7 +32,7 @@ class Load_Game(State):
                     fgcolor='BLUE', bgcolor='BLACK')
 
         # add title
-        screen.add_string_to_screen('LOAD GAME', offset=('center', 2),
+        screen.write_string('LOAD GAME', offset=('center', 2),
                     fgcolor='CYAN')
 
         # create each file data block and draw them to screen
@@ -40,7 +40,7 @@ class Load_Game(State):
         #     file_block = self.add_data_block(i, file_info)
 
         # add screen prompt
-        screen.add_string_to_screen(f'SELECT FILE SLOT TO {mode.upper()}', offset=('center', 2),
+        screen.write_string(f'SELECT FILE SLOT TO {mode.upper()}', offset=('center', 2),
                     fgcolor='CYAN')
 
         return screen
@@ -104,7 +104,7 @@ class Load_Game(State):
                     fgcolor='BLUE', bgcolor='BLACK')
 
         # add title
-        screen.add_string_to_screen('LOAD GAME', offset=('center', 2),
+        screen.write_string('LOAD GAME', offset=('center', 2),
                     fgcolor='CYAN')
 
         # create each file data block and draw them to screen
@@ -112,7 +112,7 @@ class Load_Game(State):
         #     file_data_block(i, f, screen)
 
         # add screen prompt
-        screen.add_string_to_screen(f'SELECT FILE SLOT TO {mode.upper()}', offset=('center', 2),
+        screen.write_string(f'SELECT FILE SLOT TO {mode.upper()}', offset=('center', 2),
                     fgcolor='CYAN')
 
         text = f'SELECT FILE SLOT TO {mode.upper()}'
@@ -148,7 +148,7 @@ class Save_Game(State):
         screen = Screen()
         screen.load_screen('scroll', offset=('center',1), fgcolor='YELLOW')
 
-        screen.add_string_to_screen('SAVE GAME', offset=('center', 2),
+        screen.write_string('SAVE GAME', offset=('center', 2),
                     fgcolor='CYAN')
 
         return screen

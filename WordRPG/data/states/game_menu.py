@@ -18,7 +18,7 @@ class Game_Menu(State):
 
         if prev_state is not None:
             prev_screen = prev_state.screen
-            screen.write_array_to_screen(prev_screen.copy(),
+            screen.write_array(prev_screen.copy(),
                         format_char=False, format_space=False)
 
         # creates a frame
@@ -26,7 +26,7 @@ class Game_Menu(State):
                     fgcolor='WHITE', bgcolor='BLACK', transparent=False)
 
         # add title
-        screen.add_string_to_screen(f' GAME MENU ', offset=('center', 10),
+        screen.write_string(f' GAME MENU ', offset=('center', 10),
                     transparent=False, fgcolor='WHITE', bgcolor='BLACK')
 
         # add menu
