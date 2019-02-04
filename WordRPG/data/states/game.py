@@ -3,6 +3,7 @@ from collections import deque
 import logging
 
 from ... import const
+from ...time import Game_Time
 from ...common import Point, Table
 from ...gui.screen import Screen
 from ...state_machine import State
@@ -21,16 +22,27 @@ logging.basicConfig(filename=const.SETTINGS['log_game'], filemode='w',
 
 class Game(State):
     """ 'Game' state and associated data/methods """
+    START_MAP = 'world'
+    MOVEMENT = {
+        'up' : {'text':'north', 'vec':(0, -1)},
+        'down' : {'text':'south', 'vec':(0, 1)},
+        'left' : {'text':'west', 'vec':(-1, 0)},
+        'right' : {'text':'east', 'vec':(1, 0)},
+        }
+    BUFFER_START = "WELCOME TO THE WASTELANDS"
+
+
     def __init__(self, buffer_size=5):
         """ Initiailize class and super class """
         super(Game, self).__init__()
-        #TODO: This should be True, but disabling it to speed up game launch
+        #TODO: self.first_time should be True, but disabling it to speed up game launch
         # for development
         self.first_time = False
+        self.game_time = Game_Time()
 
         # initialize maps and map data
         self.maps = self._init_maps()
-        self.cur_map = self.maps['world']
+        self.cur_map = self.maps[self.START_MAP]
 
         # initialize screen and elements
         self.screen = self._init_screen()
@@ -39,14 +51,14 @@ class Game(State):
         # initialize command buffer
         self.BUFFER_SIZE = buffer_size
         self.buffer = deque(['' for i in range(self.BUFFER_SIZE)])
-        self.add_to_buffer("WELCOME TO THE WASTELANDS")
+        self.add_to_buffer(self.BUFFER_START)
 
 
     def _init_maps(self):
         """ create a 'Map' object using the given image filename and then print
         it to the terminal """
         logging.info('MAPS_DATA:{}'.format(const.MAPS_DATA))
-        maps = {k:Map(**v) for k, v in const.MAPS_DATA.items()}
+        maps = {k:Map(**v, game_time=self.game_time) for k, v in const.MAPS_DATA.items()}
 
         return maps
 
@@ -88,21 +100,30 @@ class Game(State):
         self.screen.add_frame(size=frame_size, offset=frame_offset,
                               frame_style=0, fgcolor='WHITE', bgcolor='BLACK')
 
+        # write date/time
+        date = self.game_time.get_date_string()
+        time = self.game_time.get_time_string()
+        date_time = f"<< {date} - {time} >>"
+        col = Screen.center_offset(date_time, frame_size[0])
+        row = frame_offset.row    
+        self.screen.write_string(f'{date_time}', offset=(col, row),
+                                         fgcolor='WHITE', bgcolor='BLACK')
+
         # write current biome name
         point = self.cur_map.cur_pos
         cur_tile = self.cur_map.get(point)
         cur_tile_name = f' {cur_tile.name.upper()} - {point} '
         col = Screen.center_offset(cur_tile_name, frame_size[0])
         row = frame_offset.row + frame_size.row - 1
-        self.screen.add_string_to_screen(f'<< {cur_tile_name} >>', offset=(col, row),
+        self.screen.write_string(f'<< {cur_tile_name} >>', offset=(col, row),
                                          fgcolor='WHITE', bgcolor='BLACK')
 
         # write map to screen
         map_frame = self.cur_map.get_map_frame(as_string=False, color=const.SETTINGS['color'])
-        self.screen.write_array_to_screen(map_frame, offset=(3, 2), format_char=False)
+        self.screen.write_array(map_frame, offset=(3, 2), format_char=False)
 
         # write player cursor
-        self.screen.add_string_to_screen('@', offset=(24,12),
+        self.screen.write_string('@', offset=(24,12),
                                          fgcolor='WHITE', bgcolor='BLACK')
 
         if draw:
@@ -138,7 +159,7 @@ class Game(State):
         for i, text in enumerate(self.buffer):
             text = f'> {text}'
             text = f'{text}{" " * (width - len(text))}'
-            self.screen.add_string_to_screen(text, offset=(3, 24 + i),
+            self.screen.write_string(text, offset=(3, 24 + i),
                                              transparent=False, fgcolor='WHITE',
                                              bgcolor='BLACK')
 
@@ -169,13 +190,14 @@ class Game(State):
         self.update_map()
 
 
-    def move(self, key):
+    def move(self, direction):
         """ Even handler for moving in the game world """
-        text = const.MOVE_KEYS[key]['text'].upper()
-        vec = const.MOVE_KEYS[key]['vec']
+        text = self.MOVEMENT[direction]['text'].upper()
+        vec = self.MOVEMENT[direction]['vec']
 
         cur_pos = self.cur_map.cur_pos
         new_pos = self.cur_map.move(vec)
+        new_tile = self.cur_map.get(new_pos)
 
         if new_pos in self.cur_map.doors:
             door = self.cur_map.doors[new_pos]
@@ -183,6 +205,7 @@ class Game(State):
             map_pos = door['enter']
             self.map_transfer(map_name, map_pos)
         elif cur_pos != new_pos:
+            self.game_time.add_time(minutes=(15 * new_tile.movement))
             self.add_to_buffer(f'MOVING {text}...')
             self.update_map()
 
@@ -236,7 +259,11 @@ class Game(State):
                 return self.death()
             if key == 'esc':
                 return 'game_menu'
-            if key in const.MOVE_KEYS.keys():
-                self.move(key)
+
+            for direction, mapped_keys in const.SETTINGS['keymap'].items():
+                if key in mapped_keys and direction in self.MOVEMENT:
+                    self.move(direction)
+            # if key in const.MOVE_KEYS.keys():
+            #     self.move(key)
 
         return self
