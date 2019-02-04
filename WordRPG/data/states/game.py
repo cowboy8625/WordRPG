@@ -263,7 +263,5 @@ class Game(State):
             for direction, mapped_keys in const.SETTINGS['keymap'].items():
                 if key in mapped_keys and direction in self.MOVEMENT:
                     self.move(direction)
-            # if key in const.MOVE_KEYS.keys():
-            #     self.move(key)
 
         return self
