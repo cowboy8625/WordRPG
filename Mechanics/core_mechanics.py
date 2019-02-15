@@ -19,6 +19,7 @@ def rnd(num_to_round, x=0.01):
     """
     return math.ceil(num_to_round / x) * x
 
+
 # Helps is to show player how to fight use items and more
 # I think I will also make this accessable in game as well at some point
 
@@ -39,9 +40,9 @@ def char_creation():
                 print('\nYou need to enter a name to continue\n')
             else:
                 yes_no = input("Are you Sure You Want To Keep This Name?\n"
-                                "(1): Yes\n"
-                                "(2): No\n"
-                                "Enter A Number:> ")
+                               "(1): Yes\n"
+                               "(2): No\n"
+                               "Enter A Number:> ")
                 if yes_no == '1':
                     return option
 
@@ -85,86 +86,78 @@ def char_creation():
     if pclass == 'Mage':
         return Player(
             name=pname,
-            _class=pclass,
-            max_health=80,
-            melee_attack=1,
-            magic_attack=10,
+            char_class=pclass,
+            level=1,
             max_mana=50,
             max_stamina=10,
             defense=1,
-            luck=1,
             gender=pgender,
             gold=0,
             equipped_weapon=Items.weak_staff
         )
+
     # Warrior
     elif pclass == 'Warrior':
         return Player(
             name=pname,
-            _class=pclass,
-            max_health=150,
-            melee_attack=10,
-            magic_attack=0,
+            char_class=pclass,
+            level=1,
             max_mana=5,
             max_stamina=50,
             defense=5,
-            luck=0,
             gender=pgender,
             gold=0,
             equipped_weapon=Items.rusty_short_sword
         )
+
     # Archer
     elif pclass == 'Archer':
-        return  Player(
+        return Player(
             name=pname,
-            _class=pclass,
-            max_health=100,
-            melee_attack=5,
-            magic_attack=0,
+            char_class=pclass,
+            level=1,
             max_mana=50,
             max_stamina=10,
             defense=1,
-            luck=5,
             gender=pgender,
             gold=0,
             equipped_weapon=Items.common_hunting_bow
         )
+
     # Assassin
     elif pclass == 'Assassin':
         return Player(
             name=pname,
-            _class=pclass,
-            max_health=50,
-            melee_attack=20,
-            magic_attack=10,
+            char_class=pclass,
+            level=1,
             max_mana=25,
             max_stamina=10,
             defense=2,
-            luck=10,
             gender=pgender,
             gold=100,
             equipped_weapon=Items.rusty_dagger
         )
 
+
 # Handle inventory management
 def inventory_mode(player):
     while True:
         Screen.display('INVENTORY')
-        print('Stored inventory:\n\n' + '\n'.join([f'({i+1}) {item}' for i, item in enumerate(player.inventory)]))
+        print('Stored inventory:\n\n' + '\n'.join([f'({i + 1}) {item}' for i, item in enumerate(player.inventory)]))
         print('\nEquipped weapon: ' + str(player.equipped_weapon))
         print('\nEquipped armor: ' + str(player.equipped_armor))
         option = input('\n\n'
-                           '(1): Examine item\n'
-                           '(2): Drop item\n'
-                           '(3): Equip Weapon\n'
-                           '(4): Equip Armor\n'
-                           '(x): Exit inventory screen\n'
-                           'Enter your choice:> ')
+                       '(1): Examine item\n'
+                       '(2): Drop item\n'
+                       '(3): Equip Weapon\n'
+                       '(4): Equip Armor\n'
+                       '(x): Exit inventory screen\n'
+                       'Enter your choice:> ')
         if option in ['1', '2', '3', '4']:
             num = input('\n\nWhich item? '
-            'Enter item number: ')
+                        'Enter item number: ')
             if num.isdigit() and int(num) in range(1, len(player.inventory) + 1):
-                index = int(num)-1
+                index = int(num) - 1
                 item = player.inventory[index]
                 if option == '1':
                     clear()

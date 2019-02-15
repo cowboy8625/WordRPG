@@ -7,73 +7,55 @@ from Map_Gen.ParseMap import WorldMap
 
 
 class Character:
-    def __init__(self, name, max_health, melee_attack, magic_attack,
-                 max_mana, max_stamina, defense, luck, level=1):
+    def __init__(self, name, level=1):
         self.name = name
         self.level = level
-        # Stats
-        self.max_health = max_health
-        self.health = self.max_health
-        self.melee_damage = melee_attack
-        self.magic_damage = magic_attack
-        self.max_mana = max_mana
-        self.max_stamina = max_stamina
-        self.defense = defense
-        self.luck = luck
 
         # Inventory
         self.equipped_weapon = Items.fist
         self.equipped_armor = None
 
-    def melee_attack(self):
-        return 17           # TODO Formula will be used after testing
-        # return random.randint(self.melee_damage // 2, self.melee_damage)
-
-    def magic_attack(self):
-        return 17           # TODO Formula will be used after testing
-        # return random.randint(self.magic_damage // 2, self.magic_damage)
-
 
 class Player(Character):
-    def __init__(self, name, _class, max_health, melee_attack, magic_attack,
-                 max_mana, max_stamina, defense, luck, gender, gold=0, xp=0,
+    def __init__(self, name, level, char_class, max_stamina, max_mana, defense, gender, gold=0, xp=0,
                  equipped_weapon=None, equipped_armor=Items.farm_clothing):
-        super().__init__(name, max_health, melee_attack, magic_attack,
-                         max_mana, max_stamina, defense, luck)
-        self._class = _class
+        super().__init__(name, level=1)
 
-        if self._class == 'Warrior':
-            self.strength = int(15 + (self.level * 4.2))
-            self.agility = int(13 + (self.level * 3.7))
-            self.intelligence = int(11 + (self.level * 2.8))
+        self.level = level
+        self.char_class = char_class
 
-        elif self._class == 'Assassin':
-            self.strength = int(13 + (self.level * 3.5))
-            self.agility = int(15 + (self.level * 4.2))
-            self.intelligence = int(11 + (self.level * 2.9))
-
-        elif self._class == 'Archer':
-            self.strength = int(13 + (self.level * 3.7))
-            self.agility = int(15 + (self.level * 4))
-            self.intelligence = int(11 + (self.level * 2.9))
-
-        elif self._class == 'Mage':
-            self.strength = int(13 + (self.level * 2.8))
-            self.agility = int(11 + (self.level * 3.7))
-            self.intelligence = int(15 + (self.level * 4.2))
-
-        # If player is none type
-        else:
-            self.strength = int(13 + (self.level * 3.5))
-            self.agility = int(13 + (self.level * 3.5))
-            self.intelligence = int(13 + (self.level * 3.5))
-
+        # Stats
         self.max_health = 100
+        self.health = self.max_health
+        self.max_mana = max_mana
+        self.max_stamina = max_stamina
+        self.defense = defense
         self.gender = gender
         self.gold = gold
         self.xp = xp
         self.equipped_weapon = equipped_weapon
         self.equipped_armor = equipped_armor
+
+        if self.char_class == 'Warrior':
+            self.strength = int(15 + (self.level * 4.2))
+            self.agility = int(13 + (self.level * 3.7))
+            self.intelligence = int(11 + (self.level * 2.8))
+
+        elif self.char_class == 'Assassin':
+            self.strength = int(13 + (self.level * 3.5))
+            self.agility = int(15 + (self.level * 4.2))
+            self.intelligence = int(11 + (self.level * 2.9))
+
+        elif self.char_class == 'Archer':
+            self.strength = int(13 + (self.level * 3.7))
+            self.agility = int(15 + (self.level * 4))
+            self.intelligence = int(11 + (self.level * 2.9))
+
+        elif self.char_class == 'Mage':
+            self.strength = int(13 + (self.level * 2.8))
+            self.agility = int(11 + (self.level * 3.7))
+            self.intelligence = int(15 + (self.level * 4.2))
+
         self.died_count = 0
 
         self.inventory = [Items.flint, Items.water]
@@ -84,6 +66,14 @@ class Player(Character):
         self.pos_x = 1
         self.pos_y = 1
 
+    def melee_attack(self):
+        return 17  # TODO Formula will be used after testing
+        # return random.randint(self.melee_damage // 2, self.melee_damage)
+
+    def magic_attack(self):
+        return 17  # TODO Formula will be used after testing
+        # return random.randint(self.magic_damage // 2, self.magic_damage)
+
     def health_generation(self):
         """
         Determines maximum amount of health
@@ -91,15 +81,15 @@ class Player(Character):
         """
 
         # If ranger
-        if self._class == 'Assassin' or self._class == 'Archer':
+        if self.char_class == 'Assassin' or self.char_class == 'Archer':
             return ((100 * self.level) + (self.strength * 1.7) // (1.25 * self.level)) * 0.97
 
         # If warrior
-        elif self._class == 'Warrior':
+        elif self.char_class == 'Warrior':
             return ((100 * self.level) + (self.strength * 2) // (1.1 * self.level)) * 1.15
 
         # If mage
-        elif self._class == 'Mage':
+        elif self.char_class == 'Mage':
             return ((100 * self.level) + (self.strength * 1.4) // (1.35 * self.level)) * 0.89
 
         # If none type
@@ -111,10 +101,10 @@ class Player(Character):
         Logic responsible for health regeneration
         :return: None
         """
-        max_hp = self.health_generation()       # Sets value of max. health
+        max_hp = self.health_generation()  # Sets value of max. health
 
-        if self.health < max_hp:        # If current health is less than max. health
-            self.health += (max_hp * 0.023)         # Rate of regeneration
+        if self.health < max_hp:  # If current health is less than max. health
+            self.health += (max_hp * 0.023)  # Rate of regeneration
 
     def player_fainted(self):
         """
@@ -169,3 +159,16 @@ class Player(Character):
         print("Spawns: " + str(info["Spawns"]))
         print("Info: " + str(info["Info"]))
         pause()
+
+
+class Mob(Character):
+    def __init__(self, name, level):
+        super().__init__(name, level)
+
+    def melee_attack(self):
+        return 5  # TODO Formula will be used after testing
+        # return random.randint(self.melee_damage // 2, self.melee_damage)
+
+    def magic_attack(self):
+        return 5  # TODO Formula will be used after testing
+        # return random.randint(self.magic_damage // 2, self.magic_damage)
