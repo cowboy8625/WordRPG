@@ -7,19 +7,19 @@ import os
 
 
 # This shows who is fighing and there stats
-def vs_screen(player, mob='mob1', width=44):
-    width = (len(player.char_name) + len(mob) + 43)         # Width sets how big the screen is no matter
+def vs_screen(player, mob, width=44):
+    width = (len(player.char_name) + len(mob.char_name) + 43)         # Width sets how big the screen is no matter
     print('#' * width)                                      # How big the names or stats are
     print(f"#              {player.char_name}  -- VS --  {mob}               #")
-    print('#' * (len(player.char_name) + len(mob) + 43))
+    print('#' * (len(player.char_name) + len(mob.char_name) + 43))
 
 
-def stat_screen(player, mob='mob1', width=44):
+def stat_screen(player, mob, width=44):
     # Width sets how big the screen is no matter
-    width = (len(player.char_name) + len(mob) + 43)
+    width = (len(player.char_name) + len(mob.char_name) + 43)
 
-    left_p_class = f"{player.player_class}    "             # Left side is for player
-    right_p_class = f"    {mob}"                  # Right side is for Enemy
+    left_p_class = f"{player.char_class}    "             # Left side is for player
+    right_p_class = f"    {mob.char_name}"                  # Right side is for Enemy
     line_p_class = left_p_class + ' ' * (width - (
                 len(left_p_class) + len(right_p_class))) + right_p_class  # Line puts the Left and Right
 
@@ -52,9 +52,9 @@ def stat_screen(player, mob='mob1', width=44):
     right_stamina = f"    TEST :Stamina"
     line_stamina = left_stamina + ' ' * (width - (len(left_stamina) + len(right_stamina))) + right_stamina
 
-    left_luck = f"Luck: {player.luck}    "
-    right_luck = f"    TEST :Luck"
-    line_luck = left_luck + ' ' * (width - (len(left_luck) + len(right_luck))) + right_luck
+    # left_luck = f"Luck: {player.luck}    "
+    # right_luck = f"    TEST :Luck"
+    # line_luck = left_luck + ' ' * (width - (len(left_luck) + len(right_luck))) + right_luck
 
     print(line_p_class)
     print(line_in_hand)
@@ -64,7 +64,7 @@ def stat_screen(player, mob='mob1', width=44):
     print(line_armor)
     print(line_mana)
     print(line_stamina)
-    print(line_luck)
+    # print(line_luck)
 
 
 # Clears Print Screen
