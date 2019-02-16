@@ -61,7 +61,7 @@ def attack(player_in_game, mob):
         mob_damage = mob.melee_attack()
         player_in_game.health -= mob_damage
         clear()
-        print(f"{mob.charname} dealt {mob_damage} damage to you.")
+        print(f"{mob.char_name} dealt {mob_damage} damage to you.")
 
     pause()
 
