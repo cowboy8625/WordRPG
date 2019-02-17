@@ -17,7 +17,6 @@ player = Player(name='Steve',
                 gold=0,
                 equipped_weapon=Items.rusty_short_sword
                 )
-
-enemy = Mob('Butthead', level=1)
-
-combat(player, enemy)
+while True:
+    enemy = Mob('Butthead', level=1)
+    combat(player, enemy)
