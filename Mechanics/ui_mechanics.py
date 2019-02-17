@@ -29,15 +29,15 @@ def stat_screen(player, mob, width=44):
     line_in_hand = left_in_hand + ' ' * (width - (len(left_in_hand) + len(right_in_hand))) + right_in_hand
 
     left_level = f"Level: {player.level}    "
-    right_level = f"    TEST :Level"
+    right_level = f"    Level: {mob.level}"
     line_level = left_level + ' ' * (width - (len(left_level) + len(right_level))) + right_level
 
     left_exp = f"Exp: {player.exp}    "
-    right_exp = f"    TEST :Exp Drop"
+    right_exp = f"    Exp reward: {mob.exp}"
     line_exp = left_exp + ' ' * (width - (len(left_exp) + len(right_exp))) + right_exp
 
     left_health = f"Health: {player.max_health}\\{player.health}    "
-    right_health = f"    TEST/TEST :Health"
+    right_health = f"    Health: {mob.max_health}\\{mob.health}"
     line_health = left_health + ' ' * (width - (len(left_health) + len(right_health))) + right_health
 
     left_armor = f"Armor: {player.equipped_armor.name}    "
@@ -45,11 +45,11 @@ def stat_screen(player, mob, width=44):
     line_armor = left_armor + ' ' * (width - (len(left_armor) + len(right_armor))) + right_armor
 
     left_mana = f"Mana: {player.mana}    "
-    right_mana = f"    TEST :Mana"
+    right_mana = f"    Mana: {mob.mana}"
     line_mana = left_mana + ' ' * (width - (len(left_mana) + len(right_mana))) + right_mana
 
     left_stamina = f"Stamina: {player.stamina}    "
-    right_stamina = f"    TEST :Stamina"
+    right_stamina = f"    Stamina: {mob.stamina}"
     line_stamina = left_stamina + ' ' * (width - (len(left_stamina) + len(right_stamina))) + right_stamina
 
     # left_luck = f"Luck: {player.luck}    "
