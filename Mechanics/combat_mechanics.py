@@ -10,11 +10,11 @@ from Mechanics.ui_mechanics import clear, pause, vs_screen, stat_screen
 # If you when a fight this function handles what happens
 def win(player_in_game, mob):
     clear()
-    player_in_game.pures += mob.pures
-    player_in_game.exp += mob.exp_gained
-    print(f"You just defeated a {mob.name}\n"
-          f"Gold Looted: {mob.pures}\n"
-          f"EXP Gained: {mob.exp_gained}")
+    player_in_game.gold += mob.gold
+    player_in_game.exp += mob.exp
+    print(f"You just defeated a {mob.char_name}\n"
+          f"Gold Looted: {mob.gold}\n"
+          f"EXP Gained: {mob.exp}")
     pause()
 
 
