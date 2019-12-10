@@ -2,6 +2,8 @@
 
   A text based RPG game with a story, shopping, NPC's, crafting, fighting and a ever grouping map to explore!
 
+  [![Run on Repl.it](https://repl.it/badge/github/cowboy8625/WordRPG)](https://repl.it/github/cowboy8625/WordRPG)
+
 ## Find Me Here
 If you are playing the game feel free to message me on [discord](https://discord.gg/8bkzqfm) about bugs or ideas
 or for any thing else!
