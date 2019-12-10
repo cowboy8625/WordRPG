@@ -1,3 +1,4 @@
+[![Run on Repl.it](https://repl.it/badge/github/cowboy8625/WordRPG)](https://repl.it/github/cowboy8625/WordRPG)
 # WordRPG
 
   A text based RPG game with a story, shopping, NPC's, crafting, fighting and a ever grouping map to explore!
